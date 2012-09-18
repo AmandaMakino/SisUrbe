@@ -146,14 +146,13 @@ SysCEF.ConfigurarUpload = function () {
                 alert("error " + d.type + ": " + d.text);
         },
         'onComplete': function(){
-
             $.ajax({
                 type: 'GET',
                 url: SysCEF.CaminhoListaLaudos,
                 success: function (result) {
                     $("#listaOSs").html(result);
 
-                    alert("Arquivo importado com sucesso!");
+                    $("#mensagemUpload").show();
                 }
             });
         }

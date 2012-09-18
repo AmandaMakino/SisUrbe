@@ -10,7 +10,7 @@
 
 @if (!string.IsNullOrEmpty(Model.Mensagem))
 {
-    <div class="mensagem">@Model.Mensagem</div>
+    <div class="mensagem">OS importada com sucesso!</div>
 }
 
 <table class="SysCEF-table">
@@ -29,7 +29,7 @@
                 <th>Data Hora Vistoria</th>
                 <th>Responsavel Técnico</th>
             }
-            
+
             if (Model.StatusLaudos == EnumStatusLaudo.Concluido.ToString())
             {
                 <th></th>
@@ -55,20 +55,20 @@
                 <td style="min-width: 120px;">@(item.Cidade + " / " + item.UF)</td>
                 
                 @{
-                    if (item.Status != EnumStatusLaudo.Importado.ToString())
-                    {
+            if (item.Status != EnumStatusLaudo.Importado.ToString())
+            {
                         <td style="min-width: 120px;">@item.DataHoraVistoria</td>
                         <td>@item.ResponsavelTecnico</td>
-                    }
-            
-                    if (Model.StatusLaudos == EnumStatusLaudo.Concluido.ToString())
-                    {
+            }
+
+            if (Model.StatusLaudos == EnumStatusLaudo.Concluido.ToString())
+            {
                         <td style="width: 25px; text-align: center;">
-                            <a onclick="SysCEF.Exportar('@Url.Action("Exportar", new { id = item.LaudoId})', '@Url.Content("~/Content/uploads/")');" title="Exportar Laudo">
+                            <a onclick="SysCEF.Exportar('@Url.Action("Exportar", new { id = item.LaudoId })', '@Url.Content("~/Content/uploads/")');" title="Exportar Laudo">
                                 <img alt="Exportar Laudo" src="@Url.Content("~/Content/images/exportar.png")"/>
                             </a>
                         </td>
-                    }
+            }
                 }
             </tr>
             i++;
