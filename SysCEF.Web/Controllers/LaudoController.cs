@@ -35,36 +35,29 @@ namespace SysCEF.Web.Controllers
             return PartialView();
         }
 
-        public string Importar(HttpPostedFileBase fileData)
+        public string Importar(HttpPostedFileBase fileData, FormCollection forms)
         {
-            try
+            var uploadHelper = new UploadOSHelper
             {
-                var uploadHelper = new UploadOSHelper
-                {
-                    UnitOfWork = WorkLifetimeManager.Value,
-                    LaudoRepository = LaudoRepositorio,
-                    TipoLogradouroRepositorio = TipoLogradouroRepositorio,
-                    EstadoRepositorio = EstadoRepositorio,
-                    CidadeRepositorio = CidadeRepositorio
-                };
+                UnitOfWork = WorkLifetimeManager.Value,
+                LaudoRepository = LaudoRepositorio,
+                TipoLogradouroRepositorio = TipoLogradouroRepositorio,
+                EstadoRepositorio = EstadoRepositorio,
+                CidadeRepositorio = CidadeRepositorio
+            };
 
-                var path = System.Web.HttpContext.Current.Request.MapPath("~/Content/uploads/");
+            var path = System.Web.HttpContext.Current.Request.MapPath("~/Content/uploads/");
 
-                var fileName = Path.Combine(path, fileData.FileName);
-                
-                fileData.SaveAs(fileName); // Salva OS na pasta de Uploads do Servidor.
+            var fileName = Path.Combine(path, fileData.FileName);
 
-                var laudo = uploadHelper.GerarLaudoAPartirArquivo(fileName);
+            fileData.SaveAs(fileName); // Salva OS na pasta de Uploads do Servidor.
 
-                LaudoRepositorio.Salvar(WorkLifetimeManager.Value, laudo);
-                WorkLifetimeManager.Value.Commit();
+            var laudo = uploadHelper.GerarLaudoAPartirArquivo(fileName);
 
-                return "OS importada com sucesso!";
-            }
-            catch(Exception ex)
-            {
-                return ex.Message;
-            }
+            LaudoRepositorio.Salvar(WorkLifetimeManager.Value, laudo);
+            WorkLifetimeManager.Value.Commit();
+
+            return "Arquivo importado com sucesso!";
         }
 
         public ActionResult Lista(string status)

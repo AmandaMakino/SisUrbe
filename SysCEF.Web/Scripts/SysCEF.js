@@ -116,23 +116,44 @@ SysCEF.SelecionarAba = function(index) {
     $("#tabs").tabs('select', index);
 };
 
-SysCEF.ConfigurarUpload = function() {
+SysCEF.ConfigurarUpload = function () {
+    // Multiple files - single input
+    var auth = "<% = Request.Cookies[FormsAuthentication.FormsCookieName]==null ? string.Empty : Request.Cookies[FormsAuthentication.FormsCookieName].Value %>";
+    var ASPSESSID = "<%= Session.SessionID %>";
+
     $("#fileuploader").fileUpload({
         'uploader': SysCEF.UploaderUrl,
         'cancelImg': SysCEF.CancelImageUrl,
         'buttonText': 'Importar OS...',
         'script': SysCEF.CaminhoAcaoImportar,
-        'folder': '/Uploads',
+        'scriptData': { ASPSESSID: ASPSESSID, AUTHID: auth },
+        'fileDataName': 'FileData',
+        'multi': false,
+        'sizeLimit': 200000000,
+        'simUploadLimit': 1,
+        'folder': '/Content/uploads',
         'fileDesc': 'Arquivos texto',
         'fileExt': '*.txt;',
-        'multi': true,
         'auto': true,
-        'onComplete': function() {
+        'onError': function (a, b, c, d) {
+            if (d.status == 404)
+                alert("Could not find upload script. Use a path relative to: " + "<?= getcwd() ?>");
+            else if (d.type === "HTTP")
+                alert("error " + d.type + ": " + d.status);
+            else if (d.type === "File Size")
+                alert(c.name + " " + d.type + " Limit: " + Math.round(d.info / (1024 * 1024)) + "MB");
+            else
+                alert("error " + d.type + ": " + d.text);
+        },
+        'onComplete': function(){
+
             $.ajax({
                 type: 'GET',
                 url: SysCEF.CaminhoListaLaudos,
-                success: function(result) {
+                success: function (result) {
                     $("#listaOSs").html(result);
+
+                    alert("Arquivo importado com sucesso!");
                 }
             });
         }
