@@ -1,0 +1,81 @@
+﻿@model SysCEF.Web.Models.LoginModel
+
+@{
+    ViewBag.Title = "Sistema de Avaliação de Imóveis - Login";
+}
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function () {
+        SysCEF.ConfigurarLogin('@Url.Action("GerarNovaSenha", "Login")');
+    })
+</script>
+
+@using (Html.BeginForm("Index", "Login"))
+{
+    <div id="login" class="login">
+        <header>
+            Login - Sistema de Avaliação de Imóveis
+        </header>
+        <fieldset>
+            <legend></legend>
+
+            <div class="editor-label">
+                E-mail
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(m => m.Email, new Dictionary<string, object> {{ "id", "loginEmail"}})
+                @Html.ValidationMessageFor(m => m.Email)
+            </div>
+
+            <div class="editor-label">
+                Senha
+            </div>
+            <div class="editor-field">
+                @Html.PasswordFor(m => m.Senha)
+                @Html.ValidationMessageFor(m => m.Senha)
+            </div>
+            <div class="editor-label">
+                <a id="linkEsqueceuSenha">Esqueceu a senha?</a>
+            </div>
+
+            <span class="field-validation-error" style="display: @(Model != null && Model.DadosInvalidos ? "block" : "none");">E-mail e/ou senha incorretos.</span>
+            
+            <div class="barraBotoes">
+                <input type="submit" value="Entrar" style="width: 100px;"/>
+            </div>
+        </fieldset>
+    </div>
+}
+
+<div id="resetBackground" class="background" style="display: none;"></div>
+<div id="resetBody" class="popupMessageBody" style="display: none;">
+    
+    <header>
+        Indentificação da conta
+    </header>
+
+    <div>
+        <fieldset>
+            <legend></legend>
+
+            <div class="editor-label">
+                E-mail
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(m => m.Email, new Dictionary<string, object> { { "id", "identificacaoEmail" } })
+                <span id="resetEmailRequiredMessage" class="field-validation-error" style="display: none;">É obrigatório informar o E-mail</span>
+            </div>
+            
+            <div id="resetInfo" class="editor-label-italic">
+                Uma senha temporária será criada e exibida no lugar dessa mensagem.
+            </div>
+            
+            <div class="barraBotoes" style="width: 230px; margin-left: 20px;">
+                <input id="gerarNovaSenha" type="button" value="Gerar" style="width: 100px; float: left;"/>
+                <input id="cancelarCriacaoNovaSenha" type="button" value="Cancelar" style="width: 100px;"/>
+            </div>
+        </fieldset>
+    </div>
+</div>

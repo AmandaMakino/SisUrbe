@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E3A2F452-48F3-4959-B2EC-9F35351CEE3E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SysCEF.DAO</RootNamespace>
+    <AssemblyName>SysCEF.DAO</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Producao|AnyCPU'">
+    <OutputPath>bin\Producao\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Deploy|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Deploy\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\SysCEF.DAO.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="NHibernate">
+      <HintPath>..\ThirdParty\NHibernate\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DependencyConfigurator.cs" />
+    <Compile Include="Implementacao\SqlConfiguracaoRepositorio.cs" />
+    <Compile Include="Implementacao\SqlCidadeRepositorio.cs" />
+    <Compile Include="Implementacao\SqlEstadoRepositorio.cs" />
+    <Compile Include="Implementacao\SqlTipoLogradouroRepositorio.cs" />
+    <Compile Include="Implementacao\SqlLaudoRepositorio.cs" />
+    <Compile Include="Implementacao\SqlImovelRepositorio.cs" />
+    <Compile Include="Implementacao\SqlUsuarioRepositorio.cs" />
+    <Compile Include="Interface\IConfiguracaoRepositorio.cs" />
+    <Compile Include="Interface\IUsuarioRepositorio.cs" />
+    <Compile Include="Interface\ICidadeRepositorio.cs" />
+    <Compile Include="Interface\IEstadoRepositorio.cs" />
+    <Compile Include="Interface\ITipoLogradouroRepositorio.cs" />
+    <Compile Include="Interface\ILaudoRepositorio.cs" />
+    <Compile Include="Interface\IImovelRepositorio.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TipoLogradouro.hbm.xml">
+      <DependentUpon>HBM.tt</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Usuario.hbm.xml">
+      <DependentUpon>HBM.tt</DependentUpon>
+    </EmbeddedResource>
+    <None Include="DDL.ignore">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DDL.tt</DependentUpon>
+    </None>
+    <None Include="DDL.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DDL.ignore</LastGenOutput>
+    </None>
+    <None Include="HBM.ignore">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HBM.tt</DependentUpon>
+    </None>
+    <None Include="HBM.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>HBM.ignore</LastGenOutput>
+    </None>
+    <EmbeddedResource Include="Imovel.hbm.xml">
+      <DependentUpon>HBM.tt</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ServicoPublicoComunitario.hbm.xml">
+      <DependentUpon>HBM.tt</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InfraEstruturaUrbana.hbm.xml">
+      <DependentUpon>HBM.tt</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Estado.hbm.xml">
+      <DependentUpon>HBM.tt</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cidade.hbm.xml">
+      <DependentUpon>HBM.tt</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Laudo.hbm.xml">
+      <DependentUpon>HBM.tt</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuracao.hbm.xml">
+      <DependentUpon>HBM.tt</DependentUpon>
+    </EmbeddedResource>
+    <Content Include="SysCEF.ddl">
+      <DependentUpon>DDL.tt</DependentUpon>
+    </Content>
+    <Content Include="SysCEF.ForeignKeys.ddl">
+      <DependentUpon>DDL.tt</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{597ABE83-FE81-49DD-81BB-DC53F42D6977}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataAccess\DataAccess.csproj">
+      <Project>{DE7D25F8-5AD0-40B4-B213-8C1B2F53A674}</Project>
+      <Name>DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SysCEF.Model\SysCEF.Model.csproj">
+      <Project>{BAF074F1-0258-4CC8-AE55-B0767FAB125E}</Project>
+      <Name>SysCEF.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

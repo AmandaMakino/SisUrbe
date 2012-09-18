@@ -1,0 +1,126 @@
+﻿@using SysCEF.Model
+@using SysCEF.Web.Helpers
+
+@model SysCEF.Web.Models.LaudoViewModel
+
+<ul>
+    <li class="grupo" name="grupo">5. AVALIAÇÃO</li>
+    <li>
+        <table>
+            <tr>
+                <td>Valor da Avaliação</td>
+                <td style="width: 70%;">Valor por Extenso</td>
+            </tr>
+            <tr>
+                <td>@Html.TextBoxFor(m => m.Laudo.ValorAvaliacao, new Dictionary<string, object> { { "style", "text-align: right;" } })</td>
+                <td>@Html.TextBoxFor(m => m.Laudo.ValorAvaliacaoExtenso)</td>
+            </tr>
+        </table>
+    </li>
+    <li>
+        <table>
+            <tr>
+                <td colspan="2">
+                    <table>
+                        <tr>
+                            <td style="width: 68%;" class="horizontal-radiobuttons">@Html.RadioButtonListFor(m => m.MetodoDefinicaoValor)</td> 
+                            <td>&nbsp;</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 30%;">
+                    <table>
+                        <tr>
+                            <td>Áreas (m²)</td>
+                            <td>@Html.TextBoxFor(m => m.Laudo.AreaGlobal, new Dictionary<string, object> { { "style", "text-align: right;" } })</td>
+                        </tr>
+                        <tr>
+                            <td>Valor/m²</td>
+                            <td>@Html.TextBoxFor(m => m.Laudo.ValorMetroQuadradoGlobal, new Dictionary<string, object> { { "style", "text-align: right;" } })</td>
+                        </tr>
+                        <tr>
+                            <td>Valor Total</td>
+                            <td>@Html.TextBoxFor(m => m.Laudo.ValorTotalGlobal, new Dictionary<string, object> { { "style", "text-align: right;" } })</td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>Terreno</td>
+                            <td>Edificação</td>
+                            <td>&nbsp;</td>
+                            <td>Benfeitorias</td>
+                        </tr>
+                        <tr>
+                            <td>Áreas (m²)</td>
+                            <td>@Html.TextBoxFor(m => m.Laudo.AreaTerreno, new Dictionary<string, object> { { "style", "text-align: right;" } })</td>
+                            <td>@Html.TextBoxFor(m => m.Laudo.AreaEdificacao, new Dictionary<string, object> { { "style", "text-align: right;" } })</td>
+                            <td>&nbsp;</td>
+                            <td>@Html.TextBoxFor(m => m.Laudo.AreaBenfeitorias, new Dictionary<string, object> { { "style", "text-align: right;" } })</td>
+                        </tr>
+                        <tr>
+                            <td>Valor/m²</td>
+                            <td>@Html.TextBoxFor(m => m.Laudo.ValorMetroQuadradoTerreno, new Dictionary<string, object> { { "style", "text-align: right;" } })</td>
+                            <td>@Html.TextBoxFor(m => m.Laudo.ValorMetroQuadradoEdificacao, new Dictionary<string, object> { { "style", "text-align: right;" } })</td>
+                            <td>&nbsp;</td>
+                            <td>@Html.TextBoxFor(m => m.Laudo.ValorMetroQuadradoBenfeitorias, new Dictionary<string, object> { { "style", "text-align: right;" } })</td>
+                        </tr>
+                        <tr>
+                            <td>Produto</td>
+                            <td>@Html.TextBoxFor(m => m.Laudo.ProdutoTerreno, new Dictionary<string, object> { { "style", "text-align: right;" } })</td>
+                            <td>@Html.TextBoxFor(m => m.Laudo.ProdutoEdificacao, new Dictionary<string, object> { { "style", "text-align: right;" } })</td>
+                            <td>&nbsp;</td>
+                            <td>@Html.TextBoxFor(m => m.Laudo.ProdutoBenfeitorias, new Dictionary<string, object> { { "style", "text-align: right;" } })</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">Valor total = Somatório (Terreno+edificação+Benfeitorias)</td>
+                            <td style="text-align: right;">R$</td>
+                            <td>@Html.TextBoxFor(m => m.Laudo.ValorTotalItemizada, new Dictionary<string, object> { { "style", "text-align: right;" } })</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </li>
+    <li>
+        <table>
+            <tr>
+                <td>Precisão / Fundamentação</td>
+                <td>Metodologia</td>
+            </tr>
+            <tr>
+                <td>@Html.TextBoxFor(m => m.Laudo.PrecisaoFundamentacao)</td>
+                <td>@Html.DropDownListFor(m => m.Laudo.MetodologiaAvaliacao, typeof(EnumMetodologiaAvaliacao), Model.MetodologiaAvaliacao)</td>
+            </tr>
+        </table>
+    </li>
+    <li class="grupo">Diagnóstico</li>
+    <li>
+        <table>
+            <tr>
+                <td>Desempenho do mercado</td>
+                <td>Absorção pelo mercado</td>
+                <td>Nº de ofertas</td>
+                <td>Nível de demanda</td>
+            </tr>
+            <tr>
+                <td>@Html.RadioButtonListFor(m => m.DesempenhoMercado, EnumDisposicaoRadioButtons.Vertical)</td>
+                <td>@Html.RadioButtonListFor(m => m.AbsorcaoMercado, EnumDisposicaoRadioButtons.Vertical)</td>
+                <td>@Html.RadioButtonListFor(m => m.NumeroOfertas, EnumDisposicaoRadioButtons.Vertical)</td>
+                <td>@Html.RadioButtonListFor(m => m.NivelDemanda, EnumDisposicaoRadioButtons.Vertical)</td>
+            </tr>
+        </table>
+    </li>
+    <li class="grupo">
+        <table>
+            <tr>
+                <td style="vertical-align: middle; width: 15%; text-align: right;">Observações</td>
+                <td>@Html.TextAreaFor(m => m.Laudo.ObservacoesAvaliacao, new Dictionary<string, object> { { "style", "width: 100%; height: 50px;" } })</td>
+            </tr>
+        </table>
+    </li>
+</ul>

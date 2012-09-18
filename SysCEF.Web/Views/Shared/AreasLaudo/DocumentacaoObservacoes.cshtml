@@ -1,0 +1,62 @@
+﻿@using SysCEF.Model
+@using SysCEF.Web.Helpers
+@model SysCEF.Web.Models.LaudoViewModel
+
+<ul>
+    <li class="grupo" name="grupo">8. DOCUMENTAÇÃO APRESENTADA</li>
+    <li class="grupo">
+        <table>
+            <tr>
+                <td>Matrícula no RGI:</td>
+                <td>Ofício:</td>
+                <td>Comarca:</td>
+            </tr>
+            <tr>
+                <td style="width: 15%;">@Html.TextBoxFor(m => m.Laudo.MatriculaRGI)</td>
+                <td>@Html.TextBoxFor(m => m.Laudo.Oficio)</td>
+                <td>@Html.DropDownListFor(m => m.Laudo.Comarca.CidadeID, Model.ListaComarcas)</td>
+            </tr>
+            <tr>
+                <td style="vertical-align: middle; text-align: right;">Outros documentos</td>
+                <td>@Html.TextAreaFor(m => m.Laudo.OutrosDocumentos, new Dictionary<string, object> { { "style", "width: 100%; height: 30px;" } })</td>
+            </tr>
+            <tr><td colspan="2">As informações constantes da documentação apresentada aparentam conformidade com a realidade do imóvel vistoriado?</td></tr>
+            <tr><td>@Html.RadioButtonListFor(m => m.Conformidade)</td></tr>
+            <tr><td colspan="2">Em caso negativo citar a divergência aparente: </td></tr>
+            <tr><td colspan="2">@Html.TextAreaFor(m => m.Laudo.Divergencia, new Dictionary<string, object> { { "style", "width: 100%; height: 30px;" } })</td></tr>
+        </table>
+    </li>
+    <li class="grupo" name="grupo">9. OBSERVAÇÕES FINAIS</li>
+    <li class="grupo">
+        <table>
+            <tr>
+                <td>@Html.TextAreaFor(m => m.Laudo.ObservacoesFinais, new Dictionary<string, object> { { "style", "width: 100%; height: 30px;" } })</td>
+            </tr>
+        </table>
+    </li>
+    <li class="grupo">
+        <table>
+            <tr>
+                <td colspan="2">Local de emissão do Laudo</td>
+                <td>Representante legal da empresa</td>
+            </tr>
+            <tr>
+                <td colspan="2">@Html.TextBoxFor(m => m.Laudo.LocalEmissaoLaudo)</td>
+                <td>@Html.DropDownListFor(m => m.Laudo.RepresentanteLegalEmpresa.UsuarioId, Model.ListaRepresentantesLegais)</td>
+            </tr>
+            <tr>
+                <td>Responsável Técnico</td>
+                <td style="width: 150px;">Data e Hora da Vistoria</td>
+                <td>Situação Laudo</td>
+            </tr>
+            <tr>
+                <td>@Html.DropDownListFor(m => m.Laudo.ResponsavelTecnico.UsuarioId, Model.ListaResponsaveisTecnicos)</td>
+                <td style="float: left;">
+                    @Html.TextBoxFor(m => m.DataVistoria, new Dictionary<string, object> { { "id", "dataVistoria"}, { "style", "width: 80px;" } })&nbsp;
+                    @Html.TextBoxFor(m => m.HoraVistoria, new Dictionary<string, object> { { "id", "horaVistoria"}, {"style", "width: 50px;" } })
+                </td>
+                <td>@Html.DropDownListFor(m => m.Laudo.Status, typeof(EnumStatusLaudo), Model.ListaStatusLaudo)</td>
+            </tr>
+        </table>
+    </li>
+</ul>

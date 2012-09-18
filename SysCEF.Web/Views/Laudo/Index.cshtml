@@ -1,0 +1,38 @@
+﻿@model SysCEF.Web.Models.LaudoViewModel
+
+<script type="text/javascript">
+    $(function() {
+        SysCEF.ConfigurarFormLaudo('@Url.Action("Salvar", "Laudo")', '@Url.Action("AtualizarAreasEdificacao", "Laudo")');
+    })
+</script>
+
+<form id="formLaudo" name="formLaudo" class="wufoo page">
+    
+    @Html.HiddenFor(m => m.LaudoId)
+    @Html.HiddenFor(m => m.StatusLaudo)
+                                   
+    <div id="container">
+    
+        <div class="info">
+            <h2>Laudo de Avaliação - Unidade em Prédio</h2>
+        </div>
+        
+        @Html.Partial("AreasLaudo/Identificacao", Model)
+
+        @Html.Partial("AreasLaudo/CaracterizacaoRegiao", Model)
+        
+        @Html.Partial("AreasLaudo/Terreno", Model)
+        
+        @Html.Partial("AreasLaudo/Edificacao", Model)
+        
+        @Html.Partial("AreasLaudo/Avaliacao", Model)
+        
+        @Html.Partial("AreasLaudo/InformacoesGarantia", Model)
+        
+        @Html.Partial("AreasLaudo/DocumentacaoObservacoes", Model)
+    </div>
+    <div class="barraBotoes">
+        <input id="salvarLaudoBtn" type="button" value="Salvar" style="width: 100px;"/>
+    </div>
+</form>
+       
