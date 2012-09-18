@@ -1,7 +1,3 @@
-GO
-
-USE [SisUrbe]
-GO
 
 -- Tabelas:
 

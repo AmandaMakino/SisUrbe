@@ -1,6 +1,5 @@
-USE [SisUrbe]
 
-INSERT INTO [dbo].[Usuario] VALUES ('Representante Legal', 0, 'representantelegal@sisurbe.com', '123', 0, null, null, 0)
+INSERT INTO [dbo].[Usuario] VALUES ('Usuário Root', 0, 'rootuser@sisurbe.com.br', '123', 0, null, null, 0)
 
 GO
 
