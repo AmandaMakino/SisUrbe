@@ -319,9 +319,6 @@
   <ItemGroup>
     <None Include="Scripts\uploader.fla" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Web.Deploy.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
     <Content Include="Views\Laudo\Index.cshtml" />
     <Content Include="Views\Laudo\Lista.cshtml" />
     <Content Include="Views\Shared\Menu.cshtml" />

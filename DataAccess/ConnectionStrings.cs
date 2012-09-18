@@ -5,7 +5,7 @@ namespace DataAccess
     public static class ConnectionStrings
     {
         private static readonly ConnectionStringSettings _SysCEFDBSettings =
-            ConfigurationManager.ConnectionStrings["SysCEFConnectionString"];
+            ConfigurationManager.ConnectionStrings["SisUrbeConnectionString"];
 
         public static string SysCEFDBSettings
         {
