@@ -1,0 +1,71 @@
+﻿@using SysCEF.Web.Helpers
+@model SysCEF.Web.Models.LaudoViewModel
+
+<ul>
+    
+    <li class="grupo" name="grupo">6. INFORMAÇÕES COMPLEMENTARES</li>
+    <li class="grupo">
+        <table>
+            <tr>
+                <td colspan="2" style="width: 30%">a) O imóvel, como um todo, aparenta condições de estabilidade e solidez?</td>
+                <td style="float: left;">@Html.CheckBoxFor(m => m.Laudo.EstabilidadeSolidez)</td>
+                <td style="width: 20%;">&nbsp;</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td style="vertical-align: middle;">Em caso negativo, justificar:</td>
+                <td>@Html.TextAreaFor(m => m.Laudo.EstabilidadeSolidezJustificativa, new Dictionary<string, object> { { "style", "width: 100%; height: 50px;" } })</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="2">b) O imóvel, como um todo, apresenta vícios de construção aparente?</td>
+                <td style="float: left;">@Html.CheckBoxFor(m => m.Laudo.ViciosConstrucao)</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td style="vertical-align: middle;">Se apresenta, relacionar: </td>
+                <td>@Html.TextAreaFor(m => m.Laudo.ViciosConstrucaoRelacao, new Dictionary<string, object> { { "style", "width: 100%; height: 50px;" } })</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="2">c) O imóvel aparenta condições de habiltabilidade?</td>
+                <td style="float: left;">@Html.CheckBoxFor(m => m.Laudo.Habitabilidade)</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td style="vertical-align: middle;">Em caso negativo, justificar: </td>
+                <td>@Html.TextAreaFor(m => m.Laudo.HabitabilidadeJustificativa, new Dictionary<string, object> { { "style", "width: 100%; height: 50px;" } })</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="3">d) A liquidez e o valor do imóvel, no mercado imobiliário local, são afetados por fatores significativamente:</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="2">@Html.RadioButtonListFor(m => m.FatoresLiquidezValorImovel)</td> 
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td style="vertical-align: middle;">Em caso de valorizantes ou desvalorizantes, explicitar: </td>
+                <td>@Html.TextAreaFor(m => m.Laudo.FatoresLiquidezExplicitacao, new Dictionary<string, object> { { "style", "width: 100%; height: 50px;" } })</td>
+                <td>&nbsp;</td>
+            </tr>
+        </table>
+    </li>
+    <li class="grupo" name="grupo">7. GARANTIA</li>
+    <li class="grupo">
+        <table>
+            <tr>
+                <td colspan="2">Considerando as atuais condições físicas e de mercado, o imóvel pode ser aceito como garantia?</td>
+            </tr>
+            <tr>
+                <td>@Html.RadioButtonListFor(m => m.AceitoComoGarantia)</td> 
+                <td style="width: 70%;">&nbsp;</td>
+            </tr>
+        </table>
+    </li>
+</ul>
+

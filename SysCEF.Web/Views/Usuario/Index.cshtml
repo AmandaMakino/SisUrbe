@@ -1,0 +1,75 @@
+﻿@using SysCEF.Web.Helpers
+
+@model SysCEF.Web.Models.UsuarioViewModel
+
+<script type="text/javascript">
+    $(function () {
+        SysCEF.ConfigurarFormUsuario('@Url.Action("Salvar", "Usuario")');
+    })
+</script>
+
+
+<form id="formUsuario" name="formUsuario" class="wufoo page" style="width: 60%;">
+    @Html.HiddenFor(m => m.Usuario.Id, new Dictionary<string, object> { { "id", "idUsuario" } })
+
+    <div id="container">
+    
+        <div class="info">
+            <h2>Informações do Usuário</h2>
+        </div>
+        
+        <ul>
+            <li>
+                <table>
+                    <tr>
+                        <td colspan="2">Nome</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            @Html.TextBoxFor(m => m.Usuario.Nome, new Dictionary<string, object> {{"id", "nomeUsuario"}})
+                            <span id="nomeUsuarioRequiredMessage" class="field-validation-error" style="display: none;">É obrigatório informar o Nome</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>CPF</td>                        
+                        <td>CREA</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.TextBoxFor(m => m.Usuario.CPF, new Dictionary<string, object> { { "id", "cpfUsuario" } })</td>                        
+                        <td>@Html.TextBoxFor(m => m.Usuario.CREA)</td>
+                    </tr>
+                    <tr>
+                        <td>E-mail</td>                        
+                        <td style="width: 50%;">Perfil</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.TextBoxFor(m => m.Usuario.Email, new Dictionary<string, object> {{"id", "emailUsuario"}})
+                            <span id="emailUsuarioRequiredMessage" class="field-validation-error" style="display: none;">É obrigatório informar o E-mail</span>
+                        </td>                        
+                        <td class="horizontal-radiobuttons">@Html.RadioButtonListFor(m => m.OpcoesPerfil)</td>
+                    </tr>
+                    <tr>
+                        <td>Senha</td>
+                        <td>Confirmação</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.PasswordFor(m => m.Usuario.Senha, new Dictionary<string, object> {{"id", "senhaUsuario"}})
+                            <span id="senhaUsuarioRequiredMessage" class="field-validation-error" style="display: none;">É obrigatório informar a Senha</span>
+                            <span id="minimoSenhaUsuarioMessage" class="field-validation-error" style="display: none;">Senha deve conter no mínimo 6 caracteres</span>
+                        </td>
+                        <td>
+                            @Html.PasswordFor(m => m.Usuario.Confirmacao, new Dictionary<string, object> {{"id", "confirmacaoUsuario"}})
+                            <span id="confirmacaoUsuarioRequiredMessage" class="field-validation-error" style="display: none;">É obrigatório confirmar a Senha</span>
+                            <span id="divergenciaUsuarioMessage" class="field-validation-error" style="display: none;">Senha de confirmação está diferente</span>
+                        </td>
+                    </tr>
+                </table>
+                <div class="barraBotoes">
+                    <input id="salvarUsuarioBtn" type="button" value="Salvar" style="width: 100px;"/>
+                </div>
+            </li>
+        </ul>
+    </div>
+</form>

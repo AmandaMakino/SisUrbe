@@ -1,0 +1,191 @@
+﻿@using SysCEF.Model
+@using SysCEF.Web.Helpers
+
+@model SysCEF.Web.Models.LaudoViewModel
+
+<ul>
+    <li class="grupo" name="grupo">4. EDIFICAÇÃO</li>
+    <li>
+        <table>
+            <tr>
+                <td>Tipo</td>
+                <td>Uso</td>
+                <td>Nº de Pavimentos</td>
+                <td>Idade</td>
+                <td>Posição</td>
+            </tr>
+            <tr>
+                <td>@Html.DropDownListFor(m => m.Laudo.TipoEdificacao, typeof(EnumTipoEdificacao), Model.TiposEdificacao)</td>
+                <td>@Html.DropDownListFor(m => m.Laudo.UsoEdificacao, typeof(EnumUsosPredio), Model.UsosEdificacao)</td>
+                <td>@Html.DropDownListFor(m => m.Laudo.NumeroPavimentos, typeof(EnumQuantidadeMaior), Model.QuantidadePavimentosEdificacao)</td>
+                <td>@Html.DropDownListFor(m => m.Laudo.IdadeEdificio, typeof(EnumQuantidadeMaior), Model.IdadeEdificio)</td>
+                <td>@Html.DropDownListFor(m => m.Laudo.PosicaoEdificacao, typeof(EnumPosicaoEdificacao), Model.PosicoesEdificacao)</td>
+            </tr>
+        </table>
+    </li>
+    <li>
+        <table>
+            <tr>
+                <td>Padrão de</td>
+                <td>Estado de</td>
+                <td>&nbsp;</td>
+                <td>Fechamento das</td>
+                <td colspan="2">Nº de Vagas no Estacionamento</td>
+            </tr>
+            <tr>
+                <td>Acabamento</td>
+                <td>Conservação</td>
+                <td>Tetos</td>
+                <td>Paredes</td>
+                <td>Cobertas</td>
+                <td>Descobertas</td>
+            </tr>
+            <tr>
+                <td>@Html.DropDownListFor(m => m.Laudo.PadraoAcabamento, typeof(EnumPadraoAcabamento), Model.PadroesAcabamento)</td>
+                <td>@Html.DropDownListFor(m => m.Laudo.EstadoConservacao, typeof(EnumEstadoConservacao), Model.EstadosConservacao)</td>
+                <td>@Html.DropDownListFor(m => m.Laudo.Tetos, typeof(EnumTetos), Model.Tetos)</td>
+                <td>@Html.DropDownListFor(m => m.Laudo.FechamentoParedes, typeof(EnumFechamentoParedes), Model.TiposFechamentoParedes)</td>
+                <td>@Html.DropDownListFor(m => m.Laudo.NumeroVagasCobertas, typeof(EnumQuantidade), Model.NumeroVagasCobertas)</td>
+                <td>@Html.DropDownListFor(m => m.Laudo.NumeroVagasDescobertas, typeof(EnumQuantidade), Model.NumeroVagasDescobertas)</td>
+            </tr>
+        </table>
+    </li>
+    <li>
+        <div id="areasEdificacao">
+            <table style="float: left; width: 50%;">
+                <tr>
+                    <td style="width: 30%;">Áreas Averbadas</td>
+                    <td colspan="2">Privativa</td>
+                    <td colspan="2">De Uso Comum</td>
+                    <td colspan="2">Total</td>
+                </tr>
+                <tr>
+                    <td>Unidade</td>
+                    <td>@Html.TextBoxFor(m => m.Laudo.AreaUnidadePrivativa, new Dictionary<string, object> { { "id", "areaUnidadePrivativa" }, { "style", "text-align: right;" } })</td>
+                    <td>m²</td>
+                    <td>@Html.TextBoxFor(m => m.Laudo.AreaUnidadeComum, new Dictionary<string, object> { { "id", "areaUnidadeComum" }, { "style", "text-align: right;" } })</td>
+                    <td>m²</td>
+                    <td>@Html.TextBoxFor(m => m.Laudo.AreaUnidadeTotal, new Dictionary<string, object> { { "id", "areaUnidadeTotal" }, { "style", "text-align: right;" } })</td>
+                    <td>m²</td>
+                </tr>
+                <tr>
+                    <td>Estacionamento</td>
+                    <td>@Html.TextBoxFor(m => m.Laudo.AreaEstacionamentoPrivativa, new Dictionary<string, object> { { "id", "areaEstacionamentoPrivativa" }, { "style", "text-align: right;" } })</td>
+                    <td>m²</td>
+                    <td>@Html.TextBoxFor(m => m.Laudo.AreaEstacionamentoComum, new Dictionary<string, object> { { "id", "areaEstacionamentoComum" }, { "style", "text-align: right;" } })</td>
+                    <td>m²</td>
+                    <td>@Html.TextBoxFor(m => m.Laudo.AreaEstacionamentoTotal, new Dictionary<string, object> { { "id", "areaEstacionamentoTotal" }, { "style", "text-align: right;" } })</td>
+                    <td>m²</td>
+                </tr>
+                <tr>
+                    <td>Outros</td>
+                    <td>@Html.TextBoxFor(m => m.Laudo.AreaOutrosPrivativa, new Dictionary<string, object> { { "id", "areaOutrosPrivativa" }, { "style", "text-align: right;" } })</td>
+                    <td>m²</td>
+                    <td>@Html.TextBoxFor(m => m.Laudo.AreaOutrosComum, new Dictionary<string, object> { { "id", "areaOutrosComum" }, { "style", "text-align: right;" } })</td>
+                    <td>m²</td>
+                    <td>@Html.TextBoxFor(m => m.Laudo.AreaOutrosTotal, new Dictionary<string, object> { { "id", "areaOutrosTotal" }, { "style", "text-align: right;" } })</td>
+                    <td>m²</td>
+                </tr>
+                <tr>
+                    <td>Total</td>
+                    <td>@Html.TextBoxFor(m => m.Laudo.AreaTotalPrivativa, new Dictionary<string, object> { { "id", "areaTotalPrivativa" }, { "style", "text-align: right;" } })</td>
+                    <td>m²</td>
+                    <td>@Html.TextBoxFor(m => m.Laudo.AreaTotalComum, new Dictionary<string, object> { { "id", "areaTotalComum" }, { "style", "text-align: right;" } })</td>
+                    <td>m²</td>
+                    <td>@Html.TextBoxFor(m => m.Laudo.AreaTotalAverbada, new Dictionary<string, object> { { "id", "areaTotalAverbada" }, { "style", "text-align: right;" } })</td>
+                    <td>m²</td>
+                </tr>
+            </table>
+            <table style="width: 40%;">
+                <tr>
+                    <td colspan="2">Áreas Não Averbadas</td>
+                    <td colspan="2">Somatório das Áreas</td>
+                </tr>
+                <tr>
+                    <td colspan="2">&nbsp;</td>
+                    <td colspan="2">Averbadas e Não Averbadas</td>
+                </tr>
+                <tr><td>&nbsp;</td></tr>
+                <tr><td>&nbsp;</td></tr>
+                <tr>
+                    <td>@Html.TextBoxFor(m => m.Laudo.AreaTotalNaoAverbada, new Dictionary<string, object> { { "id", "areaTotalNaoAverbada" }, { "style", "text-align: right;" } })</td>
+                    <td>m²</td>
+                    <td>@Html.TextBoxFor(m => m.Laudo.SomatorioAreas, new Dictionary<string, object> { { "id", "somaAreas" }, { "style", "text-align: right;" } })</td>
+                    <td>m²</td>
+                </tr>
+            </table>
+        </div>
+    </li>
+    <li>Divisão interna</li>
+    <li>
+        <table style="width: 70%;">
+            <tr>
+                <td style="text-align: right;">Quartos</td>
+                <td>@Html.DropDownListFor(m => m.Laudo.NumeroQuartos, typeof(EnumQuantidade), Model.NumeroQuartos)</td>
+                <td style="text-align: right;">Suites</td>
+                <td>@Html.DropDownListFor(m => m.Laudo.NumeroSuites, typeof(EnumQuantidade), Model.NumeroSuites)</td>
+                <td style="text-align: right;">Área de Serviço</td>
+                <td>@Html.DropDownListFor(m => m.Laudo.NumeroAreasServico, typeof(EnumQuantidade), Model.NumeroAreasServico)</td>
+            </tr>
+            <tr>
+                <td style="text-align: right;">Salas</td>
+                <td>@Html.DropDownListFor(m => m.Laudo.NumeroSalas, typeof(EnumQuantidade), Model.NumeroSalas)</td>
+                <td style="text-align: right;">Closet</td>
+                <td>@Html.DropDownListFor(m => m.Laudo.NumeroClosets, typeof(EnumQuantidade), Model.NumeroClosets)</td>
+                <td style="text-align: right;">Varanda</td>
+                <td>@Html.DropDownListFor(m => m.Laudo.NumeroVarandas, typeof(EnumQuantidade), Model.NumeroVarandas)</td>
+            </tr>
+            <tr>
+                <td style="text-align: right;">Circulação</td>
+                <td>@Html.DropDownListFor(m => m.Laudo.NumeroCirculacao, typeof(EnumQuantidade), Model.NumeroCirculacao)</td>
+                <td style="text-align: right;">Copa</td>
+                <td>@Html.DropDownListFor(m => m.Laudo.NumeroCopas, typeof(EnumQuantidade), Model.NumeroCopas)</td>
+                <td style="text-align: right;">Terraço Coberto</td>
+                <td>@Html.DropDownListFor(m => m.Laudo.NumeroTerracosCobertos, typeof(EnumQuantidade), Model.NumeroTerracosCobertos)</td>
+            </tr>
+            <tr>
+                <td style="text-align: right;">Banheiros</td>
+                <td>@Html.DropDownListFor(m => m.Laudo.NumeroBanheiros, typeof(EnumQuantidade), Model.NumeroBanheiros)</td>
+                <td style="text-align: right;">Cozinha</td>
+                <td>@Html.DropDownListFor(m => m.Laudo.NumeroCozinhas, typeof(EnumQuantidade), Model.NumeroCozinhas)</td>
+                <td style="text-align: right;">Terraço Descoberto</td>
+                <td>@Html.DropDownListFor(m => m.Laudo.NumeroTerracosDescobertos, typeof(EnumQuantidade), Model.NumeroTerracosDescobertos)</td>
+            </tr>
+        </table>
+    </li>
+    <li>4.2 Prédio a qual pertence a Unidade Avalianda</li>
+    <li>
+        <table>
+            <tr>
+                <td>Usos</td>
+                <td>Nº de Pavimentos</td>
+                <td>Nº de Unidades</td>
+                <td>Nº de Elevadores</td>
+                <td>Posição</td>
+            </tr>
+            <tr>
+                <td>@Html.DropDownListFor(m => m.Laudo.UsoPredio, typeof(EnumUsosPredio), Model.UsosPredio)</td>
+                <td>@Html.DropDownListFor(m => m.Laudo.NumeroPavimentosPredio, typeof(EnumQuantidadeMaior), Model.QuantidadePavimentosPredio)</td>
+                <td>@Html.DropDownListFor(m => m.Laudo.NumeroUnidadesPredio, typeof(EnumQuantidade), Model.QuantidadeUnidadesPredio)</td>
+                <td>@Html.DropDownListFor(m => m.Laudo.NumeroElevadoresPredio, typeof(EnumQuantidade), Model.QuantidadeElevadores)</td>
+                <td>@Html.DropDownListFor(m => m.Laudo.PosicaoPredio, typeof(EnumPosicaoPredio), Model.PosicoesPredio)</td>
+            </tr>
+        </table>
+    </li>
+    <li>
+        <table>
+            <tr>
+                <td>Padrão Construtivo</td>
+                <td>Estado de Conservação</td>
+                <td>Identificação dos pavimentos</td>
+                <td>Idade Aparente</td>
+            </tr>
+            <tr>
+                <td>@Html.DropDownListFor(m => m.Laudo.PadraoConstrutivoPredio, typeof(EnumPadraoAcabamento), Model.PadroesConstrutivos)</td>
+                <td>@Html.DropDownListFor(m => m.Laudo.EstadoConservacaoPredio, typeof(EnumEstadoConservacao), Model.EstadosConservacaoPredio)</td>
+                <td>@Html.TextBoxFor(m => m.Laudo.IdentificacaoPavimentosPredio)</td>
+                <td>@Html.DropDownListFor(m => m.Laudo.IdadeAparentePredio, typeof(EnumQuantidadeMaior), Model.IdadeAparentePredio)</td>
+            </tr>
+        </table>
+    </li>
+</ul>

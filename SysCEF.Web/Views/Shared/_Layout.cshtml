@@ -1,0 +1,53 @@
+﻿@using System.Configuration
+@using SysCEF.Common.Implementacao
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title</title>
+        <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/Content/FormLaudo.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/Content/EstiloUploadify.css")" type="text/css" rel="stylesheet" />
+        <link href="@Url.Content("~/Content/themes/custom-theme/jquery-ui-1.8.22.custom.css")" rel="stylesheet" type="text/css" />
+    
+        <script src="@Url.Content("~/Scripts/jquery-1.7.2.min.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/jquery-ui-1.8.22.custom.min.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/modernizr-1.7.min.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/json2.js")" type="text/javascript" ></script>
+        <script src="@Url.Content("~/Scripts/jquery.json-2.3.min.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/jquery.maskedinput-1.2.2.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/jquery.uploadify.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/SysCEF.js")" type="text/javascript"></script>
+    </head>
+    <body>
+        
+        <div class="page">
+            <header>
+                <div id="logo">
+                    <img src="@Url.Content("~/Content/Images/cef.png")" alt=""/>
+                </div>
+            </header>
+            <section id="main">
+                @RenderBody()
+            </section>
+            <footer>
+                <div style="width: 100%; float:left; text-align: center;">
+                    <div id="linksFooter" style="display: none;">
+                        <a onclick="SysCEF.SelecionarAba(0);">Importar OS</a> |
+                        <a onclick="SysCEF.SelecionarAba(1);">Vistorias a fazer</a> |
+                        <a onclick="SysCEF.SelecionarAba(2);">Laudos em andamento</a> |
+                        <a onclick="SysCEF.SelecionarAba(3);">Laudos concluídos</a> |
+                        <a onclick="SysCEF.SelecionarAba(4);">Banco de imóveis</a> |
+                        @if (new UsuarioLogado().EAdministrador)
+                        {
+                            @Html.Raw("<a onclick='SysCEF.SelecionarAba(5);'>Cadastro de usuários</a> | " +
+                                      "<a onclick='SysCEF.SelecionarAba(6);'>Configurações</a>");
+                        }
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </body>
+</html>

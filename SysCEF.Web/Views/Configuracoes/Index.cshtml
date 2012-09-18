@@ -1,0 +1,30 @@
+﻿@model SysCEF.Model.Configuracao
+       
+<script type="text/javascript">
+    $(function () {
+        SysCEF.ConfigurarConfiguracoes('@Url.Action("Salvar")');
+    });
+ </script>
+ 
+<form id="formConfiguracao" name="formConfiguracao" class="wufoo page" style="width: 60%;">
+    <div id="container" style="height: 270px;">
+    
+        <div id="mensagem" class="mensagem" style="display: none;"></div>
+
+        <div class="info">
+            <h2>Informações da Empresa</h2>
+        </div>
+        
+        <ul>
+            <li>Nome</li>
+            <li>@Html.TextBoxFor(m => m.NomeEmpresa)</li>
+            <li>CNPJ</li>
+            <li>@Html.TextBoxFor(m => m.CNPJEmpresa, new Dictionary<string, object> { { "id", "cnpjEmpresa" }, { "style", "width: 50%;"} })</li>
+        </ul>
+        
+        <div class="barraBotoes">
+            <input id="salvarConfiguracoesBtn" type="button" value="Salvar" style="width: 100px;"/>
+        </div>
+
+    </div>
+</form>

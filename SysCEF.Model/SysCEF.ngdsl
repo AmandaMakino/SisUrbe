@@ -1,0 +1,214 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<modelRoot xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.7" name="" defaultNamespace="SysCEF.Model" assembly="SysCEF.Model" xmlns="http://schemas.microsoft.com/dsltools/NeedhamGroupDSL">
+  <modelTypes>
+    <modelClass name="Imovel" isLookupTable="false">
+      <classAttributes>
+        <classAttribute name="ImovelID" isPrimaryKeyField="true" setterAccessModifier="Public" isIdentity="true" scale="0" precision="0" />
+        <classAttribute name="NomeCliente" type="String" length="150" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="Endereco" type="String" length="150" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="Numero" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="Complemento" type="String" length="50" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="Bairro" type="String" length="100" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="CEP" type="String" length="10" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="IdentificacaoCliente" type="String" length="50" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+      </classAttributes>
+      <unidirectionalTargets>
+        <unidirectionalAssociation Id="46bd4aff-6d23-4562-8744-ca00a499e518" targetMultiplicity="One" isFkOnly="false" fetchEager="false" fkIncluded="false">
+          <modelClassMoniker name="//Cidade" />
+        </unidirectionalAssociation>
+        <unidirectionalAssociation Id="6074cac0-b64b-49db-8aef-e39d3c098fca" targetMultiplicity="One" isFkOnly="false" fetchEager="false" fkIncluded="false">
+          <modelClassMoniker name="//TipoLogradouro" />
+        </unidirectionalAssociation>
+      </unidirectionalTargets>
+    </modelClass>
+    <modelClass name="ServicoPublicoComunitario" isLookupTable="false">
+      <classAttributes>
+        <classAttribute name="ServicoPublicoComunitarioID" isPrimaryKeyField="true" setterAccessModifier="Public" isIdentity="true" scale="0" precision="0" />
+        <classAttribute name="TipoServicoPublicoComunitario" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="Descricao" type="String" length="50" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+      </classAttributes>
+    </modelClass>
+    <modelClass name="InfraEstruturaUrbana" isLookupTable="false">
+      <classAttributes>
+        <classAttribute name="InfraEstruturaUrbanaID" isPrimaryKeyField="true" setterAccessModifier="Public" isIdentity="true" scale="0" precision="0" />
+        <classAttribute name="TipoInfraEstruturaUrbana" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="Descricao" type="String" length="50" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+      </classAttributes>
+    </modelClass>
+    <modelClass name="Usuario" isLookupTable="false">
+      <classAttributes>
+        <classAttribute name="UsuarioId" isPrimaryKeyField="true" setterAccessModifier="Public" isIdentity="true" scale="0" precision="0" />
+        <classAttribute name="Nome" type="String" length="100" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="Perfil" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="Email" type="String" length="50" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="Senha" type="String" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="DeveDefinirNovaSenha" type="Boolean" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="CREA" type="String" length="20" isNullable="true" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="CPF" type="String" length="20" isNullable="true" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+      </classAttributes>
+    </modelClass>
+    <modelClass name="Estado" isLookupTable="false">
+      <classAttributes>
+        <classAttribute name="EstadoID" isPrimaryKeyField="true" setterAccessModifier="Public" isIdentity="true" scale="0" precision="0" />
+        <classAttribute name="Sigla" type="String" length="2" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="Nome" type="String" length="100" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+      </classAttributes>
+    </modelClass>
+    <modelClass name="Cidade" isLookupTable="false">
+      <classAttributes>
+        <classAttribute name="CidadeID" isPrimaryKeyField="true" setterAccessModifier="Public" isIdentity="true" scale="0" precision="0" />
+        <classAttribute name="Nome" type="String" length="150" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+      </classAttributes>
+      <unidirectionalTargets>
+        <unidirectionalAssociation Id="69f63b67-f15a-4d15-aa4c-81cfdba4f9b3" targetMultiplicity="One" isFkOnly="false" fetchEager="false" fkIncluded="false">
+          <modelClassMoniker name="//Estado" />
+        </unidirectionalAssociation>
+      </unidirectionalTargets>
+    </modelClass>
+    <modelClass name="Laudo" isLookupTable="false">
+      <classAttributes>
+        <classAttribute name="LaudoID" isPrimaryKeyField="true" setterAccessModifier="Public" isIdentity="true" scale="0" precision="0" />
+        <classAttribute name="Produto" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="Linha" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="Fonte" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="Status" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="DataHoraVistoria" type="DateTime" isNullable="true" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="UsosPredominantes" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="FormaTerreno" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="CotaGreideTerreno" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="InclinacaoTerreno" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="SituacaoTerreno" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="SuperficieTerreno" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="MedidaAreaTerreno" type="Decimal" setterAccessModifier="Public" isIdentity="false" scale="2" precision="7" />
+        <classAttribute name="MedidaFrenteTerreno" type="Decimal" setterAccessModifier="Public" isIdentity="false" scale="2" precision="7" />
+        <classAttribute name="MedidaFundosTerreno" type="Decimal" setterAccessModifier="Public" isIdentity="false" scale="2" precision="7" />
+        <classAttribute name="MedidaDireitaTerreno" type="Decimal" setterAccessModifier="Public" isIdentity="false" scale="2" precision="7" />
+        <classAttribute name="MedidaEsquerdaTerreno" type="Decimal" setterAccessModifier="Public" isIdentity="false" scale="2" precision="7" />
+        <classAttribute name="FracaoIdealTerreno" type="Double" setterAccessModifier="Public" isIdentity="false" scale="6" precision="7" />
+        <classAttribute name="TipoEdificacao" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="UsoEdificacao" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="NumeroPavimentos" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="IdadeEdificio" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="PosicaoEdificacao" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="PadraoAcabamento" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="EstadoConservacao" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="Tetos" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="FechamentoParedes" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="NumeroVagasCobertas" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="NumeroVagasDescobertas" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="AreaUnidadePrivativa" type="Decimal" setterAccessModifier="Public" isIdentity="false" scale="2" precision="7" />
+        <classAttribute name="AreaUnidadeComum" type="Decimal" setterAccessModifier="Public" isIdentity="false" scale="2" precision="7" />
+        <classAttribute name="AreaUnidadeTotal" type="Decimal" setterAccessModifier="Public" isIdentity="false" scale="2" precision="7" />
+        <classAttribute name="AreaEstacionamentoPrivativa" type="Decimal" setterAccessModifier="Public" isIdentity="false" scale="2" precision="7" />
+        <classAttribute name="AreaEstacionamentoComum" type="Decimal" setterAccessModifier="Public" isIdentity="false" scale="2" precision="7" />
+        <classAttribute name="AreaEstacionamentoTotal" type="Decimal" setterAccessModifier="Public" isIdentity="false" scale="2" precision="7" />
+        <classAttribute name="AreaOutrosPrivativa" type="Decimal" setterAccessModifier="Public" isIdentity="false" scale="2" precision="7" />
+        <classAttribute name="AreaOutrosComum" type="Decimal" setterAccessModifier="Public" isIdentity="false" scale="2" precision="7" />
+        <classAttribute name="AreaOutrosTotal" type="Decimal" setterAccessModifier="Public" isIdentity="false" scale="2" precision="7" />
+        <classAttribute name="AreaTotalPrivativa" type="Decimal" setterAccessModifier="Public" isIdentity="false" scale="2" precision="7" />
+        <classAttribute name="AreaTotalComum" type="Decimal" setterAccessModifier="Public" isIdentity="false" scale="2" precision="7" />
+        <classAttribute name="AreaTotalAverbada" type="Decimal" setterAccessModifier="Public" isIdentity="false" scale="2" precision="7" />
+        <classAttribute name="AreaTotalNaoAverbada" type="Decimal" setterAccessModifier="Public" isIdentity="false" scale="2" precision="7" />
+        <classAttribute name="SomatorioAreas" type="Decimal" setterAccessModifier="Public" isIdentity="false" scale="2" precision="7" />
+        <classAttribute name="NumeroQuartos" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="NumeroSalas" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="NumeroCirculacao" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="NumeroBanheiros" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="NumeroSuites" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="NumeroCopas" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="NumeroCozinhas" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="NumeroAreasServico" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="NumeroVarandas" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="NumeroTerracosCobertos" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="NumeroTerracosDescobertos" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="UsoPredio" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="NumeroPavimentosPredio" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="NumeroElevadoresPredio" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="PosicaoPredio" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="PadraoConstrutivoPredio" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="EstadoConservacaoPredio" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="IdentificacaoPavimentosPredio" type="String" isNullable="true" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="IdadeAparentePredio" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="ValorAvaliacao" type="Decimal" setterAccessModifier="Public" isIdentity="false" scale="2" precision="17" />
+        <classAttribute name="ValorAvaliacaoExtenso" type="String" isNullable="true" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="MetodoDefinicaoValor" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="AreaGlobal" type="Decimal" setterAccessModifier="Public" isIdentity="false" scale="2" precision="7" />
+        <classAttribute name="ValorMetroQuadradoGlobal" type="Decimal" setterAccessModifier="Public" isIdentity="false" scale="2" precision="7" />
+        <classAttribute name="ValorTotalGlobal" type="Decimal" setterAccessModifier="Public" isIdentity="false" scale="2" precision="17" />
+        <classAttribute name="AreaTerreno" type="Decimal" setterAccessModifier="Public" isIdentity="false" scale="2" precision="7" />
+        <classAttribute name="AreaEdificacao" type="Decimal" setterAccessModifier="Public" isIdentity="false" scale="2" precision="7" />
+        <classAttribute name="AreaBenfeitorias" type="Decimal" setterAccessModifier="Public" isIdentity="false" scale="2" precision="7" />
+        <classAttribute name="ValorMetroQuadradoTerreno" type="Decimal" setterAccessModifier="Public" isIdentity="false" scale="2" precision="7" />
+        <classAttribute name="ValorMetroQuadradoEdificacao" type="Decimal" setterAccessModifier="Public" isIdentity="false" scale="2" precision="7" />
+        <classAttribute name="ValorMetroQuadradoBenfeitorias" type="Decimal" setterAccessModifier="Public" isIdentity="false" scale="2" precision="7" />
+        <classAttribute name="ProdutoTerreno" type="Decimal" setterAccessModifier="Public" isIdentity="false" scale="2" precision="7" />
+        <classAttribute name="ProdutoEdificacao" type="Decimal" setterAccessModifier="Public" isIdentity="false" scale="2" precision="7" />
+        <classAttribute name="ProdutoBenfeitorias" type="Decimal" setterAccessModifier="Public" isIdentity="false" scale="2" precision="7" />
+        <classAttribute name="ValorTotalItemizada" type="Decimal" setterAccessModifier="Public" isIdentity="false" scale="2" precision="17" />
+        <classAttribute name="PrecisaoFundamentacao" type="String" isNullable="true" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="MetodologiaAvaliacao" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="DesempenhoMercado" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="AbsorcaoMercado" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="NivelOfertas" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="NivelDemanda" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="ObservacoesAvaliacao" type="String" isNullable="true" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="EstabilidadeSolidez" type="Boolean" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="EstabilidadeSolidezJustificativa" type="String" isNullable="true" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="ViciosConstrucao" type="Boolean" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="ViciosConstrucaoRelacao" type="String" isNullable="true" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="Habitabilidade" type="Boolean" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="HabitabilidadeJustificativa" type="String" isNullable="true" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="FatoresLiquidezValorImovel" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="AceitoComoGarantia" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="MatriculaRGI" type="String" isNullable="true" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="Oficio" type="String" isNullable="true" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="OutrosDocumentos" type="String" isNullable="true" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="Conformidade" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="Divergencia" type="String" isNullable="true" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="ObservacoesFinais" type="String" isNullable="true" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="LocalEmissaoLaudo" type="String" isNullable="true" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="Referencia" type="String" isNullable="true" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="NumeroClosets" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="NumeroUnidadesPredio" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="Solicitante" type="String" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="FatoresLiquidezExplicitacao" type="String" isNullable="true" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+      </classAttributes>
+      <unidirectionalTargets>
+        <unidirectionalAssociation Id="fcadddc3-425f-4d28-855f-2bd8c2ccf0a9" sourceMultiplicity="One" targetMultiplicity="One" cascadeSourceEntitySave="false" isFkOnly="false" fetchEager="false" fkIncluded="false">
+          <modelClassMoniker name="//Imovel" />
+        </unidirectionalAssociation>
+        <unidirectionalAssociation Id="78bfc2e5-3c49-4a93-ba61-dc13d48e0b86" sourceRoleName="Comarca" targetMultiplicity="ZeroOne" isFkOnly="false" fetchEager="false" fkIncluded="false">
+          <modelClassMoniker name="//Cidade" />
+        </unidirectionalAssociation>
+        <unidirectionalAssociation Id="18d37f4a-d1f4-41a8-8f81-72c342788b3b" sourceRoleName="ResponsavelTecnico" targetMultiplicity="ZeroOne" isFkOnly="false" fetchEager="false" fkIncluded="false">
+          <modelClassMoniker name="//Usuario" />
+        </unidirectionalAssociation>
+        <unidirectionalAssociation Id="2b22872e-4d0d-4383-8206-9c46b3ce0c03" sourceRoleName="RepresentanteLegalEmpresa" targetMultiplicity="ZeroOne" isFkOnly="false" fetchEager="false" fkIncluded="false">
+          <modelClassMoniker name="//Usuario" />
+        </unidirectionalAssociation>
+      </unidirectionalTargets>
+      <bidirectionalTargets>
+        <bidirectionalAssociation Id="95e0b404-9fcb-4126-97f2-019f0c850025" sourceMultiplicity="One" sourceRoleName="ListaServicoPublicoComunitario" cascadeSourceEntityDelete="true" isFkOnly="false" fetchEager="false" fkIncluded="false" cascadeTargetEntitySave="false" cascadeTargetEntityDelete="false">
+          <modelClassMoniker name="//ServicoPublicoComunitario" />
+        </bidirectionalAssociation>
+        <bidirectionalAssociation Id="3d161deb-96b6-483f-abb1-93d3011e01b3" sourceMultiplicity="One" sourceRoleName="ListaInfraEstruturaUrbana" cascadeSourceEntityDelete="true" isFkOnly="false" fetchEager="false" fkIncluded="false" cascadeTargetEntitySave="false" cascadeTargetEntityDelete="false">
+          <modelClassMoniker name="//InfraEstruturaUrbana" />
+        </bidirectionalAssociation>
+      </bidirectionalTargets>
+    </modelClass>
+    <modelClass name="TipoLogradouro" isLookupTable="false">
+      <classAttributes>
+        <classAttribute name="TipoLogradouroID" isPrimaryKeyField="true" setterAccessModifier="Public" isIdentity="true" scale="0" precision="0" />
+        <classAttribute name="Sigla" type="String" length="4" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="Descricao" type="String" length="50" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+      </classAttributes>
+    </modelClass>
+    <modelClass name="Configuracao" isLookupTable="false">
+      <classAttributes>
+        <classAttribute name="ConfiguracaoId" isPrimaryKeyField="true" setterAccessModifier="Public" isIdentity="true" scale="0" precision="0" />
+        <classAttribute name="NomeEmpresa" type="String" isNullable="true" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="CNPJEmpresa" type="String" isNullable="true" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+      </classAttributes>
+    </modelClass>
+  </modelTypes>
+</modelRoot>
