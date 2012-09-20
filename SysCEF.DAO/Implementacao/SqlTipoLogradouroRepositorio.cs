@@ -18,7 +18,7 @@ namespace SysCEF.DAO.Implementacao
         public TipoLogradouro ObterPorSigla(IUnitOfWork unitOfWork, string sigla)
         {
             return PersistenceBroker.GetQueryable<TipoLogradouro>(unitOfWork)
-                .Where(p => p.Sigla.Contains(sigla))
+                .Where(p => p.Sigla.Equals(sigla))
                 .Select(p => p)
                 .SingleOrDefault();
         }

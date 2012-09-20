@@ -23,6 +23,7 @@ namespace SysCEF.Web.BusinessLogic
         //private const int PRAZO_EXECUCAO = 21;
         //private const int VALORES = 22;
         private const int SOLICITANTE = 31;
+        private const int SOLICITANTE2 = 32;
         // ReSharper restore InconsistentNaming
         #endregion
 
@@ -41,11 +42,13 @@ namespace SysCEF.Web.BusinessLogic
 
             var referencia = ObterTexto(linhasArquivo[REFERENCIA], 30);
 
+            var textoSolicitante = linhasArquivo[SOLICITANTE].Trim() + linhasArquivo[SOLICITANTE2].Trim();
+
             var laudo = LaudoRepository.ObterPorReferencia(UnitOfWork, referencia) ??
                         new Laudo
                             {
                                 Referencia = referencia,
-                                Solicitante = ObterSolicitante(linhasArquivo[SOLICITANTE]),
+                                Solicitante = ObterSolicitante(textoSolicitante),
                                 Produto = ObterNumero(linhasArquivo[PRODUTO], 3),
                                 Linha = ObterNumero(linhasArquivo[LINHA], 3),
                                 Fonte = ObterNumero(linhasArquivo[FONTE], 3),
@@ -75,7 +78,7 @@ namespace SysCEF.Web.BusinessLogic
         {
             var imovel = new Imovel
                        {
-                           TipoLogradouro = TipoLogradouroRepositorio.ObterPorSigla(UnitOfWork, ObterTexto(linhasArquivo[LOGRADOURO_ENDERECO], 3)),
+                           TipoLogradouro = TipoLogradouroRepositorio.ObterPorSigla(UnitOfWork, ExtrairTipoLogradouro(linhasArquivo[LOGRADOURO_ENDERECO])),
                            NomeCliente = ObterTexto(linhasArquivo[CLIENTE]),
                            IdentificacaoCliente = ObterTexto(linhasArquivo[IDENTIFICACAO_CLIENTE]),
                            Endereco = ObterEndereco(linhasArquivo[LOGRADOURO_ENDERECO]),
@@ -107,6 +110,16 @@ namespace SysCEF.Web.BusinessLogic
             return comprimento == 0 ? linha.Substring(indice).Trim() : linha.Substring(indice, comprimento).Trim();
         }
 
+        public string ExtrairTipoLogradouro(string linha)
+        {
+            var indice = linha.IndexOf(':') + 2;
+            var tipoLogradouro = linha.Substring(indice, 3).Trim();
+
+            var array = tipoLogradouro.Split(' ');
+
+            return array[0];
+        }
+
         public decimal ObterValor(string linha, int indice = 0, int comprimento = 0)
         {
             if (indice == 0)
@@ -127,9 +140,9 @@ namespace SysCEF.Web.BusinessLogic
             const string textoIndicativo = "COMPARECER NA ";
 
             var indice = linha.IndexOf(textoIndicativo, StringComparison.Ordinal) + textoIndicativo.Length;
-            
-            var solicitante = linha.Substring(indice).Trim();
 
+            var solicitante = linha.Substring(indice).Trim();
+            
             if (solicitante.IndexOf(',') > 0)
                 solicitante = solicitante.Remove(solicitante.IndexOf(','));
             

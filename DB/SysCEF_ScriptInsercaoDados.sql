@@ -1,5 +1,5 @@
 
-INSERT INTO [dbo].[Usuario] VALUES ('Usuário Root', 0, 'rootuser@sisurbe.com.br', '123', 0, null, null, 0)
+INSERT INTO [dbo].[Usuario] VALUES ('Amanda Makino', 0, 'amandamakino@sisurbe.com.br', '123', 0, null, null, 0)
 
 GO
 

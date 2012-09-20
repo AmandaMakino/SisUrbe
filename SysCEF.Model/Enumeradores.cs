@@ -74,7 +74,9 @@ namespace SysCEF.Model
     public enum EnumProduto
     {
         [Description("CARTA DE CRÉDITO INDIVIDUAL")]
-        CartaCreditoIndividual = 5
+        CartaCreditoIndividual = 5,
+        [Description("IMÓVEL COMERCIAL - PESSOA JURÍDICA")]
+        ImovelComercialPessoaJuridica = 122
     }
 
     public enum EnumLinha
@@ -86,7 +88,9 @@ namespace SysCEF.Model
     public enum EnumFonte
     {
         [Description("FGTS")]
-        FGTS = 9
+        FGTS = 9,
+        [Description("SBPE")]
+        SBPE = 29
     }
     #endregion
 
