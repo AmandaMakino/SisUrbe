@@ -38,11 +38,11 @@
                         <a onclick="SysCEF.SelecionarAba(0);">Importar OS</a> |
                         <a onclick="SysCEF.SelecionarAba(1);">Vistorias a fazer</a> |
                         <a onclick="SysCEF.SelecionarAba(2);">Laudos em andamento</a> |
-                        <a onclick="SysCEF.SelecionarAba(3);">Laudos concluídos</a> |
+                        <a onclick="SysCEF.SelecionarAba(3);">Laudos concluídos</a> 
                         @if (new UsuarioLogado().EAdministrador)
                         {
-                            @Html.Raw("<a onclick='SysCEF.SelecionarAba(4);'>Cadastro de usuários</a> | " +
-                                      "<a onclick='SysCEF.SelecionarAba(5);'>Configurações</a>");
+                            @Html.Raw("| <a onclick='SysCEF.SelecionarAba(4);'>Cadastro de usuários</a> " +
+                                      "| <a onclick='SysCEF.SelecionarAba(5);'>Configurações</a>");
                         }
                     </div>
                 </div>

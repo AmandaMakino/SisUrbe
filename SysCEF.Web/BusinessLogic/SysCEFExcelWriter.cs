@@ -114,18 +114,17 @@ namespace SysCEF.Web.BusinessLogic
                     #endregion
 
                     #region Caracterização da Região
-                    var oleObjects = (OLEObjects)WorksheetAtual.OLEObjects(Type.Missing);
+                    #region Usos Predominantes
+                    var usoPredominante = ((EnumUsosPredominantes)laudo.UsosPredominantes).ToString();
 
-                    foreach (OLEObject oleObject in oleObjects)
-                    {
+                    var objeto = (OLEObject)WorksheetAtual.OLEObjects(usoPredominante);
+                    if (objeto != null)
+                        objeto.Object.Value = 1;
+                    #endregion
+                    
+                    SelecionarServicosPublicos(laudo);
 
-                    }
-
-                    //laudo.UsosPredominantes = model.Laudo.UsosPredominantes;
-
-                    //RemoverOuAdicionarServicosPublicos(laudo, model);
-
-                    //RemoverOuAdicionarInfraEstruturaUrbana(laudo, model);
+                    SelecionarInfraEstruturasUrbanas(laudo);
                     #endregion
 
                     #region Terreno
@@ -250,19 +249,36 @@ namespace SysCEF.Web.BusinessLogic
                     #endregion
 
                     #region Informações Complementares
-                    //laudo.EstabilidadeSolidez = model.Laudo.EstabilidadeSolidez;
+                    SelecionarOpcao(laudo.EstabilidadeSolidez ? "EstSim" : "EstNao");
 
                     PreencherCampo("C12", "AH12", laudo.EstabilidadeSolidezJustificativa);
 
+                    SelecionarOpcao(laudo.ViciosConstrucao ? "VicioSim" : "VicioNao");
+
                     PreencherCampo("C17", "AH17", laudo.ViciosConstrucaoRelacao);
 
+                    SelecionarOpcao(laudo.Habitabilidade ? "HabitSim" : "HabitNao");
+
                     PreencherCampo("C22", "AH22", laudo.HabitabilidadeJustificativa);
+
+                    switch ((EnumFatoresLiquidezValorImovel)laudo.FatoresLiquidezValorImovel)
+                    {
+                        case EnumFatoresLiquidezValorImovel.Valorizantes:
+                            SelecionarOpcao("Val");
+                            break;
+                        case EnumFatoresLiquidezValorImovel.Desvalorizantes:
+                            SelecionarOpcao("Desval");
+                            break;
+                        case EnumFatoresLiquidezValorImovel.Nenhum:
+                            SelecionarOpcao("Nenh");
+                            break;
+                    }
 
                     PreencherCampo("C28", "AH28", laudo.FatoresLiquidezExplicitacao);
                     #endregion
 
                     #region Garantia, Documentação Apresentada e Observações
-                    //laudo.AceitoComoGarantia = (int)model.AceitoComoGarantia.SelectedValue;
+                    SelecionarOpcao(laudo.AceitoComoGarantia == 0 ? "GarSim" : "GarNao");
 
                     PreencherCampo("B37", "H37", laudo.MatriculaRGI);
                     PreencherCampo("I37", "S37", laudo.Oficio);
@@ -270,7 +286,8 @@ namespace SysCEF.Web.BusinessLogic
 
                     PreencherCampo("B40", "AH40", laudo.OutrosDocumentos);
 
-                    //laudo.Conformidade = (int)model.Conformidade.SelectedValue;
+                    SelecionarOpcao(laudo.Conformidade == 0 ? "DocSim" : "DocNao");
+
                     PreencherCampo("C45", "AH45", laudo.Divergencia);
 
                     PreencherCampo("C49", "AH59", laudo.ObservacoesFinais);
@@ -352,6 +369,36 @@ namespace SysCEF.Web.BusinessLogic
                 ExcluirArquivo();
                 throw;
             }
+        }
+
+        private void SelecionarOpcao(string opcao)
+        {
+            var objeto = (OLEObject)WorksheetAtual.OLEObjects(opcao);
+
+            if (objeto != null)
+                objeto.Object.Value = 1;
+        }
+
+        private void SelecionarInfraEstruturasUrbanas(Laudo laudo)
+        {
+            foreach (var infra in laudo.ListaInfraEstruturaUrbana)
+            {
+                var objeto = (OLEObject)WorksheetAtual.OLEObjects(((EnumInfraEstruturaUrbana)infra.TipoInfraEstruturaUrbana).ToString());
+
+                if (objeto != null)
+                    objeto.Object.Value = 1;
+            }           
+        }
+
+        private void SelecionarServicosPublicos(Laudo laudo)
+        {
+            foreach (var servico in laudo.ListaServicoPublicoComunitario)
+            {
+                var objeto = (OLEObject)WorksheetAtual.OLEObjects(((EnumServicoPublicoComunitario)servico.TipoServicoPublicoComunitario).ToString());
+
+                if (objeto != null)
+                    objeto.Object.Value = 1;
+            } 
         }
 
         private string ObterDivisaoInterna(Laudo laudo)

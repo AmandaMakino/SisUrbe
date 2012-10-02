@@ -1,0 +1,37 @@
+Características da Região
+ResUni
+ResMult
+Com
+Ind
+Ag
+Esg
+EE
+Tel
+Pav
+Plu
+Gas
+Il
+Lixo
+Tran
+Come
+ReBa
+Esco
+Saud
+Segu
+Laze
+
+
+Informações Complementares
+EstSim
+EstNao
+VicioSim
+VicioNao
+HabitSim
+HabitNao
+Val
+Desval
+Nenh
+GarSim
+GarNao
+DocSim
+DocNao

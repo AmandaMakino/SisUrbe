@@ -98,53 +98,53 @@ namespace SysCEF.Model
     public enum EnumUsosPredominantes
     {
         [Description("Comercial")]
-        Comercial = 0,
+        Com = 0,
         [Description("Industrial")]
-        Industrial = 1,
+        Ind = 1,
         [Description("Residencial Multifamiliar")]
-        ResidencialMultifamiliar = 2,
+        ResMult = 2,
         [Description("Residencial Unifamiliar")]
-        ResidencialUnifamiliar = 3
-    }
-
-    public enum EnumServicoPublicoComunitario
-    {
-        [Description("Coleta de Lixo")]
-        ColetaLixo = 0,
-        [Description("Transporte Coletivo")]
-        TransporteColetivo = 1,
-        [Description("Comércio")]
-        Comercio = 2,
-        [Description("Rede Bancária")]
-        RedeBancaria = 3,
-        [Description("Escola")]
-        Escola = 4,
-        [Description("Saúde")]
-        Saude = 5,
-        [Description("Segurança")]
-        Seguranca = 6,
-        [Description("Lazer")]
-        Lazer = 7
+        ResUni = 3
     }
 
     public enum EnumInfraEstruturaUrbana
     {
         [Description("Água")]
-        Agua = 0,
+        Ag = 0,
         [Description("Esgoto Sanitário")]
-        EsgotoSanitario = 1,
+        Esg = 1,
         [Description("Energia Elétrica")]
-        EnergiaEletrica = 2,
+        EE = 2,
         [Description("Telefone")]
-        Telefone = 3,
+        Tel = 3,
         [Description("Pavimentação")]
-        Pavimentacao = 4,
+        Pav = 4,
         [Description("Esgoto Pluvial")]
-        EsgotoPluvial = 5,
+        Plu = 5,
         [Description("Gás Canalizado")]
-        GasCanalizado = 6,
+        Gas = 6,
         [Description("Iluminação Pública")]
-        IluminacaoPublica = 7
+        Il = 7
+    }
+
+    public enum EnumServicoPublicoComunitario
+    {
+        [Description("Coleta de Lixo")]
+        Lixo = 0,
+        [Description("Transporte Coletivo")]
+        Tran = 1,
+        [Description("Comércio")]
+        Come = 2,
+        [Description("Rede Bancária")]
+        ReBa = 3,
+        [Description("Escola")]
+        Esco = 4,
+        [Description("Saúde")]
+        Saud = 5,
+        [Description("Segurança")]
+        Segu = 6,
+        [Description("Lazer")]
+        Laze = 7
     }
     #endregion
 
