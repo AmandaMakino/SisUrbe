@@ -97,10 +97,14 @@ namespace SysCEF.Web.BusinessLogic
                     #endregion
 
                     #region Identificação
-                    PreencherCampo("B12", "U12", EnumHelper.GetDescription((EnumProduto)laudo.Produto));
-                    PreencherCampo("W12", "AI12", EnumHelper.GetDescription((EnumLinha)laudo.Linha));
+                    if (laudo.Produto != null)
+                        PreencherCampo("B12", "U12", laudo.Produto.Descricao);
 
-                    PreencherCampo("B15", "U15", EnumHelper.GetDescription((EnumFonte)laudo.Fonte));
+                    if (laudo.Linha != null)
+                        PreencherCampo("W12", "AI12", laudo.Linha.Descricao);
+
+                    if (laudo.Fonte != null)
+                        PreencherCampo("B15", "U15", laudo.Fonte.Descricao);
 
                     PreencherCampo("B18", "U18", laudo.Imovel.NomeCliente);
                     PreencherCampo("W18", "AI18", laudo.Imovel.TipoLogradouro.Descricao);
@@ -324,10 +328,14 @@ namespace SysCEF.Web.BusinessLogic
                     #endregion
 
                     #region Identificação
-                    PreencherCampo("B10", "U10", EnumHelper.GetDescription((EnumProduto)laudo.Produto));
-                    PreencherCampo("W10", "AI10", EnumHelper.GetDescription((EnumLinha)laudo.Linha));
+                    if (laudo.Produto != null)
+                        PreencherCampo("B10", "U10", laudo.Produto.Descricao);
 
-                    PreencherCampo("B13", "U13", EnumHelper.GetDescription((EnumFonte)laudo.Fonte));
+                    if (laudo.Linha != null)
+                        PreencherCampo("W10", "AI10", laudo.Linha.Descricao);
+
+                    if (laudo.Fonte != null)
+                        PreencherCampo("B13", "U13", laudo.Fonte.Descricao);
 
                     PreencherCampo("B16", "U16", laudo.Imovel.NomeCliente);
                     PreencherCampo("W16", "AI16", laudo.Imovel.TipoLogradouro.Descricao);

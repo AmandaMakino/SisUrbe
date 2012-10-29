@@ -87,9 +87,9 @@ create table [Laudo]
 	[ComarcaID] int null,
 	[ResponsavelTecnicoID] int null,
 	[RepresentanteLegalEmpresaID] int null,
-	[Produto] int not null,
-	[Linha] int not null,
-	[Fonte] int not null,
+	[ProdutoID] int null,
+	[FonteID] int null,
+	[LinhaID] int null,
 	[Status] int not null,
 	[DataHoraVistoria] datetime null,
 	[UsosPredominantes] int not null,
@@ -218,4 +218,34 @@ create table [Configuracao]
 
 alter table [Configuracao]
 	add constraint [Configuracao_PK] primary key ([ConfiguracaoId])
+
+create table [Produto]
+(
+	[ProdutoID] int identity not null,
+	[Descricao] nvarchar(255) not null CONSTRAINT [DF_Produto_Descricao] DEFAULT '',
+	[__Version] int not null CONSTRAINT DF_Produto___Version DEFAULT 0
+)
+
+alter table [Produto]
+	add constraint [Produto_PK] primary key ([ProdutoID])
+
+create table [Fonte]
+(
+	[FonteID] int identity not null,
+	[Descricao] nvarchar(255) not null CONSTRAINT [DF_Fonte_Descricao] DEFAULT '',
+	[__Version] int not null CONSTRAINT DF_Fonte___Version DEFAULT 0
+)
+
+alter table [Fonte]
+	add constraint [Fonte_PK] primary key ([FonteID])
+
+create table [Linha]
+(
+	[LinhaID] int identity not null,
+	[Descricao] nvarchar(255) not null CONSTRAINT [DF_Linha_Descricao] DEFAULT '',
+	[__Version] int not null CONSTRAINT DF_Linha___Version DEFAULT 0
+)
+
+alter table [Linha]
+	add constraint [Linha_PK] primary key ([LinhaID])
 

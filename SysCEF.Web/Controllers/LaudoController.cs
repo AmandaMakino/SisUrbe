@@ -27,6 +27,9 @@ namespace SysCEF.Web.Controllers
         public ICidadeRepositorio CidadeRepositorio { get; set; }
         public IUsuarioRepositorio UsuarioRepositorio { get; set; }
         public IConfiguracaoRepositorio ConfiguracaoRepositorio { get; set; }
+        public IProdutoRepositorio ProdutoRepositorio { get; set; }
+        public ILinhaRepositorio LinhaRepositorio { get; set; }
+        public IFonteRepositorio FonteRepositorio { get; set; }
         #endregion
 
         #region Actions
@@ -43,7 +46,10 @@ namespace SysCEF.Web.Controllers
                 LaudoRepository = LaudoRepositorio,
                 TipoLogradouroRepositorio = TipoLogradouroRepositorio,
                 EstadoRepositorio = EstadoRepositorio,
-                CidadeRepositorio = CidadeRepositorio
+                CidadeRepositorio = CidadeRepositorio,
+                ProdutoRepositorio = ProdutoRepositorio,
+                LinhaRepositorio = LinhaRepositorio,
+                FonteRepositorio = FonteRepositorio
             };
 
             var path = System.Web.HttpContext.Current.Request.MapPath("~/Content/uploads/");
@@ -68,6 +74,20 @@ namespace SysCEF.Web.Controllers
             var laudos = BuscarLaudosPorStatus(status);
 
             return PartialView(new ListaLaudoViewModel(status, laudos, null));
+        }
+
+        public ActionResult ListaImportada()
+        {
+            var status = EnumStatusLaudo.Importado.ToString();
+            var laudos = BuscarLaudosPorStatus(status);
+            var opcoesHelper = new OpcoesHelper();
+
+            var model = new ListaLaudoViewModel(status, laudos, null)
+                {
+                    ListaResponsaveisTecnicos = opcoesHelper.ObterOpcoesResponsaveisTecnicos(UsuarioRepositorio.BuscarPorPerfil(WorkLifetimeManager.Value, EnumPerfil.UsuarioComum))
+                };
+
+            return PartialView(model);
         }
 
         public ActionResult Index(int id)
@@ -137,7 +157,40 @@ namespace SysCEF.Web.Controllers
 
         public ActionResult AtualizarAreasEdificacao(LaudoViewModel viewModel)
         {
-            return PartialView("SubAreasLaudo/AreasEdificacao", ObterAreasEdificacaoCalculadas(viewModel));
+            return PartialView("AreasEdificacao", ObterAreasEdificacaoCalculadas(viewModel));
+        }
+
+        public string Agendar(int idLaudo, string dataVistoria, string horaVistoria, int idResponsavelTecnico)
+        {
+            string mensagem;
+
+            WorkLifetimeManager.Value.BeginTransaction(IsolationLevel.Serializable);
+
+            try
+            {
+                var laudo = LaudoRepositorio.Obter(WorkLifetimeManager.Value, idLaudo);
+
+
+                laudo.DataHoraVistoria = ObterDataHora(dataVistoria, horaVistoria);
+
+                if (idResponsavelTecnico > 0)
+                    laudo.ResponsavelTecnico = UsuarioRepositorio.Obter(WorkLifetimeManager.Value, idResponsavelTecnico);
+
+                laudo.Status = (int) EnumStatusLaudo.AFazer;
+
+                LaudoRepositorio.Salvar(WorkLifetimeManager.Value, laudo);
+
+                WorkLifetimeManager.Value.Commit();
+
+                mensagem = "Operação efetuada com sucesso!";
+            }
+            catch (Exception ex)
+            {
+                WorkLifetimeManager.Value.Rollback();
+                mensagem = "Não foi possível efetuar alteração: " + ex.InnerException;
+            }
+
+            return mensagem;
         }
         #endregion
 
@@ -340,15 +393,26 @@ namespace SysCEF.Web.Controllers
                 laudo.RepresentanteLegalEmpresa = null;
             else if (laudo.RepresentanteLegalEmpresa == null || laudo.RepresentanteLegalEmpresa.UsuarioId != model.Laudo.RepresentanteLegalEmpresa.UsuarioId)
                 laudo.RepresentanteLegalEmpresa = UsuarioRepositorio.Obter(WorkLifetimeManager.Value, model.Laudo.RepresentanteLegalEmpresa.UsuarioId);
-
-            if (!string.IsNullOrEmpty(model.DataVistoria))
-                laudo.DataHoraVistoria = ObterDataHora(model.DataVistoria, model.HoraVistoria);
-
-            laudo.Status = model.Laudo.Status;
-
-            if (laudo.DataHoraVistoria.HasValue && laudo.ResponsavelTecnico != null && laudo.Status == (int)EnumStatusLaudo.Importado)
-                laudo.Status = (int)EnumStatusLaudo.AFazer;
             #endregion
+            
+            if (laudo.Status == (int) EnumStatusLaudo.AFazer)
+                VerificarStatusLaudo(laudo);
+        }
+
+        private void VerificarStatusLaudo(Laudo laudo)
+        {
+            if (laudo.ListaServicoPublicoComunitario != null && laudo.ListaServicoPublicoComunitario.Any() &&
+                laudo.ListaInfraEstruturaUrbana != null && laudo.ListaInfraEstruturaUrbana.Any() &&
+                laudo.MedidaAreaTerreno > 0 &&
+                laudo.FracaoIdealTerreno > 0 &&
+                laudo.SomatorioAreas > 0 &&
+                laudo.NumeroQuartos > 0 &&
+                laudo.NumeroSalas > 0 &&
+                laudo.NumeroBanheiros > 0 &&
+                laudo.NumeroCozinhas > 0)
+            {
+                laudo.Status = (int)EnumStatusLaudo.EmAndamento;
+            }
         }
 
         private string ExportarLaudo(Laudo laudo)
@@ -361,6 +425,22 @@ namespace SysCEF.Web.Controllers
             excelWriter.PreencherCampos(laudo);
 
             excelWriter.SalvarFecharArquivo();
+
+            WorkLifetimeManager.Value.BeginTransaction(IsolationLevel.Serializable);
+
+            try
+            {
+                laudo = LaudoRepositorio.Obter(WorkLifetimeManager.Value, laudo.LaudoID);
+                laudo.Status = (int)EnumStatusLaudo.Concluido;
+
+                LaudoRepositorio.Salvar(WorkLifetimeManager.Value, laudo);
+
+                WorkLifetimeManager.Value.Commit();
+            }
+            catch
+            {
+                WorkLifetimeManager.Value.Rollback();
+            }
 
             return excelWriter.NomeArquivo;
         }
@@ -403,9 +483,9 @@ namespace SysCEF.Web.Controllers
                     select new LaudoModel
                     {
                         LaudoId = laudo.LaudoID,
-                        Produto = EnumHelper.GetDescription((EnumProduto)laudo.Produto),
-                        Linha = EnumHelper.GetDescription((EnumLinha)laudo.Linha),
-                        Fonte = EnumHelper.GetDescription((EnumFonte)laudo.Fonte),
+                        Produto = laudo.Produto != null ? laudo.Produto.Descricao : string.Empty,
+                        Linha = laudo.Linha != null ? laudo.Linha.Descricao : string.Empty,
+                        Fonte = laudo.Fonte != null ? laudo.Fonte.Descricao : string.Empty,
                         NomeCliente = laudo.Imovel.NomeCliente,
                         SiglaLogradouro = laudo.Imovel.TipoLogradouro.Sigla,
                         Endereco = laudo.Imovel.Endereco,

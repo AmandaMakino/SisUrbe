@@ -19,6 +19,10 @@ namespace SysCEF.Web.BusinessLogic
         #endregion
 
         #region Construtor
+        public OpcoesHelper()
+        {
+        }
+
         public OpcoesHelper(Laudo laudo)
         {
             Laudo = laudo;
@@ -31,7 +35,7 @@ namespace SysCEF.Web.BusinessLogic
             return (from e in estados
                     select new SelectListItem
                     {
-                        Selected = e.EstadoID == Laudo.Imovel.Cidade.Estado.EstadoID,
+                        Selected = Laudo != null && e.EstadoID == Laudo.Imovel.Cidade.Estado.EstadoID,
                         Text = e.Nome.ToUpper(CultureInfo.InvariantCulture),
                         Value = e.EstadoID.ToString(CultureInfo.InvariantCulture)
                     }).ToList();
@@ -42,7 +46,7 @@ namespace SysCEF.Web.BusinessLogic
             var listaCidades = (from c in cidades
                                 select new SelectListItem
                                            {
-                                               Selected = c.CidadeID == Laudo.Imovel.Cidade.CidadeID,
+                                               Selected = Laudo != null && c.CidadeID == Laudo.Imovel.Cidade.CidadeID,
                                                Text = c.Nome.ToUpper(CultureInfo.InvariantCulture),
                                                Value = c.CidadeID.ToString(CultureInfo.InvariantCulture)
                                            }).ToList();
@@ -55,7 +59,7 @@ namespace SysCEF.Web.BusinessLogic
             return (from tl in tiposLogradouro
                     select new SelectListItem
                     {
-                        Selected = tl.TipoLogradouroID == Laudo.Imovel.TipoLogradouro.TipoLogradouroID,
+                        Selected = Laudo != null && tl.TipoLogradouroID == Laudo.Imovel.TipoLogradouro.TipoLogradouroID,
                         Text = tl.Descricao.ToUpper(CultureInfo.InvariantCulture),
                         Value = tl.TipoLogradouroID.ToString(CultureInfo.InvariantCulture)
                     }).ToList();
@@ -67,7 +71,7 @@ namespace SysCEF.Web.BusinessLogic
                          orderby u.Nome
                          select new SelectListItem
                                     {
-                                        Selected = Laudo.ResponsavelTecnico != null && u.UsuarioId == Laudo.ResponsavelTecnico.UsuarioId,
+                                        Selected = Laudo != null && Laudo.ResponsavelTecnico != null && u.UsuarioId == Laudo.ResponsavelTecnico.UsuarioId,
                                         Text = u.Nome,
                                         Value = u.UsuarioId.ToString(CultureInfo.InvariantCulture)
                                     }).ToList();
@@ -88,7 +92,7 @@ namespace SysCEF.Web.BusinessLogic
                          orderby u.Nome
                          select new SelectListItem
                          {
-                             Selected = Laudo.RepresentanteLegalEmpresa != null && u.UsuarioId == Laudo.RepresentanteLegalEmpresa.UsuarioId,
+                             Selected = Laudo != null && Laudo.RepresentanteLegalEmpresa != null && u.UsuarioId == Laudo.RepresentanteLegalEmpresa.UsuarioId,
                              Text = u.Nome,
                              Value = u.UsuarioId.ToString(CultureInfo.InvariantCulture)
                          }).ToList();

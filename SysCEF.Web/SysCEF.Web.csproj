@@ -70,6 +70,7 @@
         </ObjectGroup>
       </Objects>
     </PublishDatabaseSettings>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -154,6 +155,7 @@
     <Compile Include="BusinessLogic\SysCEFExcelWriter.cs" />
     <Compile Include="BusinessLogic\UploadOSHelper.cs" />
     <Compile Include="Controllers\ConfiguracoesController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\LaudoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -327,8 +329,9 @@
     <Content Include="Views\Usuario\Index.cshtml" />
     <Content Include="Views\Login\RedefinirSenha.cshtml" />
     <Content Include="Views\Configuracoes\Index.cshtml" />
-    <Content Include="Views\Shared\SubAreasLaudo\AreasEdificacao.cshtml" />
+    <Content Include="Views\Shared\AreasLaudo\AreasEdificacao.cshtml" />
     <Content Include="Content\uploads\Template.xls" />
+    <Content Include="Views\Laudo\ListaImportada.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="AMovie">

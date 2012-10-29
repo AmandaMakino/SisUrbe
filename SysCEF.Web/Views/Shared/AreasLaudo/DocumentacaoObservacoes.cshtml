@@ -44,19 +44,6 @@
                 <td colspan="2">@Html.TextBoxFor(m => m.Laudo.LocalEmissaoLaudo)</td>
                 <td>@Html.DropDownListFor(m => m.Laudo.RepresentanteLegalEmpresa.UsuarioId, Model.ListaRepresentantesLegais)</td>
             </tr>
-            <tr>
-                <td>Responsável Técnico</td>
-                <td style="width: 150px;">Data e Hora da Vistoria</td>
-                <td>Situação Laudo</td>
-            </tr>
-            <tr>
-                <td>@Html.DropDownListFor(m => m.Laudo.ResponsavelTecnico.UsuarioId, Model.ListaResponsaveisTecnicos)</td>
-                <td style="float: left;">
-                    @Html.TextBoxFor(m => m.DataVistoria, new Dictionary<string, object> { { "id", "dataVistoria"}, { "style", "width: 80px;" } })&nbsp;
-                    @Html.TextBoxFor(m => m.HoraVistoria, new Dictionary<string, object> { { "id", "horaVistoria"}, {"style", "width: 50px;" } })
-                </td>
-                <td>@Html.DropDownListFor(m => m.Laudo.Status, typeof(EnumStatusLaudo), Model.ListaStatusLaudo)</td>
-            </tr>
         </table>
     </li>
 </ul>

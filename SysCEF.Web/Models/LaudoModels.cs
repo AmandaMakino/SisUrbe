@@ -109,13 +109,13 @@ namespace SysCEF.Web.Models
         #endregion
 
         #region Documentação e Observações Finais
-        public List<SelectListItem> ListaComarcas { get; set; }
-        public RadioButtonList<EnumSimOuNao> Conformidade { get; set; }
         public string DataVistoria { get; set; }
         public string HoraVistoria { get; set; }
-        public List<SelectListItem> ListaResponsaveisTecnicos { get; set; }
+        public List<SelectListItem> ListaComarcas { get; set; }
+        public RadioButtonList<EnumSimOuNao> Conformidade { get; set; }
         public List<SelectListItem> ListaRepresentantesLegais { get; set; }
         public List<SelectListItem> ListaStatusLaudo { get; set; }
+        public List<SelectListItem> ListaResponsaveisTecnicos { get; set; }
         #endregion
     }
 
@@ -128,8 +128,13 @@ namespace SysCEF.Web.Models
             Mensagem = mensagem;
         }
 
+        public int IdLaudoSelecionado { get; set; }
+        public string DataVistoria { get; set; }
+        public string HoraVistoria { get; set; }
         public string StatusLaudos { get; set; }
-        public IEnumerable<LaudoModel> Laudos { get; set; }
         public string Mensagem { get; set; }
+        public Usuario ResponsavelTecnico { get; set; }
+        public List<SelectListItem> ListaResponsaveisTecnicos { get; set; }
+        public IEnumerable<LaudoModel> Laudos { get; set; }
     }
 }

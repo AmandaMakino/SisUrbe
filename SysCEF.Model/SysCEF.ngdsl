@@ -68,9 +68,6 @@
     <modelClass name="Laudo" isLookupTable="false">
       <classAttributes>
         <classAttribute name="LaudoID" isPrimaryKeyField="true" setterAccessModifier="Public" isIdentity="true" scale="0" precision="0" />
-        <classAttribute name="Produto" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
-        <classAttribute name="Linha" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
-        <classAttribute name="Fonte" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
         <classAttribute name="Status" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
         <classAttribute name="DataHoraVistoria" type="DateTime" isNullable="true" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
         <classAttribute name="UsosPredominantes" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
@@ -174,7 +171,7 @@
         <classAttribute name="FatoresLiquidezExplicitacao" type="String" isNullable="true" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
       </classAttributes>
       <unidirectionalTargets>
-        <unidirectionalAssociation Id="fcadddc3-425f-4d28-855f-2bd8c2ccf0a9" sourceMultiplicity="One" targetMultiplicity="One" cascadeSourceEntitySave="false" isFkOnly="false" fetchEager="false" fkIncluded="false">
+        <unidirectionalAssociation Id="fcadddc3-425f-4d28-855f-2bd8c2ccf0a9" sourceMultiplicity="One" targetMultiplicity="One" isFkOnly="false" fetchEager="false" fkIncluded="false">
           <modelClassMoniker name="//Imovel" />
         </unidirectionalAssociation>
         <unidirectionalAssociation Id="78bfc2e5-3c49-4a93-ba61-dc13d48e0b86" sourceRoleName="Comarca" targetMultiplicity="ZeroOne" isFkOnly="false" fetchEager="false" fkIncluded="false">
@@ -185,6 +182,15 @@
         </unidirectionalAssociation>
         <unidirectionalAssociation Id="2b22872e-4d0d-4383-8206-9c46b3ce0c03" sourceRoleName="RepresentanteLegalEmpresa" targetMultiplicity="ZeroOne" isFkOnly="false" fetchEager="false" fkIncluded="false">
           <modelClassMoniker name="//Usuario" />
+        </unidirectionalAssociation>
+        <unidirectionalAssociation Id="e88a59ed-427a-4e45-a643-cb7c99cef32e" targetMultiplicity="ZeroOne" isFkOnly="false" fetchEager="false" fkIncluded="false">
+          <modelClassMoniker name="//Produto" />
+        </unidirectionalAssociation>
+        <unidirectionalAssociation Id="0592325b-a9e5-4542-a04a-6c1eed0acf0a" targetMultiplicity="ZeroOne" isFkOnly="false" fetchEager="false" fkIncluded="false">
+          <modelClassMoniker name="//Fonte" />
+        </unidirectionalAssociation>
+        <unidirectionalAssociation Id="d4694e94-060e-4e31-b7cf-0089861f102e" targetMultiplicity="ZeroOne" isFkOnly="false" fetchEager="false" fkIncluded="false">
+          <modelClassMoniker name="//Linha" />
         </unidirectionalAssociation>
       </unidirectionalTargets>
       <bidirectionalTargets>
@@ -208,6 +214,24 @@
         <classAttribute name="ConfiguracaoId" isPrimaryKeyField="true" setterAccessModifier="Public" isIdentity="true" scale="0" precision="0" />
         <classAttribute name="NomeEmpresa" type="String" isNullable="true" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
         <classAttribute name="CNPJEmpresa" type="String" isNullable="true" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+      </classAttributes>
+    </modelClass>
+    <modelClass name="Produto" isLookupTable="false">
+      <classAttributes>
+        <classAttribute name="ProdutoID" isPrimaryKeyField="true" setterAccessModifier="Public" isIdentity="true" scale="0" precision="0" />
+        <classAttribute name="Descricao" type="String" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+      </classAttributes>
+    </modelClass>
+    <modelClass name="Fonte" isLookupTable="false">
+      <classAttributes>
+        <classAttribute name="FonteID" isPrimaryKeyField="true" setterAccessModifier="Public" isIdentity="true" scale="0" precision="0" />
+        <classAttribute name="Descricao" type="String" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+      </classAttributes>
+    </modelClass>
+    <modelClass name="Linha" isLookupTable="false">
+      <classAttributes>
+        <classAttribute name="LinhaID" isPrimaryKeyField="true" setterAccessModifier="Public" isIdentity="true" scale="0" precision="0" />
+        <classAttribute name="Descricao" type="String" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
       </classAttributes>
     </modelClass>
   </modelTypes>

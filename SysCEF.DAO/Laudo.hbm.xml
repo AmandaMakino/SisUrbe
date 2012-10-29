@@ -15,9 +15,6 @@
 			<generator class="identity" />
 		</id>
 		<version column="__Version" name="__Version" type="Int32" access="field" unsaved-value="0"/>
-		<property name="Produto" column="Produto" type="Int32" />
-		<property name="Linha" column="Linha" type="Int32" />
-		<property name="Fonte" column="Fonte" type="Int32" />
 		<property name="Status" column="Status" type="Int32" />
 		<property name="DataHoraVistoria" column="DataHoraVistoria" type="DateTime" />
 		<property name="UsosPredominantes" column="UsosPredominantes" type="Int32" />
@@ -123,6 +120,9 @@
 		<many-to-one fetch="join" name="Comarca" column="ComarcaID" class="SysCEF.Model.Cidade, SysCEF.Model" lazy="false" cascade="save-update"></many-to-one>
 		<many-to-one fetch="join" name="ResponsavelTecnico" column="ResponsavelTecnicoID" class="SysCEF.Model.Usuario, SysCEF.Model" lazy="false" cascade="save-update"></many-to-one>
 		<many-to-one fetch="join" name="RepresentanteLegalEmpresa" column="RepresentanteLegalEmpresaID" class="SysCEF.Model.Usuario, SysCEF.Model" lazy="false" cascade="save-update"></many-to-one>
+		<many-to-one fetch="join" name="Produto" column="ProdutoID" class="SysCEF.Model.Produto, SysCEF.Model" lazy="false" cascade="save-update"></many-to-one>
+		<many-to-one fetch="join" name="Fonte" column="FonteID" class="SysCEF.Model.Fonte, SysCEF.Model" lazy="false" cascade="save-update"></many-to-one>
+		<many-to-one fetch="join" name="Linha" column="LinhaID" class="SysCEF.Model.Linha, SysCEF.Model" lazy="false" cascade="save-update"></many-to-one>
 		<bag name="ListaServicoPublicoComunitario" table="[ServicoPublicoComunitario]" lazy="true" cascade="all-delete-orphan" inverse="true">
 			<key column="LaudoID"></key>
 			<one-to-many class="SysCEF.Model.ServicoPublicoComunitario, SysCEF.Model"/>

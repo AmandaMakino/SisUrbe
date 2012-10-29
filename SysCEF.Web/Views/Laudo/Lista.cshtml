@@ -10,12 +10,14 @@
 
 @if (!string.IsNullOrEmpty(Model.Mensagem))
 {
-    <div class="mensagem">OS importada com sucesso!</div>
+    <div class="mensagem">@Model.Mensagem</div>
 }
 
 <table class="SysCEF-table">
     <tr>
-        <th></th>       
+        <th></th>   
+        <th>Data Hora Vistoria</th>
+        <th>Responsavel Técnico</th>    
         <th>Produto</th>
         <th>Linha </th>
         <th>Fonte </th>
@@ -23,14 +25,9 @@
         <th>Endereco</th>
         <th>Bairro</th>
         <th>Cidade / UF</th>
-        @{
-            if (Model.StatusLaudos != EnumStatusLaudo.Importado.ToString())
-            {
-                <th>Data Hora Vistoria</th>
-                <th>Responsavel Técnico</th>
-            }
 
-            if (Model.StatusLaudos == EnumStatusLaudo.Concluido.ToString())
+        @{            
+            if (Model.StatusLaudos == EnumStatusLaudo.EmAndamento.ToString())
             {
                 <th></th>
             }
@@ -46,6 +43,8 @@
                 <td style="width: 25px; text-align: center;">
                     <a onclick="SysCEF.Editar('@Url.Action("Index", "Laudo")', @item.LaudoId)">Editar</a>
                 </td>                  
+                <td style="min-width: 120px; background-color: #F2CA27;">@item.DataHoraVistoria</td>
+                <td>@item.ResponsavelTecnico</td>
                 <td>@item.Produto</td>
                 <td>@item.Linha</td>
                 <td>@item.Fonte</td>
@@ -54,22 +53,16 @@
                 <td>@item.Bairro</td>
                 <td style="min-width: 120px;">@(item.Cidade + " / " + item.UF)</td>
                 
-                @{
-            if (item.Status != EnumStatusLaudo.Importado.ToString())
+            @{
+            if (Model.StatusLaudos == EnumStatusLaudo.EmAndamento.ToString() || Model.StatusLaudos == EnumStatusLaudo.Concluido.ToString())
             {
-                        <td style="min-width: 120px;">@item.DataHoraVistoria</td>
-                        <td>@item.ResponsavelTecnico</td>
+                <td style="width: 25px; text-align: center;">
+                    <a onclick="SysCEF.Exportar('@Url.Action("Exportar", new { id = item.LaudoId })', '@Url.Content("~/Content/uploads/")');" title="Exportar Laudo">
+                        <img alt="Exportar Laudo" src="@Url.Content("~/Content/images/exportar.png")"/>
+                    </a>
+                </td>
+            }       
             }
-
-            if (Model.StatusLaudos == EnumStatusLaudo.Concluido.ToString())
-            {
-                        <td style="width: 25px; text-align: center;">
-                            <a onclick="SysCEF.Exportar('@Url.Action("Exportar", new { id = item.LaudoId })', '@Url.Content("~/Content/uploads/")');" title="Exportar Laudo">
-                                <img alt="Exportar Laudo" src="@Url.Content("~/Content/images/exportar.png")"/>
-                            </a>
-                        </td>
-            }
-                }
             </tr>
             i++;
         }

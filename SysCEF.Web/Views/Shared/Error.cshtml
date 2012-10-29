@@ -1,9 +1,15 @@
 ﻿@model System.Web.Mvc.HandleErrorInfo
 
 @{
-    ViewBag.Title = "Error";
+    ViewBag.Title = "Erro";
 }
 
 <h2>
-    Desculpe, um erro aconteceu enquanto processávamos o seu pedido. Aguarde um instante e tente novamente.
+    Desculpe, um erro ocorreu enquanto processávamos o pedido. Aguarde um instante e tente novamente.
 </h2>
+
+@if (Model != null)
+{
+    <p>@Model.Exception.GetType().Name<br />
+    thrown in @Model.ControllerName @Model.ActionName</p>
+}

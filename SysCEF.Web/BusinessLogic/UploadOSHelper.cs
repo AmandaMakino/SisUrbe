@@ -33,6 +33,9 @@ namespace SysCEF.Web.BusinessLogic
         public ITipoLogradouroRepositorio TipoLogradouroRepositorio { get; set; }
         public IEstadoRepositorio EstadoRepositorio { get; set; }
         public ICidadeRepositorio CidadeRepositorio { get; set; }
+        public IProdutoRepositorio ProdutoRepositorio { get; set; }
+        public ILinhaRepositorio LinhaRepositorio { get; set; }
+        public IFonteRepositorio FonteRepositorio { get; set; }
         #endregion
 
         #region Métodos Públicos
@@ -49,25 +52,23 @@ namespace SysCEF.Web.BusinessLogic
                             {
                                 Referencia = referencia,
                                 Solicitante = ObterSolicitante(textoSolicitante),
-                                Produto = ObterNumero(linhasArquivo[PRODUTO], 3),
-                                Linha = ObterNumero(linhasArquivo[LINHA], 3),
-                                Fonte = ObterNumero(linhasArquivo[FONTE], 3),
+                                Produto = ProdutoRepositorio.Obter(UnitOfWork, ObterNumero(linhasArquivo[PRODUTO], 3)),
+                                Linha = LinhaRepositorio.Obter(UnitOfWork, ObterNumero(linhasArquivo[LINHA], 3)),
+                                Fonte = FonteRepositorio.Obter(UnitOfWork, ObterNumero(linhasArquivo[FONTE], 3)),
                                 Status = (int) EnumStatusLaudo.Importado,
                                 FormaTerreno = (int) EnumFormaTerreno.Retangular,
                                 InclinacaoTerreno = (int) EnumInclinacaoTerreno.Plano,
                                 SituacaoTerreno = (int) EnumSituacaoTerreno.MeioQuadra,
                                 SuperficieTerreno = (int) EnumSuperficieTerreno.Seco,
                                 FracaoIdealTerreno = 0.000000f,
-                                NumeroQuartos = 1,
-                                NumeroBanheiros = 1,
-                                NumeroCozinhas = 1,
-                                NumeroSalas = 1,
                                 AceitoComoGarantia = (int) EnumSimOuNao.Sim,
                                 Conformidade = (int)EnumSimOuNao.Sim,
                                 EstabilidadeSolidez = true,
                                 Habitabilidade = true,
                                 FatoresLiquidezValorImovel = (int) EnumFatoresLiquidezValorImovel.Nenhum
                             };
+
+            laudo.Produto = ProdutoRepositorio.Obter(UnitOfWork, ObterNumero(linhasArquivo[PRODUTO], 3));
 
             laudo.Imovel = GerarImovelAPartirArquivo(linhasArquivo);
 

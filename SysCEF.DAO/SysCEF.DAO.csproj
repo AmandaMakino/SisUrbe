@@ -63,6 +63,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DependencyConfigurator.cs" />
+    <Compile Include="Implementacao\SqlFonteRepositorio.cs" />
+    <Compile Include="Implementacao\SqlLinhaRepositorio.cs" />
+    <Compile Include="Implementacao\SqlProdutoRepositorio.cs" />
     <Compile Include="Implementacao\SqlConfiguracaoRepositorio.cs" />
     <Compile Include="Implementacao\SqlCidadeRepositorio.cs" />
     <Compile Include="Implementacao\SqlEstadoRepositorio.cs" />
@@ -70,6 +73,9 @@
     <Compile Include="Implementacao\SqlLaudoRepositorio.cs" />
     <Compile Include="Implementacao\SqlImovelRepositorio.cs" />
     <Compile Include="Implementacao\SqlUsuarioRepositorio.cs" />
+    <Compile Include="Interface\IFonteRepositorio.cs" />
+    <Compile Include="Interface\ILinhaRepositorio.cs" />
+    <Compile Include="Interface\IProdutoRepositorio.cs" />
     <Compile Include="Interface\IConfiguracaoRepositorio.cs" />
     <Compile Include="Interface\IUsuarioRepositorio.cs" />
     <Compile Include="Interface\ICidadeRepositorio.cs" />
@@ -123,6 +129,15 @@
       <DependentUpon>HBM.tt</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Configuracao.hbm.xml">
+      <DependentUpon>HBM.tt</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Produto.hbm.xml">
+      <DependentUpon>HBM.tt</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fonte.hbm.xml">
+      <DependentUpon>HBM.tt</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Linha.hbm.xml">
       <DependentUpon>HBM.tt</DependentUpon>
     </EmbeddedResource>
     <Content Include="SysCEF.ddl">

@@ -60,15 +60,6 @@ namespace SysCEF.Model
 		public virtual int LaudoID { get; set; }
 
 		[DataMember]
-		public virtual int Produto { get; set; }
-
-		[DataMember]
-		public virtual int Linha { get; set; }
-
-		[DataMember]
-		public virtual int Fonte { get; set; }
-
-		[DataMember]
 		public virtual int Status { get; set; }
 
 		[DataMember]
@@ -382,6 +373,15 @@ namespace SysCEF.Model
 
 		[DataMember]
 		public virtual Usuario RepresentanteLegalEmpresa { get; set; }
+
+		[DataMember]
+		public virtual Produto Produto { get; set; }
+
+		[DataMember]
+		public virtual Fonte Fonte { get; set; }
+
+		[DataMember]
+		public virtual Linha Linha { get; set; }
 
 		[DataMember]
 		public virtual IList<ServicoPublicoComunitario> ListaServicoPublicoComunitario  { get; set; }

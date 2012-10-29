@@ -15,6 +15,14 @@ namespace SysCEF.Web
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
+            filters.Add(new HandleErrorAttribute
+            {
+                ExceptionType = typeof(InvalidOperationException),
+                // Error.cshtml is a view in the Shared folder.
+                View = "Error",
+                Order = 1
+            });
+
             filters.Add(new HandleErrorAttribute());
         }
 

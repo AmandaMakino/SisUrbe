@@ -71,6 +71,9 @@
     <Compile Include="Estado.cs">
       <DependentUpon>SysCEF.ngdsl</DependentUpon>
     </Compile>
+    <Compile Include="Fonte.cs">
+      <DependentUpon>SysCEF.ngdsl</DependentUpon>
+    </Compile>
     <Compile Include="Imovel.cs">
       <DependentUpon>SysCEF.ngdsl</DependentUpon>
     </Compile>
@@ -78,6 +81,12 @@
       <DependentUpon>SysCEF.ngdsl</DependentUpon>
     </Compile>
     <Compile Include="Laudo.cs">
+      <DependentUpon>SysCEF.ngdsl</DependentUpon>
+    </Compile>
+    <Compile Include="Linha.cs">
+      <DependentUpon>SysCEF.ngdsl</DependentUpon>
+    </Compile>
+    <Compile Include="Produto.cs">
       <DependentUpon>SysCEF.ngdsl</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

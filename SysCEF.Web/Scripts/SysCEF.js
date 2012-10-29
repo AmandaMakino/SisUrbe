@@ -198,8 +198,6 @@ SysCEF.Exportar = function (exportarUrl, uploadsUrl) {
 };
 
 SysCEF.FazerDownload = function (downloadUrl) {
-    //    $("#linkDownload").attr("href", downloadUrl);
-    //    $("#linkDownload").click();
     document.location.href = downloadUrl;
 
     // Esconde o dialog.
@@ -379,5 +377,39 @@ SysCEF.ConfigurarConfiguracoes = function (salvarConfiguracoesUrl) {
                 $("#formConfiguracao").find("#mensagem").delay(1000).fadeOut("slow");
             }
         });
+    });
+};
+
+SysCEF.Agendar = function (agendarUrl, id) {
+
+    $("input:button").button();
+
+    $('#dataVistoria').mask("99/99/9999", { placeholder: "_" });
+    $('#horaVistoria').mask("99:99", { placeholder: "_" });
+
+    $("#agendarBackground").css("display", "block");
+    $("#agendarBody").css("display", "block");
+
+    $('#dataVistoria').focus();
+
+    $("#salvarAgendamento").click(function () {
+        var url = agendarUrl + "?idLaudo=" + id + "&dataVistoria=" + $("#dataVistoria").val() + "&horaVistoria=" + $("#horaVistoria").val() + "&idResponsavelTecnico=" + $("#responsavelTecnico").val();
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            success: function (resultado) {
+                $("#agendarBackground").css("display", "none");
+                $("#agendarBody").css("display", "none");
+                alert(resultado);
+
+                location.reload();
+            }
+        });
+    });
+
+    $("#cancelarAgendamento").click(function () {
+        $("#agendarBackground").css("display", "none");
+        $("#agendarBody").css("display", "none");
     });
 };

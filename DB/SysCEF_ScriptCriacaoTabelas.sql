@@ -88,9 +88,9 @@ create table [Laudo]
 	[ComarcaID] int null,
 	[ResponsavelTecnicoID] int null,
 	[RepresentanteLegalEmpresaID] int null,
-	[Produto] int not null,
-	[Linha] int not null,
-	[Fonte] int not null,
+	[ProdutoID] int null,
+	[FonteID] int null,
+	[LinhaID] int null,
 	[Status] int not null,
 	[DataHoraVistoria] datetime null,
 	[UsosPredominantes] int not null,
@@ -208,7 +208,6 @@ create table [TipoLogradouro]
 
 alter table [TipoLogradouro]
 	add constraint [TipoLogradouro_PK] primary key ([TipoLogradouroID])
-	
 
 create table [Configuracao]
 (
@@ -221,6 +220,36 @@ create table [Configuracao]
 alter table [Configuracao]
 	add constraint [Configuracao_PK] primary key ([ConfiguracaoId])
 
+create table [Produto]
+(
+	[ProdutoID] int identity not null,
+	[Descricao] nvarchar(255) not null CONSTRAINT [DF_Produto_Descricao] DEFAULT '',
+	[__Version] int not null CONSTRAINT DF_Produto___Version DEFAULT 0
+)
+
+alter table [Produto]
+	add constraint [Produto_PK] primary key ([ProdutoID])
+
+create table [Fonte]
+(
+	[FonteID] int identity not null,
+	[Descricao] nvarchar(255) not null CONSTRAINT [DF_Fonte_Descricao] DEFAULT '',
+	[__Version] int not null CONSTRAINT DF_Fonte___Version DEFAULT 0
+)
+
+alter table [Fonte]
+	add constraint [Fonte_PK] primary key ([FonteID])
+
+create table [Linha]
+(
+	[LinhaID] int identity not null,
+	[Descricao] nvarchar(255) not null CONSTRAINT [DF_Linha_Descricao] DEFAULT '',
+	[__Version] int not null CONSTRAINT DF_Linha___Version DEFAULT 0
+)
+
+alter table [Linha]
+	add constraint [Linha_PK] primary key ([LinhaID])
+
 -- Chaves estrangeiras:
 alter table [Imovel] add constraint [FK_Imovel_Cidade] foreign key ([CidadeID]) references [Cidade] ([CidadeID])
 alter table [Imovel] add constraint [FK_Imovel_TipoLogradouro] foreign key ([TipoLogradouroID]) references [TipoLogradouro] ([TipoLogradouroID])
@@ -231,6 +260,9 @@ alter table [Laudo] add constraint [FK_Laudo_Imovel] foreign key ([ImovelID]) re
 alter table [Laudo] add constraint [FK_Laudo_Comarca] foreign key ([ComarcaID]) references [Cidade] ([CidadeID])
 alter table [Laudo] add constraint [FK_Laudo_ResponsavelTecnico] foreign key ([ResponsavelTecnicoID]) references [Usuario] ([UsuarioId])
 alter table [Laudo] add constraint [FK_Laudo_RepresentanteLegalEmpresa] foreign key ([RepresentanteLegalEmpresaID]) references [Usuario] ([UsuarioId])
+alter table [Laudo] add constraint [FK_Laudo_Produto] foreign key ([ProdutoID]) references [Produto] ([ProdutoID])
+alter table [Laudo] add constraint [FK_Laudo_Fonte] foreign key ([FonteID]) references [Fonte] ([FonteID])
+alter table [Laudo] add constraint [FK_Laudo_Linha] foreign key ([LinhaID]) references [Linha] ([LinhaID])
 
 -- Índices:
 create index IX_ServicoPublicoComunitario_LaudoID on [ServicoPublicoComunitario] ([LaudoID])
