@@ -5,6 +5,7 @@ SysCEF.AbaAtual = '#Importado';
 SysCEF.AjaxLoaderUrl = '';
 SysCEF.CaminhoImportarOS = '';
 SysCEF.CaminhoListaLaudos = '';
+SysCEF.CaminhoListaLaudosImportados = '';
 SysCEF.CaminhoCadastroUsuarios = '';
 SysCEF.CaminhoBancoImoveis = '';
 SysCEF.CaminhoConfiguracoes = '';
@@ -148,7 +149,7 @@ SysCEF.ConfigurarUpload = function () {
         'onComplete': function(){
             $.ajax({
                 type: 'GET',
-                url: SysCEF.CaminhoListaLaudos,
+                url: SysCEF.CaminhoListaLaudosImportados,
                 success: function (result) {
                     $("#listaOSs").html(result);
 
