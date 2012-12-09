@@ -388,7 +388,6 @@ namespace SysCEF.Model
 
 		[DataMember]
 		public virtual IList<InfraEstruturaUrbana> ListaInfraEstruturaUrbana  { get; set; }
-
 		#endregion Properties
 
 		#region Object Overrides

@@ -49,24 +49,24 @@ namespace SysCEF.Web.BusinessLogic
 
             var laudo = LaudoRepository.ObterPorReferencia(UnitOfWork, referencia) ??
                         new Laudo
-                            {
-                                Referencia = referencia,
-                                Solicitante = ObterSolicitante(textoSolicitante),
-                                Produto = ProdutoRepositorio.Obter(UnitOfWork, ObterNumero(linhasArquivo[PRODUTO], 3)),
-                                Linha = LinhaRepositorio.Obter(UnitOfWork, ObterNumero(linhasArquivo[LINHA], 3)),
-                                Fonte = FonteRepositorio.Obter(UnitOfWork, ObterNumero(linhasArquivo[FONTE], 3)),
-                                Status = (int) EnumStatusLaudo.Importado,
-                                FormaTerreno = (int) EnumFormaTerreno.Retangular,
-                                InclinacaoTerreno = (int) EnumInclinacaoTerreno.Plano,
-                                SituacaoTerreno = (int) EnumSituacaoTerreno.MeioQuadra,
-                                SuperficieTerreno = (int) EnumSuperficieTerreno.Seco,
-                                FracaoIdealTerreno = 0.000000f,
-                                AceitoComoGarantia = (int) EnumSimOuNao.Sim,
-                                Conformidade = (int)EnumSimOuNao.Sim,
-                                EstabilidadeSolidez = true,
-                                Habitabilidade = true,
-                                FatoresLiquidezValorImovel = (int) EnumFatoresLiquidezValorImovel.Nenhum
-                            };
+                        {
+                            Referencia = referencia,
+                            Solicitante = ObterSolicitante(textoSolicitante),
+                            Produto = ProdutoRepositorio.Obter(UnitOfWork, ObterNumero(linhasArquivo[PRODUTO], 3)),
+                            Linha = LinhaRepositorio.Obter(UnitOfWork, ObterNumero(linhasArquivo[LINHA], 3)),
+                            Fonte = FonteRepositorio.Obter(UnitOfWork, ObterNumero(linhasArquivo[FONTE], 3)),
+                            Status = (int)EnumStatusLaudo.Importado,
+                            FormaTerreno = (int)EnumFormaTerreno.Retangular,
+                            InclinacaoTerreno = (int)EnumInclinacaoTerreno.Plano,
+                            SituacaoTerreno = (int)EnumSituacaoTerreno.MeioQuadra,
+                            SuperficieTerreno = (int)EnumSuperficieTerreno.Seco,
+                            FracaoIdealTerreno = 0.000000f,
+                            AceitoComoGarantia = (int)EnumSimOuNao.Sim,
+                            Conformidade = (int)EnumSimOuNao.Sim,
+                            EstabilidadeSolidez = true,
+                            Habitabilidade = true,
+                            FatoresLiquidezValorImovel = (int)EnumFatoresLiquidezValorImovel.Nenhum
+                        };
 
             laudo.Produto = ProdutoRepositorio.Obter(UnitOfWork, ObterNumero(linhasArquivo[PRODUTO], 3));
 
@@ -92,6 +92,7 @@ namespace SysCEF.Web.BusinessLogic
             PreencherCidadeUF(linhasArquivo[CIDADE_UF], imovel);
 
             return imovel;
+
         }
 
         public int ObterNumero(string linha, int comprimento = 0)
@@ -143,10 +144,10 @@ namespace SysCEF.Web.BusinessLogic
             var indice = linha.IndexOf(textoIndicativo, StringComparison.Ordinal) + textoIndicativo.Length;
 
             var solicitante = linha.Substring(indice).Trim();
-            
+
             if (solicitante.IndexOf(',') > 0)
                 solicitante = solicitante.Remove(solicitante.IndexOf(','));
-            
+
             return solicitante.Replace(".", string.Empty);
         }
 
@@ -174,7 +175,7 @@ namespace SysCEF.Web.BusinessLogic
             if (cidadeEstadoArray.Length != 2) return;
 
             imovel.Cidade = CidadeRepositorio.ObterPorNomeUF(UnitOfWork, cidadeEstadoArray[0].Trim(), cidadeEstadoArray[1].Trim());
-            
+
             if (imovel.Cidade == null)
                 throw new InvalidOperationException(string.Format("Não foi possível encontrar a cidade '{0}'", cidadeEstadoTexto));
         }

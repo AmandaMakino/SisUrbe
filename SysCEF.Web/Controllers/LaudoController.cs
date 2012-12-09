@@ -58,12 +58,19 @@ namespace SysCEF.Web.Controllers
 
             fileData.SaveAs(fileName); // Salva OS na pasta de Uploads do Servidor.
 
-            var laudo = uploadHelper.GerarLaudoAPartirArquivo(fileName);
+            try
+            {
+                var laudo = uploadHelper.GerarLaudoAPartirArquivo(fileName);
 
-            LaudoRepositorio.Salvar(WorkLifetimeManager.Value, laudo);
-            WorkLifetimeManager.Value.Commit();
+                LaudoRepositorio.Salvar(WorkLifetimeManager.Value, laudo);
+                WorkLifetimeManager.Value.Commit();
 
-            return "Arquivo importado com sucesso!";
+                return "Arquivo importado com sucesso!";
+            }
+            catch
+            {
+                return "Não foi possível importar o arquivo. Verifique-o e tente novamente!";
+            }
         }
 
         public ActionResult Lista(string status)
