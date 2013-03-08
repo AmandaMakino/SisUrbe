@@ -11,8 +11,9 @@ using Core;
 using SysCEF.Common.Interface;
 using SysCEF.DAO.Interface;
 using SysCEF.Model;
-using SysCEF.Web.BusinessLogic;
+using SysCEF.Web.Helpers;
 using SysCEF.Web.Models;
+using System.Text;
 
 namespace SysCEF.Web.Controllers
 {
@@ -412,31 +413,31 @@ namespace SysCEF.Web.Controllers
                 laudo.ListaInfraEstruturaUrbana != null && laudo.ListaInfraEstruturaUrbana.Any() &&
                 laudo.MedidaAreaTerreno > 0 &&
                 laudo.FracaoIdealTerreno > 0 &&
-                laudo.SomatorioAreas > 0 &&
-                laudo.NumeroQuartos > 0 &&
-                laudo.NumeroSalas > 0 &&
-                laudo.NumeroBanheiros > 0 &&
-                laudo.NumeroCozinhas > 0)
-            {
+                laudo.SomatorioAreas > 0)
                 laudo.Status = (int)EnumStatusLaudo.EmAndamento;
-            }
         }
 
         private string ExportarLaudo(Laudo laudo)
         {
-            var configuracao = ConfiguracaoRepositorio.Obter(WorkLifetimeManager.Value);
-            var caminhoPastaServidor = Server.MapPath("~/Content/uploads/");
+            //var excelWriter = new SysCEFExcelWriter(caminhoPastaServidor, laudo.Referencia);
+            //excelWriter.PreencherPlanilha(laudo);
+            //excelWriter.SalvarFecharArquivo();
 
-            var excelWriter = new SysCEFExcelWriter(caminhoPastaServidor, laudo.Referencia, configuracao);
-            
-            excelWriter.PreencherCampos(laudo);
-
-            excelWriter.SalvarFecharArquivo();
+            var nomeArquivo = string.Format("UPredio_{0}.xlsx", laudo.Referencia.Replace("/", ""));
 
             WorkLifetimeManager.Value.BeginTransaction(IsolationLevel.Serializable);
 
             try
             {
+                var configuracao = ConfiguracaoRepositorio.Obter(WorkLifetimeManager.Value);
+                var caminhoTemplate = Path.Combine(Server.MapPath("~/Content/uploads/"), "Source.xlsx");
+                var caminhoArquivo = Path.Combine(Server.MapPath("~/Content/uploads/"), nomeArquivo);
+                
+                System.IO.File.Copy(caminhoTemplate, caminhoArquivo, true);
+
+                var openXmlHelper = new OpenXmlHelper();
+                openXmlHelper.PreencherPlanilha(caminhoArquivo, laudo, configuracao);
+                                
                 laudo = LaudoRepositorio.Obter(WorkLifetimeManager.Value, laudo.LaudoID);
                 laudo.Status = (int)EnumStatusLaudo.Concluido;
 
@@ -449,7 +450,18 @@ namespace SysCEF.Web.Controllers
                 WorkLifetimeManager.Value.Rollback();
             }
 
-            return excelWriter.NomeArquivo;
+            return nomeArquivo;
+        }
+
+        private void PrepararResponse(string nomeArquivo)
+        {
+            Response.ClearHeaders();
+            Response.Buffer = false;
+            
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            Response.AddHeader("Connection", "Keep-Alive");
+            Response.AddHeader("Content-Disposition", String.Format("attachment;  filename={0}", nomeArquivo));
+            Response.ContentEncoding = Encoding.UTF8;
         }
 
         private LaudoViewModel ObterAreasEdificacaoCalculadas(LaudoViewModel model)

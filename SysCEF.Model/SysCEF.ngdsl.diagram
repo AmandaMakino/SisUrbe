@@ -128,13 +128,13 @@
         <elementListCompartment Id="6c25c607-4a07-4058-ac3e-59020d84970c" absoluteBounds="1.0150000000000006, 8.185, 1.4700000000000002, 0.8262939453125" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="a430d9e0-269d-4e4c-bdc0-49ccf0ee9bb8" absoluteBounds="8.25, 5, 1.5, 1.0439925130208323">
+    <classShape Id="a430d9e0-269d-4e4c-bdc0-49ccf0ee9bb8" absoluteBounds="8.25, 5, 1.5, 1.2362939453124993">
       <modelClassMoniker name="//Produto" />
       <nestedChildShapes>
-        <elementListCompartment Id="b2ab6337-e208-4ccd-a872-f82cb66a178e" absoluteBounds="8.265, 5.31, 1.4700000000000002, 0.63399251302083326" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="b2ab6337-e208-4ccd-a872-f82cb66a178e" absoluteBounds="8.265, 5.31, 1.4700000000000002, 0.8262939453125" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <unidirectionalConnector edgePoints="[(6.625 : 5.52199625651042); (8.25 : 5.52199625651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <unidirectionalConnector edgePoints="[(6.625 : 5.61814697265625); (8.25 : 5.61814697265625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <unidirectionalAssociationMoniker Id="e88a59ed-427a-4e45-a643-cb7c99cef32e" />
       <relativeChildShapes />
       <nodes>
@@ -142,19 +142,19 @@
         <classShapeMoniker Id="a430d9e0-269d-4e4c-bdc0-49ccf0ee9bb8" />
       </nodes>
     </unidirectionalConnector>
-    <classShape Id="7f44fe85-b2f6-4da8-9866-25c827bd82e9" absoluteBounds="8.25, 6.625, 1.5, 1.0439925130208323">
+    <classShape Id="7f44fe85-b2f6-4da8-9866-25c827bd82e9" absoluteBounds="8.25, 6.625, 1.5, 1.2362939453124993">
       <modelClassMoniker name="//Fonte" />
       <nestedChildShapes>
-        <elementListCompartment Id="599fa4ca-5d66-4e49-9e19-7cf209fa4d3b" absoluteBounds="8.265, 6.935, 1.4700000000000002, 0.63399251302083326" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="599fa4ca-5d66-4e49-9e19-7cf209fa4d3b" absoluteBounds="8.265, 6.935, 1.4700000000000002, 0.8262939453125" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="c38f52b5-1a21-49c4-b346-390010b97772" absoluteBounds="8.25, 8.125, 1.5, 1.0439925130208341">
+    <classShape Id="c38f52b5-1a21-49c4-b346-390010b97772" absoluteBounds="8.25, 8.125, 1.5, 1.2362939453125001">
       <modelClassMoniker name="//Linha" />
       <nestedChildShapes>
-        <elementListCompartment Id="d78692d3-aa63-4c64-b3c6-4de4f9e78318" absoluteBounds="8.265, 8.435, 1.4700000000000002, 0.63399251302083326" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="d78692d3-aa63-4c64-b3c6-4de4f9e78318" absoluteBounds="8.265, 8.435, 1.4700000000000002, 0.8262939453125" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <unidirectionalConnector edgePoints="[(6.625 : 7.14699625651042); (8.25 : 7.14699625651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <unidirectionalConnector edgePoints="[(6.625 : 7.24314697265625); (8.25 : 7.24314697265625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <unidirectionalAssociationMoniker Id="0592325b-a9e5-4542-a04a-6c1eed0acf0a" />
       <relativeChildShapes />
       <nodes>
@@ -162,7 +162,7 @@
         <classShapeMoniker Id="7f44fe85-b2f6-4da8-9866-25c827bd82e9" />
       </nodes>
     </unidirectionalConnector>
-    <unidirectionalConnector edgePoints="[(6.625 : 8.64699625651042); (8.25 : 8.64699625651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <unidirectionalConnector edgePoints="[(6.625 : 8.74314697265625); (8.25 : 8.74314697265625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <unidirectionalAssociationMoniker Id="d4694e94-060e-4e31-b7cf-0089861f102e" />
       <relativeChildShapes />
       <nodes>

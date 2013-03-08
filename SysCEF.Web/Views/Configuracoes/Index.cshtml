@@ -1,30 +1,51 @@
-﻿@model SysCEF.Model.Configuracao
+﻿@using SysCEF.Common.Implementacao
+@using SysCEF.Model
+
+@model SysCEF.Model.Configuracao
        
 <script type="text/javascript">
     $(function () {
+        SysCEF.AjaxLoaderUrl = '@Url.Content("~/Content/images/ajax-loader.gif")';
         SysCEF.ConfigurarConfiguracoes('@Url.Action("Salvar")');
     });
  </script>
- 
-<form id="formConfiguracao" name="formConfiguracao" class="wufoo page" style="width: 60%;">
-    <div id="container" style="height: 270px;">
+  
+<div id="tabs">
+    <ul>
+		<li><a href="#Escritorio">Escritório</a></li>
+		<li><a href="#Fonte">Fonte</a></li>
+		<li><a href="#Linha">Linha</a></li>
+        <li><a href="#Produto">Produto</a></li>                
+	</ul>
+    <div id="Escritorio" class="mainContent">
+        <div id="container" style="height: 270px;">
     
-        <div id="mensagem" class="mensagem" style="display: none;"></div>
+            <div id="mensagem" class="mensagem" style="display: none;"></div>
 
-        <div class="info">
-            <h2>Informações da Empresa</h2>
-        </div>
+            <div class="info">
+                <h2>Informações da Empresa</h2>
+            </div>
         
-        <ul>
-            <li>Nome</li>
-            <li>@Html.TextBoxFor(m => m.NomeEmpresa)</li>
-            <li>CNPJ</li>
-            <li>@Html.TextBoxFor(m => m.CNPJEmpresa, new Dictionary<string, object> { { "id", "cnpjEmpresa" }, { "style", "width: 50%;"} })</li>
-        </ul>
+            <ul>
+                <li>Nome</li>
+                <li>@Html.TextBoxFor(m => m.NomeEmpresa)</li>
+                <li>CNPJ</li>
+                <li>@Html.TextBoxFor(m => m.CNPJEmpresa, new Dictionary<string, object> { { "id", "cnpjEmpresa" }, { "style", "width: 50%;"} })</li>
+            </ul>
         
-        <div class="barraBotoes">
-            <input id="salvarConfiguracoesBtn" type="button" value="Salvar" style="width: 100px;"/>
-        </div>
+            <div class="barraBotoes">
+                <input id="salvarConfiguracoesBtn" type="button" value="Salvar" style="width: 100px;"/>
+            </div>
 
+        </div>
+    </div>                                    
+    @*<div id="Fonte" class="mainContent">                  
+        @Html.Action("ListarFontes", "Configuracoes")
+    </div>                                    
+    <div id="Linha" class="mainContent">               
+        @Html.Action("ListarLinhas", "Configuracoes")
     </div>
-</form>
+    <div id="Produto" class="mainContent">               
+        @Html.Action("ListarProdutos", "Configuracoes")
+    </div> *@        
+</div>

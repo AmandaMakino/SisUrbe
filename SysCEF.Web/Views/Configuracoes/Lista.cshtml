@@ -1,0 +1,27 @@
+﻿<script type="text/javascript">
+    $(function () {
+        SysCEF.UploaderUrl = '@Url.Content("~/Scripts/uploader.swf")';
+        SysCEF.CancelImageUrl = '@Url.Content("~/Content/images/cancel.png")';
+        SysCEF.CaminhoAcaoImportar = '@Url.Action("Importar", "Fonte")';
+        SysCEF.ConfigurarUpload();
+
+        $("#mensagemUpload").delay(1000).fadeOut("slow");
+    });
+ </script>
+
+
+<div id="mensagemUpload" class="mensagem" style="display: none;">
+    Fontes importadas com sucesso!
+</div>
+
+<br />
+
+<div id="fileuploader" style="width: 400px; left: 0px; margin-top: 20px;"></div>
+
+<h4>Fontes cadastradas:</h4>
+
+<div id="listaOSs">
+    @Html.Action("Listar", "Fonte")
+</div>
+
+

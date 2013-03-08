@@ -219,18 +219,21 @@
     <modelClass name="Produto" isLookupTable="false">
       <classAttributes>
         <classAttribute name="ProdutoID" isPrimaryKeyField="true" setterAccessModifier="Public" isIdentity="true" scale="0" precision="0" />
+        <classAttribute name="Codigo" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
         <classAttribute name="Descricao" type="String" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
       </classAttributes>
     </modelClass>
     <modelClass name="Fonte" isLookupTable="false">
       <classAttributes>
         <classAttribute name="FonteID" isPrimaryKeyField="true" setterAccessModifier="Public" isIdentity="true" scale="0" precision="0" />
+        <classAttribute name="Codigo" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
         <classAttribute name="Descricao" type="String" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
       </classAttributes>
     </modelClass>
     <modelClass name="Linha" isLookupTable="false">
       <classAttributes>
         <classAttribute name="LinhaID" isPrimaryKeyField="true" setterAccessModifier="Public" isIdentity="true" scale="0" precision="0" />
+        <classAttribute name="Codigo" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
         <classAttribute name="Descricao" type="String" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
       </classAttributes>
     </modelClass>

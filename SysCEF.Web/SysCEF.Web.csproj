@@ -103,12 +103,12 @@
     <ExcludeGeneratedDebugSymbol>true</ExcludeGeneratedDebugSymbol>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+    <Reference Include="DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-      <HintPath>..\ThirdParty\Microsoft.Office.Interop.Excel\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <HintPath>..\ThirdParty\OpenXML\DocumentFormat.OpenXml.dll</HintPath>
+      <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Optimization, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ThirdParty\Microsoft.Web.Optimization\Microsoft.Web.Optimization.dll</HintPath>
@@ -142,11 +142,12 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BusinessLogic\OpcoesHelper.cs" />
-    <Compile Include="BusinessLogic\SysCEFExcelWriter.cs" />
-    <Compile Include="BusinessLogic\UploadOSHelper.cs" />
+    <Compile Include="Helpers\OpcoesHelper.cs" />
+    <Compile Include="Helpers\OpenXmlHelper.cs" />
+    <Compile Include="Helpers\UploadOSHelper.cs" />
     <Compile Include="Controllers\ConfiguracoesController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -313,6 +314,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Content\uploads\Source.xlsx" />
     <None Include="Scripts\uploader.fla" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Laudo\Index.cshtml" />
@@ -321,10 +323,15 @@
     <Content Include="Views\Laudo\ImportarOS.cshtml" />
     <Content Include="Views\Usuario\Index.cshtml" />
     <Content Include="Views\Login\RedefinirSenha.cshtml" />
-    <Content Include="Views\Configuracoes\Index.cshtml" />
+    <Content Include="Views\Configuracoes\Edicao.cshtml" />
     <Content Include="Views\Shared\AreasLaudo\AreasEdificacao.cshtml" />
     <Content Include="Content\uploads\Template.xls" />
     <Content Include="Views\Laudo\ListaImportada.cshtml" />
+    <Content Include="Views\Configuracoes\ListarFontes.cshtml" />
+    <Content Include="Views\Configuracoes\Index.cshtml" />
+    <Content Include="Views\Configuracoes\Lista.cshtml" />
+    <Content Include="Views\Configuracoes\ListarLinhas.cshtml" />
+    <Content Include="Views\Configuracoes\ListarProdutos.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

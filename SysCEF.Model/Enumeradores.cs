@@ -3,6 +3,16 @@
 namespace SysCEF.Model
 {
     #region Geral
+    public enum EnumConfiguracoes
+    {
+        [Description("Fonte")]
+        Fonte = 0,
+        [Description("Linha")]
+        Linha = 1,
+        [Description("Produto")]
+        Produto = 2
+    }
+
     public enum EnumPerfil
     {
         [Description("Administrador")]
@@ -97,14 +107,14 @@ namespace SysCEF.Model
     #region Caracterização da Região
     public enum EnumUsosPredominantes
     {
-        [Description("Comercial")]
-        Com = 0,
-        [Description("Industrial")]
-        Ind = 1,
-        [Description("Residencial Multifamiliar")]
-        ResMult = 2,
         [Description("Residencial Unifamiliar")]
-        ResUni = 3
+        ResUni = 0,
+        [Description("Residencial Multifamiliar")]
+        ResMult = 1,
+        [Description("Comercial")]
+        Com = 2,
+        [Description("Industrial")]
+        Ind = 3,
     }
 
     public enum EnumInfraEstruturaUrbana

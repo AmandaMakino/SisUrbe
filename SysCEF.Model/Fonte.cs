@@ -60,6 +60,9 @@ namespace SysCEF.Model
 		public virtual int FonteID { get; set; }
 
 		[DataMember]
+		public virtual int Codigo { get; set; }
+
+		[DataMember]
 		public virtual string Descricao { get; set; }
 
 		#endregion Properties

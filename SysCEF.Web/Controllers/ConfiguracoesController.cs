@@ -16,7 +16,7 @@ namespace SysCEF.Web.Controllers
         public ActionResult Index()
         {
             var configuracao = ConfiguracaoRepositorio.Obter(WorkLifetimeManager.Value) ?? new Configuracao();
-
+            
             return PartialView(configuracao);
         }
         
