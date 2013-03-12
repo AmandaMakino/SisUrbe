@@ -3,7 +3,7 @@
 namespace SysCEF.Model
 {
     #region Geral
-    public enum EnumConfiguracoes
+    public enum EnumTipoImportacao
     {
         [Description("Fonte")]
         Fonte = 0,

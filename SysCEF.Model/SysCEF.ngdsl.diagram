@@ -134,7 +134,7 @@
         <elementListCompartment Id="b2ab6337-e208-4ccd-a872-f82cb66a178e" absoluteBounds="8.265, 5.31, 1.4700000000000002, 0.8262939453125" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <unidirectionalConnector edgePoints="[(6.625 : 5.61814697265625); (8.25 : 5.61814697265625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <unidirectionalConnector edgePoints="[(6.625 : 5.61814697265625); (8.25 : 5.61814697265625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <unidirectionalAssociationMoniker Id="e88a59ed-427a-4e45-a643-cb7c99cef32e" />
       <relativeChildShapes />
       <nodes>
@@ -154,7 +154,7 @@
         <elementListCompartment Id="d78692d3-aa63-4c64-b3c6-4de4f9e78318" absoluteBounds="8.265, 8.435, 1.4700000000000002, 0.8262939453125" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <unidirectionalConnector edgePoints="[(6.625 : 7.24314697265625); (8.25 : 7.24314697265625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <unidirectionalConnector edgePoints="[(6.625 : 7.24314697265625); (8.25 : 7.24314697265625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <unidirectionalAssociationMoniker Id="0592325b-a9e5-4542-a04a-6c1eed0acf0a" />
       <relativeChildShapes />
       <nodes>
@@ -162,7 +162,7 @@
         <classShapeMoniker Id="7f44fe85-b2f6-4da8-9866-25c827bd82e9" />
       </nodes>
     </unidirectionalConnector>
-    <unidirectionalConnector edgePoints="[(6.625 : 8.74314697265625); (8.25 : 8.74314697265625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <unidirectionalConnector edgePoints="[(6.625 : 8.74314697265625); (8.25 : 8.74314697265625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <unidirectionalAssociationMoniker Id="d4694e94-060e-4e31-b7cf-0089861f102e" />
       <relativeChildShapes />
       <nodes>

@@ -44,9 +44,9 @@
                 <td>Fonte</td>
             </tr>
             <tr>
-                <td>@Html.DropDownListFor(m => m.Laudo.Produto, typeof(EnumProduto), Model.Produtos)</td>
-                <td>@Html.DropDownListFor(m => m.Laudo.Linha, typeof(EnumLinha), Model.Linhas)</td>
-                <td>@Html.DropDownListFor(m => m.Laudo.Fonte, typeof(EnumFonte), Model.Fontes)</td>
+                <td>@Html.DropDownListFor(m => m.Laudo.Produto.ProdutoID, Model.ListaProdutos)</td>
+                <td>@Html.DropDownListFor(m => m.Laudo.Linha.LinhaID, Model.ListaLinhas)</td>
+                <td>@Html.DropDownListFor(m => m.Laudo.Fonte.FonteID, Model.ListaFontes)</td>
             </tr>
         </table>
     </li>

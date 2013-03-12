@@ -11,6 +11,9 @@ using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using System.Collections;
 using DocumentFormat.OpenXml.Office2010.Excel;
+using System.Collections.Generic;
+using SysCEF.Web.Models;
+using SysCEF.DAO.Implementacao;
 
 namespace SysCEF.Web.Helpers
 {
@@ -20,11 +23,10 @@ namespace SysCEF.Web.Helpers
         private SpreadsheetDocument _document;
         private Worksheet _folhaAtual;
         private Controls _controlesFolhaAtual;
-        public MemoryStream SpreadsheetStream { get; set; }
 
-        public void PreencherPlanilha(string caminhoArquivo, Laudo laudo, Configuracao configuracao)
+        public void PreencherPlanilha(MemoryStream memoryStream, Laudo laudo, Configuracao configuracao)
         {
-            using (_document = SpreadsheetDocument.Open(caminhoArquivo, true))
+            using (_document = SpreadsheetDocument.Open(memoryStream, true))
             {
                 try
                 {
@@ -60,7 +62,7 @@ namespace SysCEF.Web.Helpers
                         #endregion
 
                         #region Caracterização da Região
-                        SelecionarOpcao(laudo.UsosPredominantes);
+                        //SelecionarOpcao(laudo.UsosPredominantes);
 
                         SelecionarServicosPublicos(laudo);
 
@@ -331,9 +333,27 @@ namespace SysCEF.Web.Helpers
             return false;
         }
 
-        public void PreencherCampo(string range, object valor)
+        private bool SelecionarPrimeiraAba()
         {
-            Cell celula = ObterCelula(range);
+            Sheet aba = _wbPart.Workbook.Descendants<Sheet>().ToList().FirstOrDefault();
+            
+            if (aba != null)
+            {
+                _folhaAtual = ((WorksheetPart)(_wbPart.GetPartById(aba.Id))).Worksheet;
+                _controlesFolhaAtual = _folhaAtual.GetFirstChild<Controls>();
+
+                return true;
+            }
+
+            return false;
+        }
+
+        public void PreencherCampo(string address, object valor)
+        {
+            if (valor == null)
+                return;
+
+            Cell celula = ObterCelula(address);
 
             CellValue valorCelula = new CellValue();
 
@@ -365,20 +385,20 @@ namespace SysCEF.Web.Helpers
             return ms;
         }
 
-        private Cell ObterCelula(string range)
+        private Cell ObterCelula(string address)
         {
-            Row linha = ObterLinha(range);
+            Row linha = ObterLinha(address);
 
             if (linha == null)
                 return null;
 
             return linha.Elements<Cell>().Where(c => string.Compare
-                   (c.CellReference.Value, range, true) == 0).First();
+                   (c.CellReference.Value, address, true) == 0).First();
         }
 
-        private Row ObterLinha(string range)
+        private Row ObterLinha(string address)
         {
-            var indice = ObterIndiceLinha(range);
+            var indice = ObterIndiceLinha(address);
 
             return _folhaAtual.GetFirstChild<SheetData>().
               Elements<Row>().Where(r => r.RowIndex == indice).First();
@@ -412,7 +432,7 @@ namespace SysCEF.Web.Helpers
             Control control = alternateContentChoice.GetFirstChild<Control>();
             ControlProperties controlProperties = control.GetFirstChild<ControlProperties>();
 
-            PreencherCampo(controlProperties.LinkedCell, true);
+            PreencherCampo(controlProperties.LinkedCell, "VERDADEIRO");
         }
 
         private void SelecionarInfraEstruturasUrbanas(Laudo laudo)
@@ -478,6 +498,65 @@ namespace SysCEF.Web.Helpers
                 divisaoInterna.Append(laudo.NumeroTerracosDescobertos).Append(laudo.NumeroTerracosDescobertos > 1 ? " TERRAÇOS DESCOBERTOS" : " TERRAÇO DESCOBERTO").Append("; ");
 
             return divisaoInterna.ToString(0, divisaoInterna.Length - 2); // Ignora os dois últimos caracteres da string para que não acabe em "; "
+        }
+
+        private string ObterValor(Cell celula)
+        {
+            if (celula.DataType != null && celula.DataType == CellValues.SharedString)
+            {
+                return ObterString(celula.CellValue.Text);
+            }
+
+            return celula.CellValue.Text;
+        }
+
+        private string ObterString(string id)
+        {
+            var sharedString = _wbPart.SharedStringTablePart.SharedStringTable.Elements<SharedStringItem>().ElementAt(Int32.Parse(id));
+
+            return sharedString.Text.Text;
+        }
+
+        public List<object[]> LerPlanilhaDados(Stream stream)
+        {
+            List<object[]> dadosPlanilha = new List<object[]>();
+
+            using (_document = SpreadsheetDocument.Open(stream, true))
+            {
+                try
+                {
+                    _wbPart = _document.WorkbookPart;
+
+                    if (SelecionarPrimeiraAba())
+                    {
+                        int indice = 0;
+
+                        foreach (Row row in _folhaAtual.Descendants<Row>())
+                        {
+                            indice++;
+
+                            if (indice == 1) continue; // Pula o cabeçalho.
+
+                            List<object> dadosLinha = new List<object>();
+
+                            foreach (Cell celula in row.Descendants<Cell>())
+                                dadosLinha.Add(ObterValor(celula));
+
+                            dadosPlanilha.Add(dadosLinha.ToArray());
+                        }
+                    }
+                }
+                catch
+                {
+                    throw;
+                }
+                finally
+                {
+                    _document.Close();
+                }
+
+                return dadosPlanilha;
+            }
         }
     }
 }

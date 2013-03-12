@@ -53,15 +53,9 @@ namespace SysCEF.Web.Controllers
                 FonteRepositorio = FonteRepositorio
             };
 
-            var path = System.Web.HttpContext.Current.Request.MapPath("~/Content/uploads/");
-
-            var fileName = Path.Combine(path, fileData.FileName);
-
-            fileData.SaveAs(fileName); // Salva OS na pasta de Uploads do Servidor.
-
             try
             {
-                var laudo = uploadHelper.GerarLaudoAPartirArquivo(fileName);
+                var laudo = uploadHelper.GerarLaudoAPartirArquivo(fileData.InputStream);
 
                 LaudoRepositorio.Salvar(WorkLifetimeManager.Value, laudo);
                 WorkLifetimeManager.Value.Commit();
@@ -105,30 +99,78 @@ namespace SysCEF.Web.Controllers
             return PartialView(PreencherViewModel(laudo));
         }
 
-        public JsonResult Exportar(int id)
+        //public JsonResult Exportar(int id)
+        //{
+        //    bool sucesso;
+        //    string mensagem;
+        //    var nomeArquivo = string.Empty;
+
+        //    try
+        //    {
+        //        var laudo = LaudoRepositorio.Obter(WorkLifetimeManager.Value, id);
+
+        //        if (laudo == null)
+        //            throw new InvalidOperationException(string.Format("Laudo não encontrado (Id: {0})", id));
+
+        //        nomeArquivo = ExportarLaudo(laudo);
+        //        sucesso = true;
+        //        mensagem = "Arquivo exportado com sucesso!";
+        //    }
+        //    catch (Exception exception)
+        //    {
+        //        sucesso = false;
+        //        mensagem = "Não foi possível realizar a operação: " + exception.Message;
+        //    }
+
+        //    return Json(new { sucesso, mensagem, nomeArquivo });
+        //}
+
+        public ActionResult Exportar(int id)
         {
-            bool sucesso;
-            string mensagem;
-            var nomeArquivo = string.Empty;
+            OpenXmlHelper openXmlHelper = new OpenXmlHelper();
+            MemoryStream memoryStream = new MemoryStream();
+
+            var laudo = LaudoRepositorio.Obter(WorkLifetimeManager.Value, id);
+
+            var nomeArquivo = string.Format("UPredio_{0}.xlsx", laudo.Referencia.Replace("/", ""));
+
+            HttpContext.Response.Clear();
+            HttpContext.Response.AddHeader("content-disposition", string.Format("attachment;filename={0}", nomeArquivo));
+            HttpContext.Response.Charset = "";
+            HttpContext.Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            HttpContext.Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            
+            WorkLifetimeManager.Value.BeginTransaction(IsolationLevel.Serializable);
 
             try
             {
-                var laudo = LaudoRepositorio.Obter(WorkLifetimeManager.Value, id);
+                var configuracao = ConfiguracaoRepositorio.Obter(WorkLifetimeManager.Value);
+                var caminhoTemplate = Path.Combine(Server.MapPath("~/Content/uploads/"), "Source.xlsx");
+                //var caminhoArquivo = Path.Combine(Server.MapPath("~/Content/uploads/"), nomeArquivo);
 
-                if (laudo == null)
-                    throw new InvalidOperationException(string.Format("Laudo não encontrado (Id: {0})", id));
+                using (FileStream source = System.IO.File.Open(caminhoTemplate, FileMode.Open))
+                {
+                    source.CopyTo(memoryStream);
+                    openXmlHelper.PreencherPlanilha(memoryStream, laudo, configuracao);
+                }
 
-                nomeArquivo = ExportarLaudo(laudo);
-                sucesso = true;
-                mensagem = "Arquivo exportado com sucesso!";
+                laudo = LaudoRepositorio.Obter(WorkLifetimeManager.Value, laudo.LaudoID);
+                laudo.Status = (int)EnumStatusLaudo.Concluido;
+
+                LaudoRepositorio.Salvar(WorkLifetimeManager.Value, laudo);
+
+                WorkLifetimeManager.Value.Commit();
             }
-            catch (Exception exception)
+            catch
             {
-                sucesso = false;
-                mensagem = "Não foi possível realizar a operação: " + exception.Message;
+                WorkLifetimeManager.Value.Rollback();
             }
 
-            return Json(new { sucesso, mensagem, nomeArquivo });
+            memoryStream.Flush();
+            memoryStream.WriteTo(HttpContext.Response.OutputStream);
+            HttpContext.Response.End();
+
+            return File(memoryStream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", nomeArquivo);
         }
         
         public ActionResult Salvar(LaudoViewModel viewModel)
@@ -161,6 +203,15 @@ namespace SysCEF.Web.Controllers
             return viewModel.StatusLaudo == EnumStatusLaudo.Importado.ToString()
                        ? PartialView("ImportarOS")
                        : PartialView("Lista", new ListaLaudoViewModel(viewModel.StatusLaudo, laudos, mensagem));
+        }
+
+        public ActionResult Voltar(LaudoViewModel viewModel)
+        {
+            var laudos = BuscarLaudosPorStatus(viewModel.StatusLaudo);
+
+            return viewModel.StatusLaudo == EnumStatusLaudo.Importado.ToString()
+                       ? PartialView("ImportarOS")
+                       : PartialView("Lista", new ListaLaudoViewModel(viewModel.StatusLaudo, laudos, null));
         }
 
         public ActionResult AtualizarAreasEdificacao(LaudoViewModel viewModel)
@@ -224,6 +275,9 @@ namespace SysCEF.Web.Controllers
                 ListaEstados = opcoesHelper.ObterOpcoesEstado(EstadoRepositorio.BuscarTodos(WorkLifetimeManager.Value)),
                 ListaCidades = opcoesHelper.ObterOpcoesCidade(CidadeRepositorio.BuscarTodasEstado(WorkLifetimeManager.Value, laudo.Imovel.Cidade.Estado.Sigla)),
                 ListaTiposLogradouro = opcoesHelper.ObterOpcoesTipoLogradouro(TipoLogradouroRepositorio.BuscarTodos(WorkLifetimeManager.Value)),
+                ListaFontes = opcoesHelper.ObterOpcoesFonte(FonteRepositorio.BuscarTodos(WorkLifetimeManager.Value)),
+                ListaLinhas = opcoesHelper.ObterOpcoesLinha(LinhaRepositorio.BuscarTodos(WorkLifetimeManager.Value)),
+                ListaProdutos = opcoesHelper.ObterOpcoesProduto(ProdutoRepositorio.BuscarTodos(WorkLifetimeManager.Value)),
                 // Caracterização da Região
                 ListaServicosPublicosComunitarios = opcoesHelper.ObterOpcoesEnum<EnumServicoPublicoComunitario>(),
                 ListaInfraEstruturasUrbanas = opcoesHelper.ObterOpcoesEnum<EnumInfraEstruturaUrbana>(),
@@ -417,51 +471,69 @@ namespace SysCEF.Web.Controllers
                 laudo.Status = (int)EnumStatusLaudo.EmAndamento;
         }
 
-        private string ExportarLaudo(Laudo laudo)
-        {
-            //var excelWriter = new SysCEFExcelWriter(caminhoPastaServidor, laudo.Referencia);
-            //excelWriter.PreencherPlanilha(laudo);
-            //excelWriter.SalvarFecharArquivo();
+        //private FileResult ExportarLaudo(Laudo laudo)
+        //{
+        //    //var excelWriter = new SysCEFExcelWriter(caminhoPastaServidor, laudo.Referencia);
+        //    //excelWriter.PreencherPlanilha(laudo);
+        //    //excelWriter.SalvarFecharArquivo();
 
-            var nomeArquivo = string.Format("UPredio_{0}.xlsx", laudo.Referencia.Replace("/", ""));
+        //    var nomeArquivo = string.Format("UPredio_{0}.xlsx", laudo.Referencia.Replace("/", ""));
 
-            WorkLifetimeManager.Value.BeginTransaction(IsolationLevel.Serializable);
+        //    HttpContext.Response.Clear();
+        //    HttpContext.Response.AddHeader("content-disposition", string.Format("attachment;filename={0}", nomeArquivo));
+        //    HttpContext.Response.Charset = "";
+        //    HttpContext.Response.Cache.SetCacheability(HttpCacheability.NoCache);
+        //    HttpContext.Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
-            try
-            {
-                var configuracao = ConfiguracaoRepositorio.Obter(WorkLifetimeManager.Value);
-                var caminhoTemplate = Path.Combine(Server.MapPath("~/Content/uploads/"), "Source.xlsx");
-                var caminhoArquivo = Path.Combine(Server.MapPath("~/Content/uploads/"), nomeArquivo);
+        //    OpenXmlHelper openXmlHelper = new OpenXmlHelper();
+        //    MemoryStream memoryStream = new MemoryStream();
+
+        //    WorkLifetimeManager.Value.BeginTransaction(IsolationLevel.Serializable);
+
+        //    try
+        //    {
+        //        var configuracao = ConfiguracaoRepositorio.Obter(WorkLifetimeManager.Value);
+        //        var caminhoTemplate = Path.Combine(Server.MapPath("~/Content/uploads/"), "Source.xlsx");
+        //        //var caminhoArquivo = Path.Combine(Server.MapPath("~/Content/uploads/"), nomeArquivo);
                 
-                System.IO.File.Copy(caminhoTemplate, caminhoArquivo, true);
-
-                var openXmlHelper = new OpenXmlHelper();
-                openXmlHelper.PreencherPlanilha(caminhoArquivo, laudo, configuracao);
+        //        using (FileStream source = System.IO.File.Open(caminhoTemplate, FileMode.Open))
+        //        {
+        //            source.CopyTo(memoryStream);
+        //            openXmlHelper.PreencherPlanilha(memoryStream, laudo, configuracao);
+        //        }
                                 
-                laudo = LaudoRepositorio.Obter(WorkLifetimeManager.Value, laudo.LaudoID);
-                laudo.Status = (int)EnumStatusLaudo.Concluido;
+        //        laudo = LaudoRepositorio.Obter(WorkLifetimeManager.Value, laudo.LaudoID);
+        //        laudo.Status = (int)EnumStatusLaudo.Concluido;
 
-                LaudoRepositorio.Salvar(WorkLifetimeManager.Value, laudo);
+        //        LaudoRepositorio.Salvar(WorkLifetimeManager.Value, laudo);
 
-                WorkLifetimeManager.Value.Commit();
-            }
-            catch
-            {
-                WorkLifetimeManager.Value.Rollback();
-            }
+        //        WorkLifetimeManager.Value.Commit();
+        //    }
+        //    catch
+        //    {
+        //        WorkLifetimeManager.Value.Rollback();
+        //    }
 
-            return nomeArquivo;
-        }
+        //    memoryStream.Flush();
+        //    memoryStream.WriteTo(HttpContext.Response.OutputStream);
+        //    HttpContext.Response.End();
+
+        //    return File(memoryStream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", nomeArquivo);
+        //}
 
         private void PrepararResponse(string nomeArquivo)
         {
-            Response.ClearHeaders();
-            Response.Buffer = false;
+            //Response.ClearHeaders();
+            //Response.Buffer = false;
             
-            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-            Response.AddHeader("Connection", "Keep-Alive");
-            Response.AddHeader("Content-Disposition", String.Format("attachment;  filename={0}", nomeArquivo));
-            Response.ContentEncoding = Encoding.UTF8;
+            //Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            //Response.AddHeader("Connection", "Keep-Alive");
+            //Response.ContentEncoding = Encoding.UTF8;
+
+            
+            //HttpContext.Response.WriteFile(
+            //HttpContext.Response.End();
+
         }
 
         private LaudoViewModel ObterAreasEdificacaoCalculadas(LaudoViewModel model)

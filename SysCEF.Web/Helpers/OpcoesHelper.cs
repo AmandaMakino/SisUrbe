@@ -65,6 +65,39 @@ namespace SysCEF.Web.Helpers
                     }).ToList();
         }
 
+        public List<SelectListItem> ObterOpcoesFonte(IEnumerable<Fonte> fontes)
+        {
+            return (from f in fontes
+                    select new SelectListItem
+                    {
+                        Selected = Laudo != null && Laudo.Fonte != null && f.FonteID == Laudo.Fonte.FonteID,
+                        Text = f.Descricao.ToUpper(CultureInfo.InvariantCulture),
+                        Value = f.FonteID.ToString(CultureInfo.InvariantCulture)
+                    }).ToList();
+        }
+
+        public List<SelectListItem> ObterOpcoesLinha(IEnumerable<Linha> linhas)
+        {
+            return (from l in linhas
+                    select new SelectListItem
+                    {
+                        Selected = Laudo != null && Laudo.Linha != null && l.LinhaID == Laudo.Linha.LinhaID,
+                        Text = l.Descricao.ToUpper(CultureInfo.InvariantCulture),
+                        Value = l.LinhaID.ToString(CultureInfo.InvariantCulture)
+                    }).ToList();
+        }
+
+        public List<SelectListItem> ObterOpcoesProduto(IEnumerable<Produto> produtos)
+        {
+            return (from p in produtos
+                    select new SelectListItem
+                    {
+                        Selected = Laudo != null && Laudo.Produto != null && p.ProdutoID == Laudo.Produto.ProdutoID,
+                        Text = p.Descricao.ToUpper(CultureInfo.InvariantCulture),
+                        Value = p.ProdutoID.ToString(CultureInfo.InvariantCulture)
+                    }).ToList();
+        }
+
         public List<SelectListItem> ObterOpcoesResponsaveisTecnicos(IEnumerable<Usuario> usuarios)
         {
             var lista = (from u in usuarios

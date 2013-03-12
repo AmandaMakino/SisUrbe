@@ -15,6 +15,7 @@
 			<generator class="identity" />
 		</id>
 		<version column="__Version" name="__Version" type="Int32" access="field" unsaved-value="0"/>
+		<property name="Codigo" column="Codigo" type="Int32" />
 		<property name="Descricao" column="Descricao" type="String" />
 	</class>
 </hibernate-mapping>

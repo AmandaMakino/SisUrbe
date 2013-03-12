@@ -39,6 +39,10 @@ namespace SysCEF.Web.Models
         public List<SelectListItem> ListaCidades { get; set; }
         public List<SelectListItem> ListaTiposLogradouro { get; set; }
 
+        public List<SelectListItem> ListaFontes { get; set; }
+        public List<SelectListItem> ListaLinhas { get; set; }
+        public List<SelectListItem> ListaProdutos { get; set; }
+
         public EnumProduto Produtos { get; set; }
         public EnumLinha Linhas { get; set; }
         public EnumFonte Fontes { get; set; }

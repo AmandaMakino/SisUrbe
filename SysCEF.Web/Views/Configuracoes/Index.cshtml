@@ -1,51 +1,54 @@
 ﻿@using SysCEF.Common.Implementacao
 @using SysCEF.Model
+@using SysCEF.Web.Helpers
 
-@model SysCEF.Model.Configuracao
+@model SysCEF.Web.Models.ConfiguracoesModel
        
 <script type="text/javascript">
     $(function () {
-        SysCEF.AjaxLoaderUrl = '@Url.Content("~/Content/images/ajax-loader.gif")';
         SysCEF.ConfigurarConfiguracoes('@Url.Action("Salvar")');
+        SysCEF.UploaderUrl = '@Url.Content("~/Scripts/uploader.swf")';
+        SysCEF.CancelImageUrl = '@Url.Content("~/Content/images/cancel.png")';
+
+        SysCEF.CaminhoAcaoImportar = '@Url.Action("Importar", "Configuracoes")';
+        SysCEF.ConfigurarUploadDados('fonte', 'block');
+        SysCEF.ConfigurarUploadDados('linha', 'none');
+        SysCEF.ConfigurarUploadDados('produto', 'none');
+        
+        $("input[type=radio]").on("click", function () {
+            $(".fileUploaderBtn").hide();
+            $("#" + this.value.toLowerCase() + "uploaderUploader").show();
+            $("#mensagemUpload").delay(1000).fadeOut("slow");
+        });
     });
  </script>
-  
-<div id="tabs">
-    <ul>
-		<li><a href="#Escritorio">Escritório</a></li>
-		<li><a href="#Fonte">Fonte</a></li>
-		<li><a href="#Linha">Linha</a></li>
-        <li><a href="#Produto">Produto</a></li>                
-	</ul>
-    <div id="Escritorio" class="mainContent">
-        <div id="container" style="height: 270px;">
-    
-            <div id="mensagem" class="mensagem" style="display: none;"></div>
 
-            <div class="info">
-                <h2>Informações da Empresa</h2>
-            </div>
+  <form id="formConfiguracao" name="formConfiguracao" class="wufoo page" style="width: 60%;">
+    <div id="container" style="height: 330px;">
+    
+        <div class="info">
+            <h2>Informações da Empresa</h2>
+        </div>
         
-            <ul>
-                <li>Nome</li>
-                <li>@Html.TextBoxFor(m => m.NomeEmpresa)</li>
-                <li>CNPJ</li>
-                <li>@Html.TextBoxFor(m => m.CNPJEmpresa, new Dictionary<string, object> { { "id", "cnpjEmpresa" }, { "style", "width: 50%;"} })</li>
-            </ul>
-        
-            <div class="barraBotoes">
-                <input id="salvarConfiguracoesBtn" type="button" value="Salvar" style="width: 100px;"/>
-            </div>
+        <div class="configuracoes">
+            <div>Nome</div>
+            <div>@Html.TextBoxFor(m => m.NomeEmpresa)</div>
+            <div>CNPJ</div>
+            <div>@Html.TextBoxFor(m => m.CNPJEmpresa, new Dictionary<string, object> { { "id", "cnpjEmpresa" }, { "style", "width: 50%;" } })</div>
+            <div>Tipo de importação</div>
+            <div style="float:left; margin-right: 10px;">@Html.RadioButtonListFor(m => m.TiposImportacao, EnumDisposicaoRadioButtons.Horizontal, new Dictionary<string, object> { { "id", "tipoImportacao" } })</div>
+            
+            <div id="fonteuploader" class="uploader"></div>
+            <div id="linhauploader" class="uploader"></div>
+            <div id="produtouploader" class="uploader"></div>
+
+        <div id="mensagemUploadDados" class="mensagem" style="display: none;">Dados importados com sucesso!</div>
 
         </div>
-    </div>                                    
-    @*<div id="Fonte" class="mainContent">                  
-        @Html.Action("ListarFontes", "Configuracoes")
-    </div>                                    
-    <div id="Linha" class="mainContent">               
-        @Html.Action("ListarLinhas", "Configuracoes")
+
+        <div class="barraBotoes">
+            <input id="salvarConfiguracoesBtn" type="button" value="Salvar" style="width: 100px;"/>
+        </div>
+
     </div>
-    <div id="Produto" class="mainContent">               
-        @Html.Action("ListarProdutos", "Configuracoes")
-    </div> *@        
-</div>
+</form>

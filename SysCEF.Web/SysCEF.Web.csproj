@@ -159,6 +159,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\HtmlHelpers.cs" />
+    <Compile Include="Models\ConfiguracoesModel.cs" />
     <Compile Include="Models\LoginModels.cs" />
     <Compile Include="Models\UsuarioModels.cs" />
     <Compile Include="Models\LaudoModels.cs" />
@@ -236,7 +237,9 @@
     <Content Include="Scripts\SysCEF.js" />
     <Content Include="Scripts\uploader.swf" />
     <Content Include="Content\EstiloUploadify.css" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -327,11 +330,7 @@
     <Content Include="Views\Shared\AreasLaudo\AreasEdificacao.cshtml" />
     <Content Include="Content\uploads\Template.xls" />
     <Content Include="Views\Laudo\ListaImportada.cshtml" />
-    <Content Include="Views\Configuracoes\ListarFontes.cshtml" />
     <Content Include="Views\Configuracoes\Index.cshtml" />
-    <Content Include="Views\Configuracoes\Lista.cshtml" />
-    <Content Include="Views\Configuracoes\ListarLinhas.cshtml" />
-    <Content Include="Views\Configuracoes\ListarProdutos.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -126,6 +126,7 @@ SysCEF.ConfigurarUpload = function () {
         'uploader': SysCEF.UploaderUrl,
         'cancelImg': SysCEF.CancelImageUrl,
         'buttonText': 'Importar OS...',
+        'display': 'block',
         'script': SysCEF.CaminhoAcaoImportar,
         'scriptData': { ASPSESSID: ASPSESSID, AUTHID: auth },
         'fileDataName': 'FileData',
@@ -154,8 +155,45 @@ SysCEF.ConfigurarUpload = function () {
                     $("#listaOSs").html(result);
 
                     $("#mensagemUpload").show();
-                }
+                },
+                cache: false
             });
+        }
+    });
+};
+
+SysCEF.ConfigurarUploadDados = function (tipo, display) {
+    // Multiple files - single input
+    var auth = "<% = Request.Cookies[FormsAuthentication.FormsCookieName]==null ? string.Empty : Request.Cookies[FormsAuthentication.FormsCookieName].Value %>";
+    var ASPSESSID = "<%= Session.SessionID %>";
+
+    $("#" + tipo + "uploader").fileUpload({
+        'uploader': SysCEF.UploaderUrl,
+        'cancelImg': SysCEF.CancelImageUrl,
+        'buttonText': 'Importar dados...',
+        'display': display,
+        'script': SysCEF.CaminhoAcaoImportar + '?tipo=' + tipo,
+        'scriptData': { ASPSESSID: ASPSESSID, AUTHID: auth },
+        'fileDataName': 'FileData',
+        'multi': false,
+        'sizeLimit': 200000000,
+        'simUploadLimit': 1,
+        'fileDesc': 'Pasta de trabalho do Excel',
+        'fileExt': '*.xlx; *xlsx',
+        'auto': true,
+        'onError': function (a, b, c, d) {
+            if (d.status == 404)
+                alert("Could not find upload script. Use a path relative to: " + "<?= getcwd() ?>");
+            else if (d.type === "HTTP")
+                alert("error " + d.type + ": " + d.status);
+            else if (d.type === "File Size")
+                alert(c.name + " " + d.type + " Limit: " + Math.round(d.info / (1024 * 1024)) + "MB");
+            else
+                alert("error " + d.type + ": " + d.text);
+        },
+        'onComplete': function () {
+            $("#mensagemUploadDados").delay(200).fadeIn('slow');
+            $("#mensagemUploadDados").fadeOut('slow');
         }
     });
 };
@@ -211,8 +249,8 @@ SysCEF.FazerDownload = function (downloadUrl) {
     $("#mensagemDownload").css("display", "none");
 };
 
-SysCEF.ConfigurarFormLaudo = function (salvarLaudoUrl, atualizarAreasEdificacaoUrl) {
-    $("#salvarLaudoBtn").button();
+SysCEF.ConfigurarFormLaudo = function (salvarLaudoUrl, voltarUrl, atualizarAreasEdificacaoUrl) {
+    $("input:button").button();
 
     $("#salvarLaudoBtn").click(function () {
         var servicoStr = "";
@@ -231,6 +269,18 @@ SysCEF.ConfigurarFormLaudo = function (salvarLaudoUrl, atualizarAreasEdificacaoU
             type: 'POST',
             data: $('#formLaudo').serialize(),
             url: salvarLaudoUrl,
+            success: function (result) {
+                $(SysCEF.AbaAtual).html(result);
+            }
+        });
+    });
+
+
+    $("#voltarBtn").click(function () {
+        $.ajax({
+            type: 'POST',
+            data: $('#formLaudo').serialize(),
+            url: voltarUrl,
             success: function (result) {
                 $(SysCEF.AbaAtual).html(result);
             }

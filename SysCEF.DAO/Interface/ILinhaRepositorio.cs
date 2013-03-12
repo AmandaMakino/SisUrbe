@@ -8,5 +8,7 @@ namespace SysCEF.DAO.Interface
     {
         Linha Obter(IUnitOfWork iUnitOfWork, int id);
         IEnumerable<Linha> BuscarTodos(IUnitOfWork unitOfWork);
+        void Salvar(IUnitOfWork unitOfWork, Linha linha);
+        void ExcluirTudo(IUnitOfWork unitOfWork);
     }
 }

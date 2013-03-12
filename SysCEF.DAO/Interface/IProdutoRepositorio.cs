@@ -8,5 +8,7 @@ namespace SysCEF.DAO.Interface
     {
         Produto Obter(IUnitOfWork iUnitOfWork, int id);
         IEnumerable<Produto> BuscarTodos(IUnitOfWork unitOfWork);
+        void Salvar(IUnitOfWork unitOfWork, Produto produto);
+        void ExcluirTudo(IUnitOfWork unitOfWork);
     }
 }

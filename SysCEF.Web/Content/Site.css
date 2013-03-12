@@ -166,6 +166,23 @@ header h1, #header h1 {
     color: #444;
 }
 
+.configuracoes 
+{
+    height: 210px;
+    margin: 15px 60px;
+}
+.configuracoes div 
+{
+    margin: 5px 0px;
+}
+
+.uploader 
+{
+    width: 500px; 
+    left: 0px; 
+    margin-top: 20px;
+}
+
 footer, 
 #footer {
     background-color: #0039BA;

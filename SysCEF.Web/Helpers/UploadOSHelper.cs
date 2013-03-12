@@ -2,6 +2,8 @@
 using DataAccess;
 using SysCEF.DAO.Interface;
 using SysCEF.Model;
+using System.IO;
+using System.Collections.Generic;
 
 namespace SysCEF.Web.Helpers
 {
@@ -39,15 +41,29 @@ namespace SysCEF.Web.Helpers
         #endregion
 
         #region Métodos Públicos
-        public Laudo GerarLaudoAPartirArquivo(string fileName)
+        public Laudo GerarLaudoAPartirArquivo(Stream stream)
         {
-            var linhasArquivo = System.IO.File.ReadAllLines(fileName);
+            List<string> linhas = new List<string>();
+
+            using (StreamReader reader = new StreamReader(stream, System.Text.Encoding.UTF8))
+            {
+                string linha;
+
+                while ((linha = reader.ReadLine()) != null)
+                {
+                    linhas.Add(linha);
+                }
+
+                reader.Close();
+            }
+
+            var linhasArquivo = linhas.ToArray();
 
             var referencia = ObterTexto(linhasArquivo[REFERENCIA], 30);
 
             var textoSolicitante = linhasArquivo[SOLICITANTE].Trim() + linhasArquivo[SOLICITANTE2].Trim();
 
-            var laudo = LaudoRepository.ObterPorReferencia(UnitOfWork, referencia) ??
+            Laudo laudo = LaudoRepository.ObterPorReferencia(UnitOfWork, referencia) ??
                         new Laudo
                         {
                             Referencia = referencia,
@@ -67,7 +83,7 @@ namespace SysCEF.Web.Helpers
                             Habitabilidade = true,
                             FatoresLiquidezValorImovel = (int)EnumFatoresLiquidezValorImovel.Nenhum
                         };
-            
+
             laudo.Imovel = GerarImovelAPartirArquivo(linhasArquivo);
 
             return laudo;

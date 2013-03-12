@@ -2,7 +2,10 @@
 
 <script type="text/javascript">
     $(function() {
-        SysCEF.ConfigurarFormLaudo('@Url.Action("Salvar", "Laudo")', '@Url.Action("AtualizarAreasEdificacao", "Laudo")');
+        SysCEF.ConfigurarFormLaudo(
+        '@Url.Action("Salvar", "Laudo")', 
+        '@Url.Action("Voltar", "Laudo")', 
+        '@Url.Action("AtualizarAreasEdificacao", "Laudo")');
     })
 </script>
 
@@ -10,7 +13,7 @@
     
     @Html.HiddenFor(m => m.LaudoId)
     @Html.HiddenFor(m => m.StatusLaudo)
-                                   
+                                          
     <div id="container">
     
         <div class="info">
@@ -32,6 +35,7 @@
         @Html.Partial("AreasLaudo/DocumentacaoObservacoes", Model)
     </div>
     <div class="barraBotoes">
+        <input id="voltarBtn" type="button" value="Voltar" style="width: 100px;" />
         <input id="salvarLaudoBtn" type="button" value="Salvar" style="width: 100px;"/>
     </div>
 </form>

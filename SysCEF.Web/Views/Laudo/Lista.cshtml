@@ -27,7 +27,8 @@
         <th>Cidade / UF</th>
 
         @{            
-            if (Model.StatusLaudos == EnumStatusLaudo.EmAndamento.ToString())
+            if (Model.StatusLaudos == EnumStatusLaudo.EmAndamento.ToString() ||
+                Model.StatusLaudos == EnumStatusLaudo.Concluido.ToString())
             {
                 <th></th>
             }
@@ -57,7 +58,7 @@
             if (Model.StatusLaudos == EnumStatusLaudo.EmAndamento.ToString() || Model.StatusLaudos == EnumStatusLaudo.Concluido.ToString())
             {
                 <td style="width: 25px; text-align: center;">
-                    <a onclick="SysCEF.Exportar('@Url.Action("Exportar", new { id = item.LaudoId })', '@Url.Content("~/Content/uploads/")');" title="Exportar Laudo">
+                    <a href="@Url.Action("Exportar", new { id = item.LaudoId })" title="Exportar Laudo">
                         <img alt="Exportar Laudo" src="@Url.Content("~/Content/images/exportar.png")"/>
                     </a>
                 </td>

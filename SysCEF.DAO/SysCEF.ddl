@@ -222,6 +222,7 @@ alter table [Configuracao]
 create table [Produto]
 (
 	[ProdutoID] int identity not null,
+	[Codigo] int not null,
 	[Descricao] nvarchar(255) not null CONSTRAINT [DF_Produto_Descricao] DEFAULT '',
 	[__Version] int not null CONSTRAINT DF_Produto___Version DEFAULT 0
 )
@@ -232,6 +233,7 @@ alter table [Produto]
 create table [Fonte]
 (
 	[FonteID] int identity not null,
+	[Codigo] int not null,
 	[Descricao] nvarchar(255) not null CONSTRAINT [DF_Fonte_Descricao] DEFAULT '',
 	[__Version] int not null CONSTRAINT DF_Fonte___Version DEFAULT 0
 )
@@ -242,6 +244,7 @@ alter table [Fonte]
 create table [Linha]
 (
 	[LinhaID] int identity not null,
+	[Codigo] int not null,
 	[Descricao] nvarchar(255) not null CONSTRAINT [DF_Linha_Descricao] DEFAULT '',
 	[__Version] int not null CONSTRAINT DF_Linha___Version DEFAULT 0
 )

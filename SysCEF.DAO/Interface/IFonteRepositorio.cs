@@ -8,5 +8,7 @@ namespace SysCEF.DAO.Interface
     {
         Fonte Obter(IUnitOfWork iUnitOfWork, int id);
         IEnumerable<Fonte> BuscarTodos(IUnitOfWork unitOfWork);
+        void Salvar(IUnitOfWork unitOfWork, Fonte fonte);
+        void ExcluirTudo(IUnitOfWork unitOfWork);
     }
 }

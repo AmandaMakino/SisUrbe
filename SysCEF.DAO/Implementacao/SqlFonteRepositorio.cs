@@ -19,5 +19,21 @@ namespace SysCEF.DAO.Implementacao
         {
             return PersistenceBroker.GetQueryable<Fonte>(unitOfWork);
         }
+
+        public void Salvar(IUnitOfWork unitOfWork, Fonte fonte)
+        {
+            PersistenceBroker.Salvar<Fonte>(unitOfWork, fonte);
+        }
+
+        public void ExcluirTudo(IUnitOfWork unitOfWork)
+        {
+            var itens = PersistenceBroker.GetQueryable<Fonte>(unitOfWork);
+
+            foreach (var item in itens)
+            {
+                var fonte = Obter(unitOfWork, item.FonteID);
+                PersistenceBroker.Excluir(unitOfWork, fonte);
+            }
+        }
     }
 }
