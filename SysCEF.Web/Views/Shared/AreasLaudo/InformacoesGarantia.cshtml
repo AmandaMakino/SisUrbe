@@ -8,7 +8,7 @@
         <table>
             <tr>
                 <td colspan="2" style="width: 30%">a) O imóvel, como um todo, aparenta condições de estabilidade e solidez?</td>
-                <td style="float: left;">@Html.CheckBoxFor(m => m.Laudo.EstabilidadeSolidez)</td>
+                <td style="float: left;">@Html.RadioButtonListFor(m => m.EstabilidadeSolidez)</td>
                 <td style="width: 20%;">&nbsp;</td>
             </tr>
             <tr>
@@ -19,7 +19,7 @@
             </tr>
             <tr>
                 <td colspan="2">b) O imóvel, como um todo, apresenta vícios de construção aparente?</td>
-                <td style="float: left;">@Html.CheckBoxFor(m => m.Laudo.ViciosConstrucao)</td>
+                <td style="float: left;">@Html.RadioButtonListFor(m => m.ViciosConstrucao)</td>
                 <td>&nbsp;</td>
             </tr>
             <tr>
@@ -30,7 +30,7 @@
             </tr>
             <tr>
                 <td colspan="2">c) O imóvel aparenta condições de habiltabilidade?</td>
-                <td style="float: left;">@Html.CheckBoxFor(m => m.Laudo.Habitabilidade)</td>
+                <td style="float: left;">@Html.RadioButtonListFor(m => m.CondicoesHabitabilidade)</td>
                 <td>&nbsp;</td>
             </tr>
             <tr>

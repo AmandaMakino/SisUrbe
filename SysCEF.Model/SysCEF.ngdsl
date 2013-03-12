@@ -149,18 +149,18 @@
         <classAttribute name="NivelOfertas" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
         <classAttribute name="NivelDemanda" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
         <classAttribute name="ObservacoesAvaliacao" type="String" isNullable="true" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
-        <classAttribute name="EstabilidadeSolidez" type="Boolean" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="EstabilidadeSolidez" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
         <classAttribute name="EstabilidadeSolidezJustificativa" type="String" isNullable="true" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
-        <classAttribute name="ViciosConstrucao" type="Boolean" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="ViciosConstrucao" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
         <classAttribute name="ViciosConstrucaoRelacao" type="String" isNullable="true" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
-        <classAttribute name="Habitabilidade" type="Boolean" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="Habitabilidade" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
         <classAttribute name="HabitabilidadeJustificativa" type="String" isNullable="true" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
         <classAttribute name="FatoresLiquidezValorImovel" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
         <classAttribute name="AceitoComoGarantia" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
         <classAttribute name="MatriculaRGI" type="String" isNullable="true" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
         <classAttribute name="Oficio" type="String" isNullable="true" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
         <classAttribute name="OutrosDocumentos" type="String" isNullable="true" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
-        <classAttribute name="Conformidade" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
+        <classAttribute name="ConformidadeDocumentacao" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
         <classAttribute name="Divergencia" type="String" isNullable="true" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
         <classAttribute name="ObservacoesFinais" type="String" isNullable="true" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />
         <classAttribute name="LocalEmissaoLaudo" type="String" isNullable="true" setterAccessModifier="Public" isIdentity="false" scale="0" precision="0" />

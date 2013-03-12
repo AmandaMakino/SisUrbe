@@ -68,20 +68,21 @@ namespace SysCEF.Web.Helpers
                         {
                             Referencia = referencia,
                             Solicitante = ObterSolicitante(textoSolicitante),
-                            Produto = ProdutoRepositorio.Obter(UnitOfWork, ObterNumero(linhasArquivo[PRODUTO], 3)),
-                            Linha = LinhaRepositorio.Obter(UnitOfWork, ObterNumero(linhasArquivo[LINHA], 3)),
-                            Fonte = FonteRepositorio.Obter(UnitOfWork, ObterNumero(linhasArquivo[FONTE], 3)),
+                            Produto = ProdutoRepositorio.ObterPorCodigo(UnitOfWork, ObterNumero(linhasArquivo[PRODUTO], 3)),
+                            Linha = LinhaRepositorio.ObterPorCodigo(UnitOfWork, ObterNumero(linhasArquivo[LINHA], 3)),
+                            Fonte = FonteRepositorio.ObterPorCodigo(UnitOfWork, ObterNumero(linhasArquivo[FONTE], 3)),
                             Status = (int)EnumStatusLaudo.Importado,
                             FormaTerreno = (int)EnumFormaTerreno.Retangular,
                             InclinacaoTerreno = (int)EnumInclinacaoTerreno.Plano,
                             SituacaoTerreno = (int)EnumSituacaoTerreno.MeioQuadra,
                             SuperficieTerreno = (int)EnumSuperficieTerreno.Seco,
                             FracaoIdealTerreno = 0.000000f,
-                            AceitoComoGarantia = (int)EnumSimOuNao.Sim,
-                            Conformidade = (int)EnumSimOuNao.Sim,
-                            EstabilidadeSolidez = true,
-                            Habitabilidade = true,
-                            FatoresLiquidezValorImovel = (int)EnumFatoresLiquidezValorImovel.Nenhum
+                            AceitoComoGarantia = (int)EnumGarantiaSimOuNao.GarSim,
+                            EstabilidadeSolidez = (int)EnumEstabilidadeSimOuNao.EstSim,
+                            Habitabilidade = (int)EnumHabitabilidadeSimOuNao.HabitSim,
+                            ViciosConstrucao = (int)EnumVicioSimOuNao.VicioNao,
+                            FatoresLiquidezValorImovel = (int)EnumFatoresLiquidezValorImovel.Nenh,
+                            ConformidadeDocumentacao = (int)EnumConformidadeDocumentacaoSimOuNao.DocSim
                         };
 
             laudo.Imovel = GerarImovelAPartirArquivo(linhasArquivo);

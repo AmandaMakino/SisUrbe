@@ -96,18 +96,18 @@
 		<property name="NivelOfertas" column="NivelOfertas" type="Int32" />
 		<property name="NivelDemanda" column="NivelDemanda" type="Int32" />
 		<property name="ObservacoesAvaliacao" column="ObservacoesAvaliacao" type="String" />
-		<property name="EstabilidadeSolidez" column="EstabilidadeSolidez" type="Boolean" />
+		<property name="EstabilidadeSolidez" column="EstabilidadeSolidez" type="Int32" />
 		<property name="EstabilidadeSolidezJustificativa" column="EstabilidadeSolidezJustificativa" type="String" />
-		<property name="ViciosConstrucao" column="ViciosConstrucao" type="Boolean" />
+		<property name="ViciosConstrucao" column="ViciosConstrucao" type="Int32" />
 		<property name="ViciosConstrucaoRelacao" column="ViciosConstrucaoRelacao" type="String" />
-		<property name="Habitabilidade" column="Habitabilidade" type="Boolean" />
+		<property name="Habitabilidade" column="Habitabilidade" type="Int32" />
 		<property name="HabitabilidadeJustificativa" column="HabitabilidadeJustificativa" type="String" />
 		<property name="FatoresLiquidezValorImovel" column="FatoresLiquidezValorImovel" type="Int32" />
 		<property name="AceitoComoGarantia" column="AceitoComoGarantia" type="Int32" />
 		<property name="MatriculaRGI" column="MatriculaRGI" type="String" />
 		<property name="Oficio" column="Oficio" type="String" />
 		<property name="OutrosDocumentos" column="OutrosDocumentos" type="String" />
-		<property name="Conformidade" column="Conformidade" type="Int32" />
+		<property name="ConformidadeDocumentacao" column="ConformidadeDocumentacao" type="Int32" />
 		<property name="Divergencia" column="Divergencia" type="String" />
 		<property name="ObservacoesFinais" column="ObservacoesFinais" type="String" />
 		<property name="LocalEmissaoLaudo" column="LocalEmissaoLaudo" type="String" />

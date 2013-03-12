@@ -126,7 +126,6 @@ SysCEF.ConfigurarUpload = function () {
         'uploader': SysCEF.UploaderUrl,
         'cancelImg': SysCEF.CancelImageUrl,
         'buttonText': 'Importar OS...',
-        'display': 'block',
         'script': SysCEF.CaminhoAcaoImportar,
         'scriptData': { ASPSESSID: ASPSESSID, AUTHID: auth },
         'fileDataName': 'FileData',
@@ -162,7 +161,7 @@ SysCEF.ConfigurarUpload = function () {
     });
 };
 
-SysCEF.ConfigurarUploadDados = function (tipo, display) {
+SysCEF.ConfigurarUploadDados = function (tipo) {
     // Multiple files - single input
     var auth = "<% = Request.Cookies[FormsAuthentication.FormsCookieName]==null ? string.Empty : Request.Cookies[FormsAuthentication.FormsCookieName].Value %>";
     var ASPSESSID = "<%= Session.SessionID %>";
@@ -171,7 +170,6 @@ SysCEF.ConfigurarUploadDados = function (tipo, display) {
         'uploader': SysCEF.UploaderUrl,
         'cancelImg': SysCEF.CancelImageUrl,
         'buttonText': 'Importar dados...',
-        'display': display,
         'script': SysCEF.CaminhoAcaoImportar + '?tipo=' + tipo,
         'scriptData': { ASPSESSID: ASPSESSID, AUTHID: auth },
         'fileDataName': 'FileData',

@@ -21,7 +21,7 @@
                 <td>@Html.TextAreaFor(m => m.Laudo.OutrosDocumentos, new Dictionary<string, object> { { "style", "width: 100%; height: 30px;" } })</td>
             </tr>
             <tr><td colspan="2">As informações constantes da documentação apresentada aparentam conformidade com a realidade do imóvel vistoriado?</td></tr>
-            <tr><td>@Html.RadioButtonListFor(m => m.Conformidade)</td></tr>
+            <tr><td>@Html.RadioButtonListFor(m => m.ConformidadeDocumentacao)</td></tr>
             <tr><td colspan="2">Em caso negativo citar a divergência aparente: </td></tr>
             <tr><td colspan="2">@Html.TextAreaFor(m => m.Laudo.Divergencia, new Dictionary<string, object> { { "style", "width: 100%; height: 30px;" } })</td></tr>
         </table>

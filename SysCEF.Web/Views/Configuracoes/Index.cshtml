@@ -14,7 +14,9 @@
         SysCEF.ConfigurarUploadDados('fonte', 'block');
         SysCEF.ConfigurarUploadDados('linha', 'none');
         SysCEF.ConfigurarUploadDados('produto', 'none');
-        
+        $("#linhauploaderUploader").hide();
+        $("#produtouploaderUploader").hide();
+
         $("input[type=radio]").on("click", function () {
             $(".fileUploaderBtn").hide();
             $("#" + this.value.toLowerCase() + "uploaderUploader").show();

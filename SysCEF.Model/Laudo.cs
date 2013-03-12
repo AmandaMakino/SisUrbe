@@ -303,19 +303,19 @@ namespace SysCEF.Model
 		public virtual string ObservacoesAvaliacao { get; set; }
 
 		[DataMember]
-		public virtual bool EstabilidadeSolidez { get; set; }
+		public virtual int EstabilidadeSolidez { get; set; }
 
 		[DataMember]
 		public virtual string EstabilidadeSolidezJustificativa { get; set; }
 
 		[DataMember]
-		public virtual bool ViciosConstrucao { get; set; }
+		public virtual int ViciosConstrucao { get; set; }
 
 		[DataMember]
 		public virtual string ViciosConstrucaoRelacao { get; set; }
 
 		[DataMember]
-		public virtual bool Habitabilidade { get; set; }
+		public virtual int Habitabilidade { get; set; }
 
 		[DataMember]
 		public virtual string HabitabilidadeJustificativa { get; set; }
@@ -336,7 +336,7 @@ namespace SysCEF.Model
 		public virtual string OutrosDocumentos { get; set; }
 
 		[DataMember]
-		public virtual int Conformidade { get; set; }
+		public virtual int ConformidadeDocumentacao { get; set; }
 
 		[DataMember]
 		public virtual string Divergencia { get; set; }

@@ -269,8 +269,11 @@ namespace SysCEF.Web.Controllers
                 NumeroOfertas = RadioButtonHelper.ParseEnumToRadioButtonList((EnumNivelImobiliario)laudo.NivelOfertas),
                 NivelDemanda = RadioButtonHelper.ParseEnumToRadioButtonList((EnumNivelImobiliario)laudo.NivelDemanda),
                 FatoresLiquidezValorImovel = RadioButtonHelper.ParseEnumToRadioButtonList((EnumFatoresLiquidezValorImovel)laudo.FatoresLiquidezValorImovel),
-                AceitoComoGarantia = RadioButtonHelper.ParseEnumToRadioButtonList((EnumSimOuNao)laudo.AceitoComoGarantia),
-                Conformidade = RadioButtonHelper.ParseEnumToRadioButtonList((EnumSimOuNao)laudo.Conformidade),
+                EstabilidadeSolidez = RadioButtonHelper.ParseEnumToRadioButtonList((EnumEstabilidadeSimOuNao)laudo.EstabilidadeSolidez),
+                ViciosConstrucao = RadioButtonHelper.ParseEnumToRadioButtonList((EnumVicioSimOuNao)laudo.ViciosConstrucao),
+                CondicoesHabitabilidade = RadioButtonHelper.ParseEnumToRadioButtonList((EnumHabitabilidadeSimOuNao)laudo.Habitabilidade), 
+                AceitoComoGarantia = RadioButtonHelper.ParseEnumToRadioButtonList((EnumGarantiaSimOuNao)laudo.AceitoComoGarantia),
+                ConformidadeDocumentacao = RadioButtonHelper.ParseEnumToRadioButtonList((EnumConformidadeDocumentacaoSimOuNao)laudo.ConformidadeDocumentacao),
                 // Identificação
                 ListaEstados = opcoesHelper.ObterOpcoesEstado(EstadoRepositorio.BuscarTodos(WorkLifetimeManager.Value)),
                 ListaCidades = opcoesHelper.ObterOpcoesCidade(CidadeRepositorio.BuscarTodasEstado(WorkLifetimeManager.Value, laudo.Imovel.Cidade.Estado.Sigla)),
@@ -438,7 +441,7 @@ namespace SysCEF.Web.Controllers
                 laudo.Comarca = CidadeRepositorio.Obter(WorkLifetimeManager.Value, model.Laudo.Comarca.CidadeID);
 
             laudo.OutrosDocumentos = model.Laudo.OutrosDocumentos;
-            laudo.Conformidade = (int)model.Conformidade.SelectedValue;
+            laudo.ConformidadeDocumentacao = (int)model.ConformidadeDocumentacao.SelectedValue;
             laudo.Divergencia = model.Laudo.Divergencia;
             #endregion
 

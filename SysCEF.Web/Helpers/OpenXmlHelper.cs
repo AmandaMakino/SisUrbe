@@ -21,8 +21,53 @@ namespace SysCEF.Web.Helpers
     {
         private WorkbookPart _wbPart;
         private SpreadsheetDocument _document;
-        private Worksheet _folhaAtual;
+        private SharedStringTablePart _sharedStringPart;
+        private Worksheet _activeWorksheet;
         private Controls _controlesFolhaAtual;
+
+        #region Public Methods
+        public List<object[]> LerPlanilhaDados(Stream stream)
+        {
+            List<object[]> dadosPlanilha = new List<object[]>();
+
+            using (_document = SpreadsheetDocument.Open(stream, true))
+            {
+                try
+                {
+                    _wbPart = _document.WorkbookPart;
+                    _sharedStringPart = GetSharedStringPart();
+
+                    if (SelectFirstSheet())
+                    {
+                        int indice = 0;
+
+                        foreach (Row row in _activeWorksheet.Descendants<Row>())
+                        {
+                            indice++;
+
+                            if (indice == 1) continue; // Pula o cabeçalho.
+
+                            List<object> dadosLinha = new List<object>();
+
+                            foreach (Cell celula in row.Descendants<Cell>())
+                                dadosLinha.Add(GetCellValue(celula));
+
+                            dadosPlanilha.Add(dadosLinha.ToArray());
+                        }
+                    }
+                }
+                catch
+                {
+                    throw;
+                }
+                finally
+                {
+                    _document.Close();
+                }
+
+                return dadosPlanilha;
+            }
+        }
 
         public void PreencherPlanilha(MemoryStream memoryStream, Laudo laudo, Configuracao configuracao)
         {
@@ -31,9 +76,10 @@ namespace SysCEF.Web.Helpers
                 try
                 {
                     _wbPart = _document.WorkbookPart;
+                    _sharedStringPart = GetSharedStringPart();
 
                     #region Laudo fl 1
-                    if (SelecionarAba("Laudo fl 1"))
+                    if (SelectSheet("Laudo fl 1"))
                     {
                         #region Cabeçalho
                         PreencherCampo("L8", laudo.Solicitante);
@@ -62,7 +108,7 @@ namespace SysCEF.Web.Helpers
                         #endregion
 
                         #region Caracterização da Região
-                        //SelecionarOpcao(laudo.UsosPredominantes);
+                        SelecionarOpcao(((EnumUsosPredominantes)laudo.UsosPredominantes).ToString());
 
                         SelecionarServicosPublicos(laudo);
 
@@ -182,7 +228,7 @@ namespace SysCEF.Web.Helpers
                     #endregion
 
                     #region Laudo fl 2
-                    if (SelecionarAba("Laudo fl 2"))
+                    if (SelectSheet("Laudo fl 2"))
                     {
                         #region Cabeçalho
                         PreencherCampo("L6", laudo.Solicitante);
@@ -204,13 +250,13 @@ namespace SysCEF.Web.Helpers
 
                         switch ((EnumFatoresLiquidezValorImovel)laudo.FatoresLiquidezValorImovel)
                         {
-                            case EnumFatoresLiquidezValorImovel.Valorizantes:
+                            case EnumFatoresLiquidezValorImovel.Val:
                                 //SelecionarOpcao("Val");
                                 break;
-                            case EnumFatoresLiquidezValorImovel.Desvalorizantes:
+                            case EnumFatoresLiquidezValorImovel.Desval:
                                 //SelecionarOpcao("Desval");
                                 break;
-                            case EnumFatoresLiquidezValorImovel.Nenhum:
+                            case EnumFatoresLiquidezValorImovel.Nenh:
                                 //SelecionarOpcao("Nenh");
                                 break;
                         }
@@ -257,7 +303,7 @@ namespace SysCEF.Web.Helpers
                     #endregion
 
                     #region Laudo fl 3
-                    if (SelecionarAba("Laudo fl 3"))
+                    if (SelectSheet("Laudo fl 3"))
                     {
                         #region Cabeçalho
                         PreencherCampo("L6", laudo.Solicitante);
@@ -317,147 +363,64 @@ namespace SysCEF.Web.Helpers
                 }
             }
         }
-
-        private bool SelecionarAba(string nomeAba)
+        
+        public void PreencherCampo(string address, object value)
         {
-            Sheet aba = _wbPart.Workbook.Descendants<Sheet>().ToList().FirstOrDefault(s => s.Name == nomeAba);
-
-            if (aba != null)
+            if (value != null)
             {
-                _folhaAtual = ((WorksheetPart)(_wbPart.GetPartById(aba.Id))).Worksheet;
-                _controlesFolhaAtual = _folhaAtual.GetFirstChild<Controls>();
+                var text = value.ToString();
 
-                return true;
-            }
+                if (string.IsNullOrWhiteSpace(text))
+                    return;
 
-            return false;
-        }
-
-        private bool SelecionarPrimeiraAba()
-        {
-            Sheet aba = _wbPart.Workbook.Descendants<Sheet>().ToList().FirstOrDefault();
-            
-            if (aba != null)
-            {
-                _folhaAtual = ((WorksheetPart)(_wbPart.GetPartById(aba.Id))).Worksheet;
-                _controlesFolhaAtual = _folhaAtual.GetFirstChild<Controls>();
-
-                return true;
-            }
-
-            return false;
-        }
-
-        public void PreencherCampo(string address, object valor)
-        {
-            if (valor == null)
-                return;
-
-            Cell celula = ObterCelula(address);
-
-            CellValue valorCelula = new CellValue();
-
-            valorCelula.Text = valor.ToString();
-
-            celula.Append(valorCelula);
-
-            if (valor is string)
-                celula.DataType = new EnumValue<CellValues>(CellValues.String);
-            else if (valor is bool)
-                celula.DataType = new EnumValue<CellValues>(CellValues.Boolean);
-            else
-                celula.DataType = new EnumValue<CellValues>(CellValues.Number);
-
-            _folhaAtual.Save();
-        }
-
-        public MemoryStream ReadFileIntoMemoryStream(string fileName)
-        {
-            MemoryStream ms = new MemoryStream();
-
-            using (FileStream fileStream = File.OpenRead(fileName))
-            {
-                ms.SetLength(fileStream.Length);
-
-                fileStream.Read(ms.GetBuffer(), 0, Convert.ToInt32(fileStream.Length));
-            }
-
-            return ms;
-        }
-
-        private Cell ObterCelula(string address)
-        {
-            Row linha = ObterLinha(address);
-
-            if (linha == null)
-                return null;
-
-            return linha.Elements<Cell>().Where(c => string.Compare
-                   (c.CellReference.Value, address, true) == 0).First();
-        }
-
-        private Row ObterLinha(string address)
-        {
-            var indice = ObterIndiceLinha(address);
-
-            return _folhaAtual.GetFirstChild<SheetData>().
-              Elements<Row>().Where(r => r.RowIndex == indice).First();
-        }
-
-        private UInt32 ObterIndiceLinha(string address)
-        {
-            string rowPart;
-            UInt32 l;
-            UInt32 result = 0;
-
-            for (int i = 0; i < address.Length; i++)
-            {
-                if (UInt32.TryParse(address.Substring(i, 1), out l))
+                if (value is bool)
                 {
-                    rowPart = address.Substring(i, address.Length - i);
-                    if (UInt32.TryParse(rowPart, out l))
-                    {
-                        result = l;
-                        break;
-                    }
+                    bool selected = Convert.ToBoolean(value);
+
+                    if (selected)
+                        InsertBoolean(address, "1");
                 }
+                else
+                    InsertText(address, text);
+                
+                _activeWorksheet.Save();
             }
-            return result;
         }
 
-        private void SelecionarOpcao(int valor)
+        public void SelecionarOpcao(string name)
         {
-            AlternateContent alternateContent = _controlesFolhaAtual.Elements<AlternateContent>().ElementAt(valor);
-            AlternateContentChoice alternateContentChoice = alternateContent.GetFirstChild<AlternateContentChoice>();
-            Control control = alternateContentChoice.GetFirstChild<Control>();
+            IEnumerable<AlternateContent> alternateContents = _controlesFolhaAtual.Elements<AlternateContent>();
+
+            Control control = (from ac in alternateContents
+                               from acc in ac.GetFirstChild<AlternateContentChoice>()
+                               from c in acc.GetFirstChild<Control>()
+                               from p in c.GetFirstChild<ControlProperties>()
+                               where (c as Control).Name == name
+                               select (c as Control)).SingleOrDefault();
+
+            //AlternateContent alternateContent = _controlesFolhaAtual.Elements<AlternateContent>().ElementAt(index);
+
+            //AlternateContentChoice alternateContentChoice = alternateContent.GetFirstChild<AlternateContentChoice>();
+            //Control control = alternateContentChoice.GetFirstChild<Control>();
+
             ControlProperties controlProperties = control.GetFirstChild<ControlProperties>();
 
-            PreencherCampo(controlProperties.LinkedCell, "VERDADEIRO");
+            PreencherCampo(controlProperties.LinkedCell, true);
         }
 
-        private void SelecionarInfraEstruturasUrbanas(Laudo laudo)
+        public void SelecionarInfraEstruturasUrbanas(Laudo laudo)
         {
-            //foreach (var infra in laudo.ListaInfraEstruturaUrbana)
-            //{
-            //    var objeto = (OLEObject)WorksheetAtual.OLEObjects(((EnumInfraEstruturaUrbana)infra.TipoInfraEstruturaUrbana).ToString());
-
-            //    if (objeto != null)
-            //        objeto.Object.Value = 1;
-            //}
+            foreach (var infra in laudo.ListaInfraEstruturaUrbana)
+                SelecionarOpcao(((EnumInfraEstruturaUrbana)infra.TipoInfraEstruturaUrbana).ToString());
         }
 
-        private void SelecionarServicosPublicos(Laudo laudo)
+        public void SelecionarServicosPublicos(Laudo laudo)
         {
-            //foreach (var servico in laudo.ListaServicoPublicoComunitario)
-            //{
-            //    var objeto = (OLEObject)WorksheetAtual.OLEObjects(((EnumServicoPublicoComunitario)servico.TipoServicoPublicoComunitario).ToString());
-
-            //    if (objeto != null)
-            //        objeto.Object.Value = 1;
-            //}
+            foreach (var servico in laudo.ListaServicoPublicoComunitario)
+                SelecionarOpcao(((EnumServicoPublicoComunitario)servico.TipoServicoPublicoComunitario).ToString());
         }
 
-        private string ObterDivisaoInterna(Laudo laudo)
+        public string ObterDivisaoInterna(Laudo laudo)
         {
             var divisaoInterna = new StringBuilder();
 
@@ -499,64 +462,149 @@ namespace SysCEF.Web.Helpers
 
             return divisaoInterna.ToString(0, divisaoInterna.Length - 2); // Ignora os dois últimos caracteres da string para que não acabe em "; "
         }
+        #endregion
 
-        private string ObterValor(Cell celula)
+        #region Private Methods
+        private SharedStringTablePart GetSharedStringPart()
+        {
+            SharedStringTablePart sharedStringPart;
+
+            if (_wbPart.GetPartsOfType<SharedStringTablePart>().Count() > 0)
+                sharedStringPart = _wbPart.GetPartsOfType<SharedStringTablePart>().First();
+            else
+                sharedStringPart = _wbPart.AddNewPart<SharedStringTablePart>();
+
+            // If the part does not contain a SharedStringTable, create one.
+            if (sharedStringPart.SharedStringTable == null)
+                sharedStringPart.SharedStringTable = new SharedStringTable();
+
+            return sharedStringPart;
+        }
+
+        private bool SelectSheet(string nomeAba)
+        {
+            Sheet aba = _wbPart.Workbook.Descendants<Sheet>().ToList().FirstOrDefault(s => s.Name == nomeAba);
+
+            if (aba != null)
+            {
+                _activeWorksheet = ((WorksheetPart)(_wbPart.GetPartById(aba.Id))).Worksheet;
+                _controlesFolhaAtual = _activeWorksheet.GetFirstChild<Controls>();
+
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool SelectFirstSheet()
+        {
+            Sheet aba = _wbPart.Workbook.Descendants<Sheet>().ToList().FirstOrDefault();
+
+            if (aba != null)
+            {
+                _activeWorksheet = ((WorksheetPart)(_wbPart.GetPartById(aba.Id))).Worksheet;
+                _controlesFolhaAtual = _activeWorksheet.GetFirstChild<Controls>();
+
+                return true;
+            }
+
+            return false;
+        }
+
+        private Cell GetCell(string address)
+        {
+            Row linha = GetRow(address);
+
+            if (linha == null)
+                return null;
+
+            return linha.Elements<Cell>().Where(c => string.Compare
+                   (c.CellReference.Value, address, true) == 0).First();
+        }
+
+        private Row GetRow(string address)
+        {
+            var indice = GetRowIndex(address);
+
+            return _activeWorksheet.GetFirstChild<SheetData>().
+              Elements<Row>().Where(r => r.RowIndex == indice).First();
+        }
+
+        private UInt32 GetRowIndex(string address)
+        {
+            string rowPart;
+            UInt32 l;
+            UInt32 result = 0;
+
+            for (int i = 0; i < address.Length; i++)
+            {
+                if (UInt32.TryParse(address.Substring(i, 1), out l))
+                {
+                    rowPart = address.Substring(i, address.Length - i);
+                    if (UInt32.TryParse(rowPart, out l))
+                    {
+                        result = l;
+                        break;
+                    }
+                }
+            }
+            return result;
+        }
+
+        private string GetCellValue(Cell celula)
         {
             if (celula.DataType != null && celula.DataType == CellValues.SharedString)
             {
-                return ObterString(celula.CellValue.Text);
+                return GetText(celula.CellValue.Text);
             }
 
             return celula.CellValue.Text;
         }
 
-        private string ObterString(string id)
+        private int InsertSharedStringItem(string text)
         {
-            var sharedString = _wbPart.SharedStringTablePart.SharedStringTable.Elements<SharedStringItem>().ElementAt(Int32.Parse(id));
+            int i = 0;
+
+            // Iterate through all the items in the SharedStringTable. If the text already exists, return its index.
+            foreach (SharedStringItem item in _sharedStringPart.SharedStringTable.Elements<SharedStringItem>())
+            {
+                if (item.InnerText == text)
+                {
+                    return i;
+                }
+
+                i++;
+            }
+
+            // The text does not exist in the part. Create the SharedStringItem and return its index.
+            _sharedStringPart.SharedStringTable.AppendChild(new SharedStringItem(new DocumentFormat.OpenXml.Spreadsheet.Text(text)));
+            _sharedStringPart.SharedStringTable.Save();
+
+            return i;
+        }
+        
+        private string GetText(string id)
+        {
+            var sharedString = _sharedStringPart.SharedStringTable.Elements<SharedStringItem>().ElementAt(Int32.Parse(id));
 
             return sharedString.Text.Text;
         }
 
-        public List<object[]> LerPlanilhaDados(Stream stream)
+        private void InsertText(string address, string text)
         {
-            List<object[]> dadosPlanilha = new List<object[]>();
+            int index = InsertSharedStringItem(text);
 
-            using (_document = SpreadsheetDocument.Open(stream, true))
-            {
-                try
-                {
-                    _wbPart = _document.WorkbookPart;
-
-                    if (SelecionarPrimeiraAba())
-                    {
-                        int indice = 0;
-
-                        foreach (Row row in _folhaAtual.Descendants<Row>())
-                        {
-                            indice++;
-
-                            if (indice == 1) continue; // Pula o cabeçalho.
-
-                            List<object> dadosLinha = new List<object>();
-
-                            foreach (Cell celula in row.Descendants<Cell>())
-                                dadosLinha.Add(ObterValor(celula));
-
-                            dadosPlanilha.Add(dadosLinha.ToArray());
-                        }
-                    }
-                }
-                catch
-                {
-                    throw;
-                }
-                finally
-                {
-                    _document.Close();
-                }
-
-                return dadosPlanilha;
-            }
+            Cell cell = GetCell(address);
+            cell.CellValue = new CellValue(index.ToString());
+            cell.DataType = new EnumValue<CellValues>(CellValues.SharedString);
         }
+
+        private void InsertBoolean(string address, string value)
+        {
+            Cell cell = GetCell(address);
+            cell.CellValue = new CellValue(value);
+            cell.DataType = new EnumValue<CellValues>(CellValues.Boolean);
+        }
+        #endregion
     }
 }

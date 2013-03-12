@@ -1,6 +1,4 @@
---Generated using version 1.0 of the NeedhamGroupDSL Tool
-
---Generated using version 1.0 of the NeedhamGroupDSL Tool
+-- Tabelas:
 
 create table [Imovel]
 (
@@ -173,18 +171,18 @@ create table [Laudo]
 	[NivelOfertas] int not null,
 	[NivelDemanda] int not null,
 	[ObservacoesAvaliacao] nvarchar(255) null,
-	[EstabilidadeSolidez] bit not null,
+	[EstabilidadeSolidez] int not null,
 	[EstabilidadeSolidezJustificativa] nvarchar(255) null,
-	[ViciosConstrucao] bit not null,
+	[ViciosConstrucao] int not null,
 	[ViciosConstrucaoRelacao] nvarchar(255) null,
-	[Habitabilidade] bit not null,
+	[Habitabilidade] int not null,
 	[HabitabilidadeJustificativa] nvarchar(255) null,
 	[FatoresLiquidezValorImovel] int not null,
 	[AceitoComoGarantia] int not null,
 	[MatriculaRGI] nvarchar(255) null,
 	[Oficio] nvarchar(255) null,
 	[OutrosDocumentos] nvarchar(255) null,
-	[Conformidade] int not null,
+	[ConformidadeDocumentacao] int not null,
 	[Divergencia] nvarchar(255) null,
 	[ObservacoesFinais] nvarchar(255) null,
 	[LocalEmissaoLaudo] nvarchar(255) null,
@@ -254,7 +252,7 @@ create table [Linha]
 alter table [Linha]
 	add constraint [Linha_PK] primary key ([LinhaID])
 
-
+	
 -- Chaves estrangeiras:
 alter table [Imovel] add constraint [FK_Imovel_Cidade] foreign key ([CidadeID]) references [Cidade] ([CidadeID])
 alter table [Imovel] add constraint [FK_Imovel_TipoLogradouro] foreign key ([TipoLogradouroID]) references [TipoLogradouro] ([TipoLogradouroID])

@@ -15,6 +15,14 @@ namespace SysCEF.DAO.Implementacao
             return PersistenceBroker.Obter<Produto>(unitOfWork, id);
         }
 
+        public Produto ObterPorCodigo(IUnitOfWork unitOfWork, int codigo)
+        {
+            return PersistenceBroker.GetQueryable<Produto>(unitOfWork)
+                .Where(p => p.Codigo == codigo)
+                .Select(p => p)
+                .SingleOrDefault();
+        }
+
         public IEnumerable<Produto> BuscarTodos(IUnitOfWork unitOfWork)
         {
             return PersistenceBroker.GetQueryable<Produto>(unitOfWork);

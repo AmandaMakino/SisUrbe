@@ -58,15 +58,7 @@ namespace SysCEF.Model
         [Description("10")]
         Dez = 10
     }
-
-    public enum EnumSimOuNao
-    {
-        [Description("Sim")]
-        Sim = 0,
-        [Description("Não")]
-        Nao = 1
-    }
-
+    
     public enum EnumDisposicaoRadioButtons
     {
         Horizontal = 0,
@@ -110,9 +102,9 @@ namespace SysCEF.Model
         [Description("Residencial Unifamiliar")]
         ResUni = 0,
         [Description("Residencial Multifamiliar")]
-        ResMult = 1,
+        ResMult = 2,
         [Description("Comercial")]
-        Com = 2,
+        Com = 1,
         [Description("Industrial")]
         Ind = 3,
     }
@@ -120,41 +112,41 @@ namespace SysCEF.Model
     public enum EnumInfraEstruturaUrbana
     {
         [Description("Água")]
-        Ag = 0,
+        Ag = 4,
         [Description("Esgoto Sanitário")]
-        Esg = 1,
+        Esg = 5,
         [Description("Energia Elétrica")]
-        EE = 2,
+        EE = 6,
         [Description("Telefone")]
-        Tel = 3,
+        Tel = 7,
         [Description("Pavimentação")]
-        Pav = 4,
+        Pav = 8,
         [Description("Esgoto Pluvial")]
-        Plu = 5,
+        Plu = 9,
         [Description("Gás Canalizado")]
-        Gas = 6,
+        Gas = 10,
         [Description("Iluminação Pública")]
-        Il = 7
+        Il = 11
     }
 
     public enum EnumServicoPublicoComunitario
     {
         [Description("Coleta de Lixo")]
-        Lixo = 0,
+        Lixo = 12,
         [Description("Transporte Coletivo")]
-        Tran = 1,
+        Tran = 13,
         [Description("Comércio")]
-        Come = 2,
+        Come = 14,
         [Description("Rede Bancária")]
-        ReBa = 3,
+        ReBa = 15,
         [Description("Escola")]
-        Esco = 4,
+        Esco = 16,
         [Description("Saúde")]
-        Saud = 5,
+        Saud = 17,
         [Description("Segurança")]
-        Segu = 6,
+        Segu = 18,
         [Description("Lazer")]
-        Laze = 7
+        Laze = 19
     }
     #endregion
 
@@ -449,14 +441,56 @@ namespace SysCEF.Model
     #endregion
 
     #region Informações Complementares
+    public enum EnumEstabilidadeSimOuNao
+    {
+        [Description("Sim")]
+        EstSim = 8,
+        [Description("Não")]
+        EstNao = 9
+    }
+
+    public enum EnumVicioSimOuNao
+    {
+        [Description("Sim")]
+        VicioSim = 6,
+        [Description("Não")]
+        VicioNao = 7
+    }
+
+    public enum EnumHabitabilidadeSimOuNao
+    {
+        [Description("Sim")]
+        HabitSim = 4,
+        [Description("Não")]
+        HabitNao = 1
+    }
+
     public enum EnumFatoresLiquidezValorImovel
     {
         [Description("Valorizantes")]
-        Valorizantes = 0,
+        Val = 0,
         [Description("Desvalorizantes")]
-        Desvalorizantes = 1,
+        Desval = 1,
         [Description("Nenhum")]
-        Nenhum = 2
+        Nenh = 2
     }
+    public enum EnumGarantiaSimOuNao
+    {
+        [Description("Sim")]
+        GarSim = 0,
+        [Description("Não")]
+        GarNao = 1
+    }
+
+    public enum EnumConformidadeDocumentacaoSimOuNao
+    {
+        [Description("Sim")]
+        DocSim = 0,
+        [Description("Não")]
+        DocNao = 1
+    }
+
     #endregion
+
+
 }

@@ -108,15 +108,18 @@ namespace SysCEF.Web.Models
         #endregion
 
         #region Informações, Garantia, Documentação e Observações
+        public RadioButtonList<EnumEstabilidadeSimOuNao> EstabilidadeSolidez { get; set; }
+        public RadioButtonList<EnumVicioSimOuNao> ViciosConstrucao { get; set; }
+        public RadioButtonList<EnumHabitabilidadeSimOuNao> CondicoesHabitabilidade { get; set; }
         public RadioButtonList<EnumFatoresLiquidezValorImovel> FatoresLiquidezValorImovel { get; set; }
-        public RadioButtonList<EnumSimOuNao> AceitoComoGarantia { get; set; }
+        public RadioButtonList<EnumGarantiaSimOuNao> AceitoComoGarantia { get; set; }
         #endregion
 
         #region Documentação e Observações Finais
         public string DataVistoria { get; set; }
         public string HoraVistoria { get; set; }
         public List<SelectListItem> ListaComarcas { get; set; }
-        public RadioButtonList<EnumSimOuNao> Conformidade { get; set; }
+        public RadioButtonList<EnumConformidadeDocumentacaoSimOuNao> ConformidadeDocumentacao { get; set; }
         public List<SelectListItem> ListaRepresentantesLegais { get; set; }
         public List<SelectListItem> ListaStatusLaudo { get; set; }
         public List<SelectListItem> ListaResponsaveisTecnicos { get; set; }
